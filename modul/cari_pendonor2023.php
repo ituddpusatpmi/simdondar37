@@ -13,7 +13,37 @@
     <script src="bootsrap337/js/jquery.min.js"></script>
     <script src="bootsrap337/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
-
+    <link type="text/css" href="../../css/blitzer/jquery-ui.min.css" rel="stylesheet" />
+    <script type="text/javascript" charset="utf-8" src="../../js/jquery-ui.min.js"></script>
+    <style>
+        .ui-autocomplete {
+            max-height: 200px;
+            overflow-y: auto;
+            /* prevent horizontal scrollbar */
+            overflow-x: hidden;
+        }
+    </style>
+    <script>
+        jQuery(document).ready(function() {
+            $("#nama").autocomplete({
+                source: '../../modul/suggest_pendonor.php',
+                minLength: 3,
+                select: function(event, ui) {
+                    const tgl = ui.item.tgl;
+                    const bln = ui.item.bln;
+                    const thn = ui.item.thn;
+                    const nama = ui.item.value;
+                    if (tgl != '' && bln != '' && thn != '') {
+                        $("#thn").val(thn);
+                        $("#bln").val(bln);
+                        $("#tgl").val(tgl);
+                    }
+                    $("#nama").val(nama);
+                    $("#cari").click();
+                }
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -114,12 +144,13 @@
             //------------------------ set id pendonor ------------------------->
             //digit pendonor 14 digit, 4kode utd, 3 nama, 2 tmpt aftap, 6 sequence,
 
-            function getInitials($string) {
+            function getInitials($string)
+            {
                 $cleanString = preg_replace('/[\s\W]+/', '', $string);
                 return substr($cleanString, 0, 3);
             }
             $initials = getInitials($mnama);
-    
+
             $nama1 = str_replace(".", "", $mnama);
             $nama1 = str_replace(" ", "", $mnama);
             $nama1 = str_replace(",", "", $mnama);
@@ -139,7 +170,7 @@
             }
             $kodep = $kdtp . $idp4 . $int_idp2;
             //---------------------- END set id pendonor ------------------------->
-    
+
             $insertdonor = "insert into pendonor
         (`Kode`,`NoKTP`,`Nama`,`Alamat`,`Jk`,`Pekerjaan`,
         `telp`,`TempatLhr`,`TglLhr`,`Status`,`GolDarah`,
@@ -152,7 +183,7 @@
         '$mtelp','$mumur','$now',
         'test data','','0','','$sekarang','$sekarang','0')";
             //echo $insertdonor;
-    
+
             $qins = mysqli_query($dbi, $insertdonor);
             if ($qins) {
 
@@ -162,7 +193,7 @@
                 $log_aksi = 'Tambah Pendonor: ' . $kodep . ' Nama: ' . $mnama;
                 include_once "user_log.php";
                 //=====================================================================================================
-    
+
                 if (cek_net() == true) {
                     //insert ke nasional
                     $curlinsdn = curl_init();
@@ -190,435 +221,422 @@
                         <script>
                             alert("Pendonor Sudah Terdaftar di Antrian");
                         </script><?php
-                    } else {
-                        //Shift Petugas
-                        $shift = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT nama,jam,sampai_jam FROM `shift` WHERE time(now()) between time(jam) AND time(sampai_jam)"));
-                        //$shif   = $shift['nama'];
-                        if ($shift['nama'] == "I") {
-                            $shif = "1";
-                        } else if ($shift['nama'] == "II") {
-                            $shif = "2";
-                        } else if ($shift['nama'] == "III") {
-                            $shif = "3";
-                        } else {
-                            $shif = "4";
-                        }
-                        //------------------------ set id transaksi ------------------------->
-    
-                        $idtp = mysqli_query($dbi, "select * from tempat_donor where active='1'");
-                        $idtp1 = mysqli_fetch_assoc($idtp);
-                        $th = substr(date("Y"), 2, 2);
-                        $bl = date("m");
-                        $tgl = date("d");
-                        $kdtp = substr($idtp1['id1'], 0, 2) . $tgl . $bl . $th . "-" . $udd['id'] . "-";
-                        $idp = mysqli_query($dbi, "select NoTrans from htransaksi where NoTrans like '$kdtp%' order by NoTrans DESC");
-                        $idp1 = mysqli_fetch_assoc($idp);
-                        $idp2 = substr($idp1['NoTrans'], 14, 4);
-                        if ($idp2 < 1) {
-                            $idp2 = "0000";
-                        }
-                        $idp3 = (int) $idp2 + 1;
-                        $id31 = strlen($idp2) - strlen($idp3);
-                        $idp4 = "";
-                        for ($i = 0; $i < $id31; $i++) {
-                            $idp4 .= "0";
-                        }
-                        $id_transaksi_baru = $kdtp . $idp4 . $idp3;
-                        //------------------------ END set id transaksi ------------------------->
-    
-                        $namauser = $_SESSION['namauser'];
-                        $lv0 = $_SESSION['leveluser'];
-                        $v_notransaksi = $id_transaksi_baru;
+                                } else {
+                                    //Shift Petugas
+                                    $shift = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT nama,jam,sampai_jam FROM `shift` WHERE time(now()) between time(jam) AND time(sampai_jam)"));
+                                    //$shif   = $shift['nama'];
+                                    if ($shift['nama'] == "I") {
+                                        $shif = "1";
+                                    } else if ($shift['nama'] == "II") {
+                                        $shif = "2";
+                                    } else if ($shift['nama'] == "III") {
+                                        $shif = "3";
+                                    } else {
+                                        $shif = "4";
+                                    }
+                                    //------------------------ set id transaksi ------------------------->
+
+                                    $idtp = mysqli_query($dbi, "select * from tempat_donor where active='1'");
+                                    $idtp1 = mysqli_fetch_assoc($idtp);
+                                    $th = substr(date("Y"), 2, 2);
+                                    $bl = date("m");
+                                    $tgl = date("d");
+                                    $kdtp = substr($idtp1['id1'], 0, 2) . $tgl . $bl . $th . "-" . $udd['id'] . "-";
+                                    $idp = mysqli_query($dbi, "select NoTrans from htransaksi where NoTrans like '$kdtp%' order by NoTrans DESC");
+                                    $idp1 = mysqli_fetch_assoc($idp);
+                                    $idp2 = substr($idp1['NoTrans'], 14, 4);
+                                    if ($idp2 < 1) {
+                                        $idp2 = "0000";
+                                    }
+                                    $idp3 = (int) $idp2 + 1;
+                                    $id31 = strlen($idp2) - strlen($idp3);
+                                    $idp4 = "";
+                                    for ($i = 0; $i < $id31; $i++) {
+                                        $idp4 .= "0";
+                                    }
+                                    $id_transaksi_baru = $kdtp . $idp4 . $idp3;
+                                    //------------------------ END set id transaksi ------------------------->
+
+                                    $namauser = $_SESSION['namauser'];
+                                    $lv0 = $_SESSION['leveluser'];
+                                    $v_notransaksi = $id_transaksi_baru;
 
 
-                        //ID SERVER
-                        if ($metode == "1") {
-                            $aph = "0";
-                            $tpk = "0";
-                        } else {
-                            $aph = "1";
-                            $tpk = "0";
-                        }
-                        if ($donorke == "1") {
-                            $donorbaru = "0";
-                        } else {
-                            $donorbaru = "1";
-                        }
-                        if (substr($idtp1['id1'], 0, 1) == "M") {
-                            $tempat = "M";
-                            $rs1 = mysqli_fetch_assoc(mysqli_query($dbi, "select * from detailinstansi where aktif='1'"));
-                            $namains = $rs1['nama'];
-                        } else {
-                            $tempat = "M";
-                            $namains = "";
-                        }
-                        //ID SERVER
-    
-                        //QUERY Htransaksi
-                        $q_htrans = "insert into htransaksi
+                                    //ID SERVER
+                                    if ($metode == "1") {
+                                        $aph = "0";
+                                        $tpk = "0";
+                                    } else {
+                                        $aph = "1";
+                                        $tpk = "0";
+                                    }
+                                    if ($donorke == "1") {
+                                        $donorbaru = "0";
+                                    } else {
+                                        $donorbaru = "1";
+                                    }
+                                    if (substr($idtp1['id1'], 0, 1) == "M") {
+                                        $tempat = "M";
+                                        $rs1 = mysqli_fetch_assoc(mysqli_query($dbi, "select * from detailinstansi where aktif='1'"));
+                                        $namains = $rs1['nama'];
+                                    } else {
+                                        $tempat = "M";
+                                        $namains = "";
+                                    }
+                                    //ID SERVER
+
+                                    //QUERY Htransaksi
+                                    $q_htrans = "insert into htransaksi
                                 (NoTrans,KodePendonor,KodePendonor_lama,Tgl,Pengambilan,ketBatal,tempat,Instansi, JenisDonor,id_permintaan,Status,Nopol,apheresis,kendaraan,shift,kota,umur,donorbaru,jk, gol_darah,rhesus,pekerjaan,donorke,user,jam_mulai,rs, donor_tpk) value ('$v_notransaksi','$kodep','$kodep','$sekarang','-','-','0','$namains','$jenis_donor','','0','-','$aph','','$shif','$udd[id]','$mumur','$donorbaru','$mjk','$mgoldarah','$mrhesus','$mpekerjaan','$mdonorke','$namauser','$jam_donor','','$tpk')";
-                        if (mysqli_query($dbi, $q_htrans)) {
+                                    if (mysqli_query($dbi, $q_htrans)) {
 
-                            $lanjut = '0';
-                            if ($lanjut == "0") {
-                                //=======Audit Trial====================================================================================
-                                $log_mdl = 'REGISTRASI';
-                                $log_aksi = 'Registrasi: ' . $id_transaksi_baru . ' Donor: ' . $id . ' ' . $jenis_donasi;
-                                include_once "user_log.php";
-                                //=====================================================================================================
-    
-                                /////=========> Antrian Donor
-                                $antri = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT count(nomor) as nomor from `antrian` where tgl= curdate() limit 1"));
-                                $no_antri = $antri['nomor'] + 1;
+                                        $lanjut = '0';
+                                        if ($lanjut == "0") {
+                                            //=======Audit Trial====================================================================================
+                                            $log_mdl = 'REGISTRASI';
+                                            $log_aksi = 'Registrasi: ' . $id_transaksi_baru . ' Donor: ' . $id . ' ' . $jenis_donasi;
+                                            include_once "user_log.php";
+                                            //=====================================================================================================
 
-                                $q_antri = "INSERT INTO `antrian` (`transaksi`, `pendonor`, `nama`,`nomor`,`tgl`,`donorke`,`lengan`) VALUES ('$v_notransaksi', '$kodep','$mnama','$no_antri','$now','$mdonorke','$lengan')";
-                                $antrikan = mysqli_query($dbi, $q_antri);
-                                //echo $q_antri;
-    
-                                /////=========> Informed Consent
-                                if ($tcetak == '1') {
-                                    //echo "Data Telah berhasil dimasukkan, isikan inform concent pendonor<br>"; ?>
+                                            /////=========> Antrian Donor
+                                            $antri = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT count(nomor) as nomor from `antrian` where tgl= curdate() limit 1"));
+                                            $no_antri = $antri['nomor'] + 1;
+
+                                            $q_antri = "INSERT INTO `antrian` (`transaksi`, `pendonor`, `nama`,`nomor`,`tgl`,`donorke`,`lengan`) VALUES ('$v_notransaksi', '$kodep','$mnama','$no_antri','$now','$mdonorke','$lengan')";
+                                            $antrikan = mysqli_query($dbi, $q_antri);
+                                            //echo $q_antri;
+
+                                            /////=========> Informed Consent
+                                            if ($tcetak == '1') {
+                                                //echo "Data Telah berhasil dimasukkan, isikan inform concent pendonor<br>"; 
+                                    ?>
                                     <META http-equiv="refresh" content="1; url=Formulir23-st.php?kp=<?= $kodep ?>&trans=<?= $v_notransaksi ?>"><?php
-                                } else { ?>
+                                                                                                                                            } else { ?>
                                     <script>
                                         alert("Transaksi Donor berhasil disimpan");
                                     </script>
-                                <?php }
-
-                            }
-
-
-                        } else {
-                            echo "Data GAGAL<br>";
-                        }
-                        //Query htransaksi
-                    }
-                }
-
-            } else { ?>
+                <?php }
+                                                                                                                                        }
+                                                                                                                                    } else {
+                                                                                                                                        echo "Data GAGAL<br>";
+                                                                                                                                    }
+                                                                                                                                    //Query htransaksi
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        } else { ?>
                 <script>
                     alert("Transaksi Donor Gagal disimpan");
                 </script>
-                <?php
-            }
+        <?php
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }
+                                                                                                                //SIMPAN DONOR BARU -- END
 
 
+                                                                                                                //EDIT DONOR LOKAL
+                                                                                                                if (isset($_POST['editlokal'])) {
+                                                                                                                    $sekarang = date("Y-m-d H:i:s");
+                                                                                                                    $now = date("Y-m-d");
+                                                                                                                    $year = date("Y");
+                                                                                                                    $mnoktp = $_POST['enoktp'];
+                                                                                                                    $ekode = $_POST['ekode'];
+                                                                                                                    $mnama = $_POST['enama'];
+                                                                                                                    $mjk = $_POST['ejk'];
+                                                                                                                    $mtmplahir = $_POST['etmplahir'];
+                                                                                                                    $mtgl = $_POST['etgl'];
+                                                                                                                    $mbln = $_POST['ebln'];
+                                                                                                                    $mthn = $_POST['ethn'];
+                                                                                                                    $malamat = $_POST['ealamat'];
+                                                                                                                    $mkelurahan = $_POST['ekelurahan'];
+                                                                                                                    $mkecamatan = $_POST['ekecamatan'];
+                                                                                                                    $mwilayah = $_POST['ewilayah'];
+                                                                                                                    $mtelp = $_POST['etelp'];
+                                                                                                                    $mgoldarah = $_POST['egoldarah'];
+                                                                                                                    $mrhesus = $_POST['erhesus'];
+                                                                                                                    $mmenikah = $_POST['emenikah'];
+                                                                                                                    $mpekerjaan = $_POST['epekerjaan'];
+                                                                                                                    $mjumdonor = $_POST['ejumdonor'];
+                                                                                                                    $etglkembali = $_POST['etglkembali'];
+                                                                                                                    $eumur = $year - $mthn;
+                                                                                                                    $mdonorke = $mjumdonor + 1;
+                                                                                                                    $mtgl_lhr = $mthn . "-" . $mbln . "-" . $mtgl;
+                                                                                                                    $edaftar = $_POST['edaftar'];
+                                                                                                                    $jenis_donor = $_POST['ejenis_donor'];
+                                                                                                                    $metode = $_POST['emetode'];
+                                                                                                                    $lengan = $_POST['elengan'];
+                                                                                                                    $tcetak = $_POST['ecetak'];
+                                                                                                                    $jam_donor = date("H:i:s");
+                                                                                                                    //echo "Edaftar ==> ".$edaftar;
 
-        }
-    }
-    //SIMPAN DONOR BARU -- END
-    
-
-    //EDIT DONOR LOKAL
-    if (isset($_POST['editlokal'])) {
-        $sekarang = date("Y-m-d H:i:s");
-        $now = date("Y-m-d");
-        $year = date("Y");
-        $mnoktp = $_POST['enoktp'];
-        $ekode = $_POST['ekode'];
-        $mnama = $_POST['enama'];
-        $mjk = $_POST['ejk'];
-        $mtmplahir = $_POST['etmplahir'];
-        $mtgl = $_POST['etgl'];
-        $mbln = $_POST['ebln'];
-        $mthn = $_POST['ethn'];
-        $malamat = $_POST['ealamat'];
-        $mkelurahan = $_POST['ekelurahan'];
-        $mkecamatan = $_POST['ekecamatan'];
-        $mwilayah = $_POST['ewilayah'];
-        $mtelp = $_POST['etelp'];
-        $mgoldarah = $_POST['egoldarah'];
-        $mrhesus = $_POST['erhesus'];
-        $mmenikah = $_POST['emenikah'];
-        $mpekerjaan = $_POST['epekerjaan'];
-        $mjumdonor = $_POST['ejumdonor'];
-        $etglkembali = $_POST['etglkembali'];
-        $eumur = $year - $mthn;
-        $mdonorke = $mjumdonor + 1;
-        $mtgl_lhr = $mthn . "-" . $mbln . "-" . $mtgl;
-        $edaftar = $_POST['edaftar'];
-        $jenis_donor = $_POST['ejenis_donor'];
-        $metode = $_POST['emetode'];
-        $lengan = $_POST['elengan'];
-        $tcetak = $_POST['ecetak'];
-        $jam_donor = date("H:i:s");
-        //echo "Edaftar ==> ".$edaftar;
-    
-        $udd1 = mysqli_query($dbi, "select id from utd where aktif='1'");
-        $udd = mysqli_fetch_assoc($udd1);
-        $idudd = $udd['id'];
+                                                                                                                    $udd1 = mysqli_query($dbi, "select id from utd where aktif='1'");
+                                                                                                                    $udd = mysqli_fetch_assoc($udd1);
+                                                                                                                    $idudd = $udd['id'];
 
 
-        //Edit Data Lokal
-        $edit = mysqli_query($dbi, "UPDATE pendonor set NoKTP='$mnoktp', Nama='$mnama', Alamat= '$malamat', Jk='$mjk', Pekerjaan= '$mpekerjaan', TempatLhr= '$mtmplahir', TglLhr='$mtgl_lhr', Status= '$mmenikah', kelurahan= '$mkelurahan', kecamatan= '$mkecamatan', wilayah='$mwilayah', GolDarah= '$mgoldarah', Rhesus= '$mrhesus', jumDonor='$mjumdonor', telp2='$mtelp', tglkembali='$etglkembali', umur = '$eumur' where Kode='$ekode'");
+                                                                                                                    //Edit Data Lokal
+                                                                                                                    $edit = mysqli_query($dbi, "UPDATE pendonor set NoKTP='$mnoktp', Nama='$mnama', Alamat= '$malamat', Jk='$mjk', Pekerjaan= '$mpekerjaan', TempatLhr= '$mtmplahir', TglLhr='$mtgl_lhr', Status= '$mmenikah', kelurahan= '$mkelurahan', kecamatan= '$mkecamatan', wilayah='$mwilayah', GolDarah= '$mgoldarah', Rhesus= '$mrhesus', jumDonor='$mjumdonor', telp2='$mtelp', tglkembali='$etglkembali', umur = '$eumur' where Kode='$ekode'");
 
 
-        //insert ke nasional
-        $curlinsdn = curl_init();
-        curl_setopt_array($curlinsdn, array(
-            CURLOPT_URL => "https://dbdonor.pmi.or.id/pmi/api/simdondar/insertpendonor.php",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 5,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => array('idudd' => $idudd, 'Kode' => $ekode, 'NoKTP' => $mnoktp, 'Nama' => $mnama, 'Alamat' => $malamat, 'Jk' => $mjk, 'Pekerjaan' => $mpekerjaan, 'TempatLhr' => $mtmplahir, 'TglLhr' => $mtgl_lhr, 'Status' => $mmenikah, 'kelurahan' => $mkelurahan, 'kecamatan' => $mkecamatan, 'wilayah' => $mwilayah, 'telp2' => $mtelp, 'GolDarah' => $mgoldarah, 'Rhesus' => $mrhesus, 'jumDonor' => $mjumdonor, 'Call' => '1', 'tglkembali' => $etglkembali, 'umur' => $eumur, 'metode' => 'insert'),
-        ));
-        $response = curl_exec($curlinsdn);
-        $datains = json_decode($response, true);
-        //echo "<pre>"; print_r($response); echo "</pre>";
-        curl_close($curlinsdn);
+                                                                                                                    //insert ke nasional
+                                                                                                                    $curlinsdn = curl_init();
+                                                                                                                    curl_setopt_array($curlinsdn, array(
+                                                                                                                        CURLOPT_URL => "https://dbdonor.pmi.or.id/pmi/api/simdondar/insertpendonor.php",
+                                                                                                                        CURLOPT_RETURNTRANSFER => true,
+                                                                                                                        CURLOPT_ENCODING => "",
+                                                                                                                        CURLOPT_MAXREDIRS => 10,
+                                                                                                                        CURLOPT_TIMEOUT => 5,
+                                                                                                                        CURLOPT_FOLLOWLOCATION => true,
+                                                                                                                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                                                                                                        CURLOPT_CUSTOMREQUEST => "POST",
+                                                                                                                        CURLOPT_POSTFIELDS => array('idudd' => $idudd, 'Kode' => $ekode, 'NoKTP' => $mnoktp, 'Nama' => $mnama, 'Alamat' => $malamat, 'Jk' => $mjk, 'Pekerjaan' => $mpekerjaan, 'TempatLhr' => $mtmplahir, 'TglLhr' => $mtgl_lhr, 'Status' => $mmenikah, 'kelurahan' => $mkelurahan, 'kecamatan' => $mkecamatan, 'wilayah' => $mwilayah, 'telp2' => $mtelp, 'GolDarah' => $mgoldarah, 'Rhesus' => $mrhesus, 'jumDonor' => $mjumdonor, 'Call' => '1', 'tglkembali' => $etglkembali, 'umur' => $eumur, 'metode' => 'insert'),
+                                                                                                                    ));
+                                                                                                                    $response = curl_exec($curlinsdn);
+                                                                                                                    $datains = json_decode($response, true);
+                                                                                                                    //echo "<pre>"; print_r($response); echo "</pre>";
+                                                                                                                    curl_close($curlinsdn);
         ?>
         <div class="row">
             <div class="col-lg-12">
-              <div class="alert alert-success alert-dismissable" role="alert">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                <strong>Data Pendonor</strong> Tersimpan
-              </div>
+                <div class="alert alert-success alert-dismissable" role="alert">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <strong>Data Pendonor</strong> Tersimpan
+                </div>
             </div>
-          </div>
+        </div>
         <?php
-        //insert ke nasional --- END
-    
-        //JIKA DAFTAR DONOR
-        //CARI TRANSAKSI SEBELUMNYA
-        if ($edaftar == "1") {
-            $selectht = mysqli_num_rows(mysqli_query($dbi, "select * from htransaksi where KodePendonor='$ekode' AND date(Tgl)='$now'"));
-            if ($selectht > 0) { ?>
+                                                                                                                    //insert ke nasional --- END
+
+                                                                                                                    //JIKA DAFTAR DONOR
+                                                                                                                    //CARI TRANSAKSI SEBELUMNYA
+                                                                                                                    if ($edaftar == "1") {
+                                                                                                                        $selectht = mysqli_num_rows(mysqli_query($dbi, "select * from htransaksi where KodePendonor='$ekode' AND date(Tgl)='$now'"));
+                                                                                                                        if ($selectht > 0) { ?>
                 <script>
                     alert("Pendonor Sudah Terdaftar di Antrian");
                 </script><?php
-            } else {
-                //Shift Petugas
-                $shift = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT nama,jam,sampai_jam FROM `shift` WHERE time(now()) between time(jam) AND time(sampai_jam)"));
-                //$shif   = $shift['nama'];
-                if ($shift['nama'] == "I") {
-                    $shif = "1";
-                } else if ($shift['nama'] == "II") {
-                    $shif = "2";
-                } else if ($shift['nama'] == "III") {
-                    $shif = "3";
-                } else {
-                    $shif = "4";
-                }
-                //------------------------ set id transaksi ------------------------->
-    
-                $idtp = mysqli_query($dbi, "select * from tempat_donor where active='1'");
-                $idtp1 = mysqli_fetch_assoc($idtp);
-                $th = substr(date("Y"), 2, 2);
-                $bl = date("m");
-                $tgl = date("d");
-                $kdtp = substr($idtp1['id1'], 0, 2) . $tgl . $bl . $th . "-" . $udd['id'] . "-";
-                $idp = mysqli_query($dbi, "select NoTrans from htransaksi where NoTrans like '$kdtp%' order by NoTrans DESC");
-                $idp1 = mysqli_fetch_assoc($idp);
-                $idp2 = substr($idp1['NoTrans'], 14, 4);
-                if ($idp2 < 1) {
-                    $idp2 = "0000";
-                }
-                $idp3 = (int) $idp2 + 1;
-                $id31 = strlen($idp2) - strlen($idp3);
-                $idp4 = "";
-                for ($i = 0; $i < $id31; $i++) {
-                    $idp4 .= "0";
-                }
-                $id_transaksi_baru = $kdtp . $idp4 . $idp3;
-                //------------------------ END set id transaksi ------------------------->
-    
-                $namauser = $_SESSION['namauser'];
-                $lv0 = $_SESSION['leveluser'];
-                $v_notransaksi = $id_transaksi_baru;
+                                                                                                                        } else {
+                                                                                                                            //Shift Petugas
+                                                                                                                            $shift = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT nama,jam,sampai_jam FROM `shift` WHERE time(now()) between time(jam) AND time(sampai_jam)"));
+                                                                                                                            //$shif   = $shift['nama'];
+                                                                                                                            if ($shift['nama'] == "I") {
+                                                                                                                                $shif = "1";
+                                                                                                                            } else if ($shift['nama'] == "II") {
+                                                                                                                                $shif = "2";
+                                                                                                                            } else if ($shift['nama'] == "III") {
+                                                                                                                                $shif = "3";
+                                                                                                                            } else {
+                                                                                                                                $shif = "4";
+                                                                                                                            }
+                                                                                                                            //------------------------ set id transaksi ------------------------->
+
+                                                                                                                            $idtp = mysqli_query($dbi, "select * from tempat_donor where active='1'");
+                                                                                                                            $idtp1 = mysqli_fetch_assoc($idtp);
+                                                                                                                            $th = substr(date("Y"), 2, 2);
+                                                                                                                            $bl = date("m");
+                                                                                                                            $tgl = date("d");
+                                                                                                                            $kdtp = substr($idtp1['id1'], 0, 2) . $tgl . $bl . $th . "-" . $udd['id'] . "-";
+                                                                                                                            $idp = mysqli_query($dbi, "select NoTrans from htransaksi where NoTrans like '$kdtp%' order by NoTrans DESC");
+                                                                                                                            $idp1 = mysqli_fetch_assoc($idp);
+                                                                                                                            $idp2 = substr($idp1['NoTrans'], 14, 4);
+                                                                                                                            if ($idp2 < 1) {
+                                                                                                                                $idp2 = "0000";
+                                                                                                                            }
+                                                                                                                            $idp3 = (int) $idp2 + 1;
+                                                                                                                            $id31 = strlen($idp2) - strlen($idp3);
+                                                                                                                            $idp4 = "";
+                                                                                                                            for ($i = 0; $i < $id31; $i++) {
+                                                                                                                                $idp4 .= "0";
+                                                                                                                            }
+                                                                                                                            $id_transaksi_baru = $kdtp . $idp4 . $idp3;
+                                                                                                                            //------------------------ END set id transaksi ------------------------->
+
+                                                                                                                            $namauser = $_SESSION['namauser'];
+                                                                                                                            $lv0 = $_SESSION['leveluser'];
+                                                                                                                            $v_notransaksi = $id_transaksi_baru;
 
 
-                //ID SERVER
-                if ($metode == "1") {
-                    $aph = "0";
-                    $tpk = "0";
-                } else {
-                    $aph = "1";
-                    $tpk = "0";
-                }
-                if ($donorke == "1") {
-                    $donorbaru = "0";
-                } else {
-                    $donorbaru = "1";
-                }
-                if (substr($idtp1['id1'], 0, 1) == "M") {
-                    $tempat = "M";
-                    $rs1 = mysqli_fetch_assoc(mysqli_query($dbi, "select * from detailinstansi where aktif='1'"));
-                    $namains = $rs1['nama'];
-                } else {
-                    $tempat = "M";
-                    $namains = "";
-                }
-                //ID SERVER
-    
-                //QUERY Htransaksi
-                $q_htrans = "insert into htransaksi
+                                                                                                                            //ID SERVER
+                                                                                                                            if ($metode == "1") {
+                                                                                                                                $aph = "0";
+                                                                                                                                $tpk = "0";
+                                                                                                                            } else {
+                                                                                                                                $aph = "1";
+                                                                                                                                $tpk = "0";
+                                                                                                                            }
+                                                                                                                            if ($donorke == "1") {
+                                                                                                                                $donorbaru = "0";
+                                                                                                                            } else {
+                                                                                                                                $donorbaru = "1";
+                                                                                                                            }
+                                                                                                                            if (substr($idtp1['id1'], 0, 1) == "M") {
+                                                                                                                                $tempat = "M";
+                                                                                                                                $rs1 = mysqli_fetch_assoc(mysqli_query($dbi, "select * from detailinstansi where aktif='1'"));
+                                                                                                                                $namains = $rs1['nama'];
+                                                                                                                            } else {
+                                                                                                                                $tempat = "M";
+                                                                                                                                $namains = "";
+                                                                                                                            }
+                                                                                                                            //ID SERVER
+
+                                                                                                                            //QUERY Htransaksi
+                                                                                                                            $q_htrans = "insert into htransaksi
                     (NoTrans,KodePendonor,KodePendonor_lama,Tgl,Pengambilan,ketBatal,tempat,Instansi, JenisDonor,id_permintaan,Status,Nopol,apheresis,kendaraan,shift,kota,umur,donorbaru,jk, gol_darah,rhesus,pekerjaan,donorke,user,jam_mulai,rs, donor_tpk) value ('$v_notransaksi','$ekode','$ekode','$sekarang','-','-','0','$namains','$jenis_donor','','0','-','$aph','','$shif','$udd[id]','$eumur','$donorbaru','$mjk','$mgoldarah','$mrhesus','$mpekerjaan','$mdonorke','$namauser','$jam_donor','','$tpk')";
-                if (mysqli_query($dbi, $q_htrans)) {
+                                                                                                                            if (mysqli_query($dbi, $q_htrans)) {
 
-                    $lanjut = '0';
-                } else { ?>
+                                                                                                                                $lanjut = '0';
+                                                                                                                            } else { ?>
                     <script>
                         alert("Transaksi Donor Gagal disimpan");
                     </script>
                     <?php
-                }
-                //Query htransaksi
-    
-                //Cetak Formulir
-                if ($lanjut == "0") {
-                    //=======Audit Trial====================================================================================
-                    $log_mdl = 'REGISTRASI';
-                    $log_aksi = 'Registrasi: ' . $id_transaksi_baru . ' Donor: ' . $id . ' ' . $jenis_donasi;
-                    include_once "user_log.php";
-                    //=====================================================================================================
-    
-                    /////=========> Antrian Donor
-                    $antri = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT count(nomor) as nomor from `antrian` where tgl= curdate() limit 1"));
-                    $no_antri = $antri['nomor'] + 1;
+                                                                                                                            }
+                                                                                                                            //Query htransaksi
 
-                    $q_antri = "INSERT INTO `antrian` (`transaksi`, `pendonor`, `nama`,`nomor`,`tgl`,`donorke`,`lengan`) VALUES ('$v_notransaksi', '$ekode','$mnama','$no_antri','$now','$mdonorke','$lengan')";
-                    $antrikan = mysqli_query($dbi, $q_antri);
-                    //echo $q_antri;
-    
-                    /////=========> Informed Consent
-                    if ($tcetak == '1') {
-                        //echo "Data Telah berhasil dimasukkan, isikan inform concent pendonor<br>"; ?>
+                                                                                                                            //Cetak Formulir
+                                                                                                                            if ($lanjut == "0") {
+                                                                                                                                //=======Audit Trial====================================================================================
+                                                                                                                                $log_mdl = 'REGISTRASI';
+                                                                                                                                $log_aksi = 'Registrasi: ' . $id_transaksi_baru . ' Donor: ' . $id . ' ' . $jenis_donasi;
+                                                                                                                                include_once "user_log.php";
+                                                                                                                                //=====================================================================================================
+
+                                                                                                                                /////=========> Antrian Donor
+                                                                                                                                $antri = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT count(nomor) as nomor from `antrian` where tgl= curdate() limit 1"));
+                                                                                                                                $no_antri = $antri['nomor'] + 1;
+
+                                                                                                                                $q_antri = "INSERT INTO `antrian` (`transaksi`, `pendonor`, `nama`,`nomor`,`tgl`,`donorke`,`lengan`) VALUES ('$v_notransaksi', '$ekode','$mnama','$no_antri','$now','$mdonorke','$lengan')";
+                                                                                                                                $antrikan = mysqli_query($dbi, $q_antri);
+                                                                                                                                //echo $q_antri;
+
+                                                                                                                                /////=========> Informed Consent
+                                                                                                                                if ($tcetak == '1') {
+                                                                                                                                    //echo "Data Telah berhasil dimasukkan, isikan inform concent pendonor<br>"; 
+                    ?>
                         <META http-equiv="refresh" content="1; url=Formulir23-st.php?kp=<?= $ekode ?>&trans=<?= $v_notransaksi ?>"><?php
-                    } else { ?>
+                                                                                                                                } else { ?>
                         <script>
                             alert("Transaksi Donor berhasil disimpan");
                         </script>
-                        <?php
+                <?php
 
-                    }
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                    //JIKA DAFTAR DONOR ---- END
 
-                }
+                                                                                                                }
+                                                                                                                //EDIT DONOR LOKAL -- END
 
+                                                                                                                //EDIT DONOR NASIONAL
+                                                                                                                if (isset($_POST['editnasional'])) {
+                                                                                                                    $sekarang = date("Y-m-d H:i:s");
+                                                                                                                    $now = date("Y-m-d");
+                                                                                                                    $year = date("Y");
+                                                                                                                    $mnoktp = $_POST['nnoktp'];
+                                                                                                                    $ekode = $_POST['nkode'];
+                                                                                                                    $mnama = $_POST['nnama'];
+                                                                                                                    $mjk = $_POST['njk'];
+                                                                                                                    $mtmplahir = $_POST['ntmplahir'];
+                                                                                                                    $mtgl = $_POST['ntgl'];
+                                                                                                                    $mbln = $_POST['nbln'];
+                                                                                                                    $mthn = $_POST['nthn'];
+                                                                                                                    $malamat = $_POST['nalamat'];
+                                                                                                                    $mkelurahan = $_POST['nkelurahan'];
+                                                                                                                    $mkecamatan = $_POST['nkecamatan'];
+                                                                                                                    $mwilayah = $_POST['nwilayah'];
+                                                                                                                    $mtelp = $_POST['ntelp'];
+                                                                                                                    $mgoldarah = $_POST['ngoldarah'];
+                                                                                                                    $mrhesus = $_POST['nrhesus'];
+                                                                                                                    $mmenikah = $_POST['nmenikah'];
+                                                                                                                    $mpekerjaan = $_POST['npekerjaan'];
+                                                                                                                    $mjumdonor = $_POST['njumdonor'];
+                                                                                                                    $etglkembali = $_POST['ntglkembali'];
+                                                                                                                    $eumur = $year - $mthn;
+                                                                                                                    $mdonorke = $mjumdonor + 1;
+                                                                                                                    $mtgl_lhr = $mthn . "-" . $mbln . "-" . $mtgl;
+                                                                                                                    $edaftar = $_POST['ndaftar'];
+                                                                                                                    $jenis_donor = $_POST['njenis_donor'];
+                                                                                                                    $metode = $_POST['nmetode'];
+                                                                                                                    $lengan = $_POST['nlengan'];
+                                                                                                                    $tcetak = $_POST['ncetak'];
+                                                                                                                    $jam_donor = date("H:i:s");
+                                                                                                                    //echo "Edaftar ==> ".$edaftar;
 
-
-            }
-        }
-        //JIKA DAFTAR DONOR ---- END
-    
-    }
-    //EDIT DONOR LOKAL -- END
-    
-    //EDIT DONOR NASIONAL
-    if (isset($_POST['editnasional'])) {
-        $sekarang = date("Y-m-d H:i:s");
-        $now = date("Y-m-d");
-        $year = date("Y");
-        $mnoktp = $_POST['nnoktp'];
-        $ekode = $_POST['nkode'];
-        $mnama = $_POST['nnama'];
-        $mjk = $_POST['njk'];
-        $mtmplahir = $_POST['ntmplahir'];
-        $mtgl = $_POST['ntgl'];
-        $mbln = $_POST['nbln'];
-        $mthn = $_POST['nthn'];
-        $malamat = $_POST['nalamat'];
-        $mkelurahan = $_POST['nkelurahan'];
-        $mkecamatan = $_POST['nkecamatan'];
-        $mwilayah = $_POST['nwilayah'];
-        $mtelp = $_POST['ntelp'];
-        $mgoldarah = $_POST['ngoldarah'];
-        $mrhesus = $_POST['nrhesus'];
-        $mmenikah = $_POST['nmenikah'];
-        $mpekerjaan = $_POST['npekerjaan'];
-        $mjumdonor = $_POST['njumdonor'];
-        $etglkembali = $_POST['ntglkembali'];
-        $eumur = $year - $mthn;
-        $mdonorke = $mjumdonor + 1;
-        $mtgl_lhr = $mthn . "-" . $mbln . "-" . $mtgl;
-        $edaftar = $_POST['ndaftar'];
-        $jenis_donor = $_POST['njenis_donor'];
-        $metode = $_POST['nmetode'];
-        $lengan = $_POST['nlengan'];
-        $tcetak = $_POST['ncetak'];
-        $jam_donor = date("H:i:s");
-        //echo "Edaftar ==> ".$edaftar;
-    
-        $udd1 = mysqli_query($dbi, "select id from utd where aktif='1'");
-        $udd = mysqli_fetch_assoc($udd1);
-        $idudd = $udd['id'];
+                                                                                                                    $udd1 = mysqli_query($dbi, "select id from utd where aktif='1'");
+                                                                                                                    $udd = mysqli_fetch_assoc($udd1);
+                                                                                                                    $idudd = $udd['id'];
 
 
-        //Compare Lokal
-        $carilokal = mysqli_query($dbi, "select * from pendonor where Kode = '$ekode'");
-        $rowlokal = mysqli_num_rows($carilokal);
+                                                                                                                    //Compare Lokal
+                                                                                                                    $carilokal = mysqli_query($dbi, "select * from pendonor where Kode = '$ekode'");
+                                                                                                                    $rowlokal = mysqli_num_rows($carilokal);
 
-        // Jika Lokal Ada
-        if ($rowlokal > 0) {
+                                                                                                                    // Jika Lokal Ada
+                                                                                                                    if ($rowlokal > 0) {
 
-            $datalokal = mysqli_fetch_array($carilokal);
-            $jum = $datalokal['jumDonor'];
-            $jumnas = (int) $mjumdonor;
-
-
-            //Update Nasional ke Lokal
-    
-            if ($jumnas > $jum) {
-                $edit = mysqli_query($dbi, "UPDATE pendonor set NoKTP='$mnoktp', Nama='$mnama', Alamat= '$malamat', Jk='$mjk', Pekerjaan= '$mpekerjaan', TempatLhr= '$mtmplahir', TglLhr='$mtgl_lhr', Status= '$mmenikah', kelurahan= '$mkelurahan', kecamatan= '$mkecamatan', wilayah='$mwilayah', GolDarah= '$mgoldarah', Rhesus= '$mrhesus', jumDonor='$mjumdonor', tglkembali='$etglkembali', umur = '$eumur'    where Kode='$ekode'");
-
-                //echo "Nasional lebih banyak";
-            } else if ($jum > $jumnas) {
-                //Update lokal ke Nasional
-                //insert ke nasional
-                $curlinsdn = curl_init();
-                curl_setopt_array($curlinsdn, array(
-                    CURLOPT_URL => "https://dbdonor.pmi.or.id/pmi/api/simdondar/insertpendonor.php",
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => "",
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 5,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => "POST",
-                    CURLOPT_POSTFIELDS => array('idudd' => $idudd, 'Kode' => $ekode, 'NoKTP' => $mnoktp, 'Nama' => $mnama, 'Alamat' => $malamat, 'Jk' => $mjk, 'Pekerjaan' => $mpekerjaan, 'TempatLhr' => $mtmplahir, 'TglLhr' => $mtgl_lhr, 'Status' => $mmenikah, 'kelurahan' => $mkelurahan, 'kecamatan' => $mkecamatan, 'wilayah' => $mwilayah, 'telp2' => $mtelp, 'GolDarah' => $mgoldarah, 'Rhesus' => $mrhesus, 'jumDonor' => $jum, 'Call' => '1', 'tglkembali' => $etglkembali, 'umur' => $eumur, 'metode' => 'update'),
-                ));
-                $response = curl_exec($curlinsdn);
-                $datains = json_decode($response, true);
-                //echo "<pre>"; print_r($response); echo "</pre>";
-                curl_close($curlinsdn);
-                //insert ke nasional --- END
-    
-                //echo "Lokal lebih banyak";
-            } else {
-                $edit = mysqli_query($dbi, "UPDATE pendonor set NoKTP='$mnoktp', Nama='$mnama', Alamat= '$malamat', Jk='$mjk', Pekerjaan= '$mpekerjaan', TempatLhr= '$mtmplahir', TglLhr='$mtgl_lhr', Status= '$mmenikah', kelurahan= '$mkelurahan', kecamatan= '$mkecamatan', wilayah='$mwilayah', GolDarah= '$mgoldarah', Rhesus= '$mrhesus', jumDonor='$mjumdonor', tglkembali='$etglkembali', umur = '$eumur'    where Kode='$ekode'");
-
-                //update ke nasional
-                $curlinsdn = curl_init();
-                curl_setopt_array($curlinsdn, array(
-                    CURLOPT_URL => "https://dbdonor.pmi.or.id/pmi/api/simdondar/insertpendonor.php",
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => "",
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 5,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => "POST",
-                    CURLOPT_POSTFIELDS => array('idudd' => $idudd, 'Kode' => $ekode, 'NoKTP' => $mnoktp, 'Nama' => $mnama, 'Alamat' => $malamat, 'Jk' => $mjk, 'Pekerjaan' => $mpekerjaan, 'TempatLhr' => $mtmplahir, 'TglLhr' => $mtgl_lhr, 'Status' => $mmenikah, 'kelurahan' => $mkelurahan, 'kecamatan' => $mkecamatan, 'wilayah' => $mwilayah, 'telp2' => $mtelp, 'GolDarah' => $mgoldarah, 'Rhesus' => $mrhesus, 'jumDonor' => $mjumdonor, 'Call' => '1', 'tglkembali' => $etglkembali, 'umur' => $eumur, 'metode' => 'update'),
-                ));
-                $response = curl_exec($curlinsdn);
-                $datains = json_decode($response, true);
-                //echo "<pre>"; print_r($response); echo "</pre>";
-                curl_close($curlinsdn);
-                //update ke nasional --- END
-    
-                //echo "Lokal dan Nasional Sama" ;
-            }
+                                                                                                                        $datalokal = mysqli_fetch_array($carilokal);
+                                                                                                                        $jum = $datalokal['jumDonor'];
+                                                                                                                        $jumnas = (int) $mjumdonor;
 
 
+                                                                                                                        //Update Nasional ke Lokal
 
+                                                                                                                        if ($jumnas > $jum) {
+                                                                                                                            $edit = mysqli_query($dbi, "UPDATE pendonor set NoKTP='$mnoktp', Nama='$mnama', Alamat= '$malamat', Jk='$mjk', Pekerjaan= '$mpekerjaan', TempatLhr= '$mtmplahir', TglLhr='$mtgl_lhr', Status= '$mmenikah', kelurahan= '$mkelurahan', kecamatan= '$mkecamatan', wilayah='$mwilayah', GolDarah= '$mgoldarah', Rhesus= '$mrhesus', jumDonor='$mjumdonor', tglkembali='$etglkembali', umur = '$eumur'    where Kode='$ekode'");
 
-        } else { // Jika Lokal Tidak Ada
-            //INSERT LOKAL
-            $insertdonor = "insert into pendonor
+                                                                                                                            //echo "Nasional lebih banyak";
+                                                                                                                        } else if ($jum > $jumnas) {
+                                                                                                                            //Update lokal ke Nasional
+                                                                                                                            //insert ke nasional
+                                                                                                                            $curlinsdn = curl_init();
+                                                                                                                            curl_setopt_array($curlinsdn, array(
+                                                                                                                                CURLOPT_URL => "https://dbdonor.pmi.or.id/pmi/api/simdondar/insertpendonor.php",
+                                                                                                                                CURLOPT_RETURNTRANSFER => true,
+                                                                                                                                CURLOPT_ENCODING => "",
+                                                                                                                                CURLOPT_MAXREDIRS => 10,
+                                                                                                                                CURLOPT_TIMEOUT => 5,
+                                                                                                                                CURLOPT_FOLLOWLOCATION => true,
+                                                                                                                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                                                                                                                CURLOPT_CUSTOMREQUEST => "POST",
+                                                                                                                                CURLOPT_POSTFIELDS => array('idudd' => $idudd, 'Kode' => $ekode, 'NoKTP' => $mnoktp, 'Nama' => $mnama, 'Alamat' => $malamat, 'Jk' => $mjk, 'Pekerjaan' => $mpekerjaan, 'TempatLhr' => $mtmplahir, 'TglLhr' => $mtgl_lhr, 'Status' => $mmenikah, 'kelurahan' => $mkelurahan, 'kecamatan' => $mkecamatan, 'wilayah' => $mwilayah, 'telp2' => $mtelp, 'GolDarah' => $mgoldarah, 'Rhesus' => $mrhesus, 'jumDonor' => $jum, 'Call' => '1', 'tglkembali' => $etglkembali, 'umur' => $eumur, 'metode' => 'update'),
+                                                                                                                            ));
+                                                                                                                            $response = curl_exec($curlinsdn);
+                                                                                                                            $datains = json_decode($response, true);
+                                                                                                                            //echo "<pre>"; print_r($response); echo "</pre>";
+                                                                                                                            curl_close($curlinsdn);
+                                                                                                                            //insert ke nasional --- END
+
+                                                                                                                            //echo "Lokal lebih banyak";
+                                                                                                                        } else {
+                                                                                                                            $edit = mysqli_query($dbi, "UPDATE pendonor set NoKTP='$mnoktp', Nama='$mnama', Alamat= '$malamat', Jk='$mjk', Pekerjaan= '$mpekerjaan', TempatLhr= '$mtmplahir', TglLhr='$mtgl_lhr', Status= '$mmenikah', kelurahan= '$mkelurahan', kecamatan= '$mkecamatan', wilayah='$mwilayah', GolDarah= '$mgoldarah', Rhesus= '$mrhesus', jumDonor='$mjumdonor', tglkembali='$etglkembali', umur = '$eumur'    where Kode='$ekode'");
+
+                                                                                                                            //update ke nasional
+                                                                                                                            $curlinsdn = curl_init();
+                                                                                                                            curl_setopt_array($curlinsdn, array(
+                                                                                                                                CURLOPT_URL => "https://dbdonor.pmi.or.id/pmi/api/simdondar/insertpendonor.php",
+                                                                                                                                CURLOPT_RETURNTRANSFER => true,
+                                                                                                                                CURLOPT_ENCODING => "",
+                                                                                                                                CURLOPT_MAXREDIRS => 10,
+                                                                                                                                CURLOPT_TIMEOUT => 5,
+                                                                                                                                CURLOPT_FOLLOWLOCATION => true,
+                                                                                                                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                                                                                                                CURLOPT_CUSTOMREQUEST => "POST",
+                                                                                                                                CURLOPT_POSTFIELDS => array('idudd' => $idudd, 'Kode' => $ekode, 'NoKTP' => $mnoktp, 'Nama' => $mnama, 'Alamat' => $malamat, 'Jk' => $mjk, 'Pekerjaan' => $mpekerjaan, 'TempatLhr' => $mtmplahir, 'TglLhr' => $mtgl_lhr, 'Status' => $mmenikah, 'kelurahan' => $mkelurahan, 'kecamatan' => $mkecamatan, 'wilayah' => $mwilayah, 'telp2' => $mtelp, 'GolDarah' => $mgoldarah, 'Rhesus' => $mrhesus, 'jumDonor' => $mjumdonor, 'Call' => '1', 'tglkembali' => $etglkembali, 'umur' => $eumur, 'metode' => 'update'),
+                                                                                                                            ));
+                                                                                                                            $response = curl_exec($curlinsdn);
+                                                                                                                            $datains = json_decode($response, true);
+                                                                                                                            //echo "<pre>"; print_r($response); echo "</pre>";
+                                                                                                                            curl_close($curlinsdn);
+                                                                                                                            //update ke nasional --- END
+
+                                                                                                                            //echo "Lokal dan Nasional Sama" ;
+                                                                                                                        }
+                                                                                                                    } else { // Jika Lokal Tidak Ada
+                                                                                                                        //INSERT LOKAL
+                                                                                                                        $insertdonor = "insert into pendonor
                     (`Kode`,`NoKTP`,`Nama`,`Alamat`,`Jk`,`Pekerjaan`,
                     `telp`,`TempatLhr`,`TglLhr`,`Status`,`GolDarah`,
                     `Rhesus`,`Call`,`kelurahan`,`kecamatan`,`wilayah`,`jumDonor`,`title`,
@@ -629,237 +647,233 @@
                     '$mrhesus','1','$mkelurahan','$mkecamatan','$mwilayah','$mjumdonor','-',
                     '$mtelp','$mumur','$etglkembali',
                     'test data','','0','','$sekarang','$sekarang','0')";
-            //echo $insertdonor;
-    
-            $qinsert = mysqli_query($dbi, $insertdonor);
-        }
-        //Compare Lokal ---- END
-    
+                                                                                                                        //echo $insertdonor;
 
-        //JIKA DAFTAR DONOR
-        //CARI TRANSAKSI SEBELUMNYA
-        if ($edaftar == "1") {
-            $selectht = mysqli_num_rows(mysqli_query($dbi, "select * from htransaksi where KodePendonor='$ekode' AND date(Tgl)='$now'"));
-            if ($selectht > 0) { ?>
+                                                                                                                        $qinsert = mysqli_query($dbi, $insertdonor);
+                                                                                                                    }
+                                                                                                                    //Compare Lokal ---- END
+
+
+                                                                                                                    //JIKA DAFTAR DONOR
+                                                                                                                    //CARI TRANSAKSI SEBELUMNYA
+                                                                                                                    if ($edaftar == "1") {
+                                                                                                                        $selectht = mysqli_num_rows(mysqli_query($dbi, "select * from htransaksi where KodePendonor='$ekode' AND date(Tgl)='$now'"));
+                                                                                                                        if ($selectht > 0) { ?>
                 <script>
                     alert("Pendonor Sudah Terdaftar di Antrian");
                 </script><?php
-            } else {
-                //Shift Petugas
-                $shift = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT nama,jam,sampai_jam FROM `shift` WHERE time(now()) between time(jam) AND time(sampai_jam)"));
-                //$shif   = $shift['nama'];
-                if ($shift['nama'] == "I") {
-                    $shif = "1";
-                } else if ($shift['nama'] == "II") {
-                    $shif = "2";
-                } else if ($shift['nama'] == "III") {
-                    $shif = "3";
-                } else {
-                    $shif = "4";
-                }
-                //------------------------ set id transaksi ------------------------->
-    
-                $idtp = mysqli_query($dbi, "select * from tempat_donor where active='1'");
-                $idtp1 = mysqli_fetch_assoc($idtp);
-                $th = substr(date("Y"), 2, 2);
-                $bl = date("m");
-                $tgl = date("d");
-                $kdtp = substr($idtp1['id1'], 0, 2) . $tgl . $bl . $th . "-" . $udd['id'] . "-";
-                $idp = mysqli_query($dbi, "select NoTrans from htransaksi where NoTrans like '$kdtp%' order by NoTrans DESC");
-                $idp1 = mysqli_fetch_assoc($idp);
-                $idp2 = substr($idp1['NoTrans'], 14, 4);
-                if ($idp2 < 1) {
-                    $idp2 = "0000";
-                }
-                $idp3 = (int) $idp2 + 1;
-                $id31 = strlen($idp2) - strlen($idp3);
-                $idp4 = "";
-                for ($i = 0; $i < $id31; $i++) {
-                    $idp4 .= "0";
-                }
-                $id_transaksi_baru = $kdtp . $idp4 . $idp3;
-                //------------------------ END set id transaksi ------------------------->
-    
-                $namauser = $_SESSION['namauser'];
-                $lv0 = $_SESSION['leveluser'];
-                $v_notransaksi = $id_transaksi_baru;
+                                                                                                                        } else {
+                                                                                                                            //Shift Petugas
+                                                                                                                            $shift = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT nama,jam,sampai_jam FROM `shift` WHERE time(now()) between time(jam) AND time(sampai_jam)"));
+                                                                                                                            //$shif   = $shift['nama'];
+                                                                                                                            if ($shift['nama'] == "I") {
+                                                                                                                                $shif = "1";
+                                                                                                                            } else if ($shift['nama'] == "II") {
+                                                                                                                                $shif = "2";
+                                                                                                                            } else if ($shift['nama'] == "III") {
+                                                                                                                                $shif = "3";
+                                                                                                                            } else {
+                                                                                                                                $shif = "4";
+                                                                                                                            }
+                                                                                                                            //------------------------ set id transaksi ------------------------->
+
+                                                                                                                            $idtp = mysqli_query($dbi, "select * from tempat_donor where active='1'");
+                                                                                                                            $idtp1 = mysqli_fetch_assoc($idtp);
+                                                                                                                            $th = substr(date("Y"), 2, 2);
+                                                                                                                            $bl = date("m");
+                                                                                                                            $tgl = date("d");
+                                                                                                                            $kdtp = substr($idtp1['id1'], 0, 2) . $tgl . $bl . $th . "-" . $udd['id'] . "-";
+                                                                                                                            $idp = mysqli_query($dbi, "select NoTrans from htransaksi where NoTrans like '$kdtp%' order by NoTrans DESC");
+                                                                                                                            $idp1 = mysqli_fetch_assoc($idp);
+                                                                                                                            $idp2 = substr($idp1['NoTrans'], 14, 4);
+                                                                                                                            if ($idp2 < 1) {
+                                                                                                                                $idp2 = "0000";
+                                                                                                                            }
+                                                                                                                            $idp3 = (int) $idp2 + 1;
+                                                                                                                            $id31 = strlen($idp2) - strlen($idp3);
+                                                                                                                            $idp4 = "";
+                                                                                                                            for ($i = 0; $i < $id31; $i++) {
+                                                                                                                                $idp4 .= "0";
+                                                                                                                            }
+                                                                                                                            $id_transaksi_baru = $kdtp . $idp4 . $idp3;
+                                                                                                                            //------------------------ END set id transaksi ------------------------->
+
+                                                                                                                            $namauser = $_SESSION['namauser'];
+                                                                                                                            $lv0 = $_SESSION['leveluser'];
+                                                                                                                            $v_notransaksi = $id_transaksi_baru;
 
 
-                //ID SERVER
-                if ($metode == "1") {
-                    $aph = "0";
-                    $tpk = "0";
-                } else {
-                    $aph = "1";
-                    $tpk = "0";
-                }
-                if ($donorke == "1") {
-                    $donorbaru = "0";
-                } else {
-                    $donorbaru = "1";
-                }
-                if (substr($idtp1['id1'], 0, 1) == "M") {
-                    $tempat = "M";
-                    $rs1 = mysqli_fetch_assoc(mysqli_query($dbi, "select * from detailinstansi where aktif='1'"));
-                    $namains = $rs1['nama'];
-                } else {
-                    $tempat = "M";
-                    $namains = "";
-                }
-                //ID SERVER
-    
-                //QUERY Htransaksi
-                $q_htrans = "insert into htransaksi
+                                                                                                                            //ID SERVER
+                                                                                                                            if ($metode == "1") {
+                                                                                                                                $aph = "0";
+                                                                                                                                $tpk = "0";
+                                                                                                                            } else {
+                                                                                                                                $aph = "1";
+                                                                                                                                $tpk = "0";
+                                                                                                                            }
+                                                                                                                            if ($donorke == "1") {
+                                                                                                                                $donorbaru = "0";
+                                                                                                                            } else {
+                                                                                                                                $donorbaru = "1";
+                                                                                                                            }
+                                                                                                                            if (substr($idtp1['id1'], 0, 1) == "M") {
+                                                                                                                                $tempat = "M";
+                                                                                                                                $rs1 = mysqli_fetch_assoc(mysqli_query($dbi, "select * from detailinstansi where aktif='1'"));
+                                                                                                                                $namains = $rs1['nama'];
+                                                                                                                            } else {
+                                                                                                                                $tempat = "M";
+                                                                                                                                $namains = "";
+                                                                                                                            }
+                                                                                                                            //ID SERVER
+
+                                                                                                                            //QUERY Htransaksi
+                                                                                                                            $q_htrans = "insert into htransaksi
                     (NoTrans,KodePendonor,KodePendonor_lama,Tgl,Pengambilan,ketBatal,tempat,Instansi, JenisDonor,id_permintaan,Status,Nopol,apheresis,kendaraan,shift,kota,umur,donorbaru,jk, gol_darah,rhesus,pekerjaan,donorke,user,jam_mulai,rs, donor_tpk) value ('$v_notransaksi','$ekode','$ekode','$sekarang','-','-','0','$namains','$jenis_donor','','0','-','$aph','','$shif','$udd[id]','$eumur','$donorbaru','$mjk','$mgoldarah','$mrhesus','$mpekerjaan','$mdonorke','$namauser','$jam_donor','','$tpk')";
-                if (mysqli_query($dbi, $q_htrans)) {
+                                                                                                                            if (mysqli_query($dbi, $q_htrans)) {
 
-                    $lanjut = '0';
-                } else { ?>
+                                                                                                                                $lanjut = '0';
+                                                                                                                            } else { ?>
                     <script>
                         alert("Transaksi Donor Gagal disimpan");
                     </script>
                     <?php
-                }
-                //Query htransaksi
-    
-                //Cetak Formulir
-                if ($lanjut == "0") {
-                    //=======Audit Trial====================================================================================
-                    $log_mdl = 'REGISTRASI';
-                    $log_aksi = 'Registrasi: ' . $id_transaksi_baru . ' Donor: ' . $id . ' ' . $jenis_donor;
-                    include_once "user_log.php";
-                    //=====================================================================================================
-    
-                    /////=========> Antrian Donor
-                    $antri = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT count(nomor) as nomor from `antrian` where tgl= curdate() limit 1"));
-                    $no_antri = $antri['nomor'] + 1;
+                                                                                                                            }
+                                                                                                                            //Query htransaksi
 
-                    $q_antri = "INSERT INTO `antrian` (`transaksi`, `pendonor`, `nama`,`nomor`,`tgl`,`donorke`,`lengan`) VALUES ('$v_notransaksi', '$ekode','$mnama','$no_antri','$now','$mdonorke','$lengan')";
-                    $antrikan = mysqli_query($dbi, $q_antri);
-                    //echo $q_antri;
-    
-                    /////=========> Informed Consent
-                    if ($tcetak == '1') {
-                        //echo "Data Telah berhasil dimasukkan, isikan inform concent pendonor<br>"; ?>
+                                                                                                                            //Cetak Formulir
+                                                                                                                            if ($lanjut == "0") {
+                                                                                                                                //=======Audit Trial====================================================================================
+                                                                                                                                $log_mdl = 'REGISTRASI';
+                                                                                                                                $log_aksi = 'Registrasi: ' . $id_transaksi_baru . ' Donor: ' . $id . ' ' . $jenis_donor;
+                                                                                                                                include_once "user_log.php";
+                                                                                                                                //=====================================================================================================
+
+                                                                                                                                /////=========> Antrian Donor
+                                                                                                                                $antri = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT count(nomor) as nomor from `antrian` where tgl= curdate() limit 1"));
+                                                                                                                                $no_antri = $antri['nomor'] + 1;
+
+                                                                                                                                $q_antri = "INSERT INTO `antrian` (`transaksi`, `pendonor`, `nama`,`nomor`,`tgl`,`donorke`,`lengan`) VALUES ('$v_notransaksi', '$ekode','$mnama','$no_antri','$now','$mdonorke','$lengan')";
+                                                                                                                                $antrikan = mysqli_query($dbi, $q_antri);
+                                                                                                                                //echo $q_antri;
+
+                                                                                                                                /////=========> Informed Consent
+                                                                                                                                if ($tcetak == '1') {
+                                                                                                                                    //echo "Data Telah berhasil dimasukkan, isikan inform concent pendonor<br>"; 
+                    ?>
                         <META http-equiv="refresh" content="1; url=Formulir23-st.php?kp=<?= $ekode ?>&trans=<?= $v_notransaksi ?>"><?php
-                    } else {
-                        ?>
+                                                                                                                                } else {
+                                                                                                                                    ?>
                         <script>
                             alert("Transaksi Donor berhasil disimpan");
                         </script>
-                        <?php
-                    }
-
-                }
-
-
-
-            }
-        }
-        //JIKA DAFTAR DONOR ---- END
-        echo $sqlup;
-
-    }
-    //EDIT DONOR NASIONAL -- END
-    
+            <?php
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                    //JIKA DAFTAR DONOR ---- END
+                                                                                                                    echo $sqlup;
+                                                                                                                }
+                                                                                                                //EDIT DONOR NASIONAL -- END
 
 
-    //Transaksi Donor -- Start
-    if (isset($_POST['btndonor'])) {
-        $udd1 = mysqli_query($dbi, "select id from utd where aktif='1'");
-        $udd = mysqli_fetch_assoc($udd1);
-        $kodep = $_POST['MInpKode'];
-        $today1 = date('Y-m-d');
-        $namauser = $_SESSION['namauser'];
-        $lv0 = $_SESSION['leveluser'];
-        $id = $_POST['MInpKode'];
-        $nama = $_POST['MInpNama'];
-        $sekarang = date("Y-m-d H:i:s");
 
-        $gol = $_POST['tgol'];
-        $rh = $_POST['jrh'];
-        $jmldnr = $_POST['tjmld'];
-        $donorke = $_POST['tjmld'] + 1;
-        $tgl_lhr = $_POST['jtgllhr'];
-        $pekerjaan = $_POST['jkerja'];
-        $jenis_donor = $_POST['tjenis_donor'];
-        $metode = $_POST['tmetode'];
-        $lengan = $_POST['tlengan'];
-        $tcetak = $_POST['tcetak'];
-        $jk = $_POST['jjk'];
+                                                                                                                //Transaksi Donor -- Start
+                                                                                                                if (isset($_POST['btndonor'])) {
+                                                                                                                    $udd1 = mysqli_query($dbi, "select id from utd where aktif='1'");
+                                                                                                                    $udd = mysqli_fetch_assoc($udd1);
+                                                                                                                    $kodep = $_POST['MInpKode'];
+                                                                                                                    $today1 = date('Y-m-d');
+                                                                                                                    $namauser = $_SESSION['namauser'];
+                                                                                                                    $lv0 = $_SESSION['leveluser'];
+                                                                                                                    $id = $_POST['MInpKode'];
+                                                                                                                    $nama = $_POST['MInpNama'];
+                                                                                                                    $sekarang = date("Y-m-d H:i:s");
 
-        $jam_donor = date("H:i:s");
-        $year = date('Y');
-        $thnpd = substr($tgl_lhr, 0, 4);
-        $umur = $year - $thnpd;
+                                                                                                                    $gol = $_POST['tgol'];
+                                                                                                                    $rh = $_POST['jrh'];
+                                                                                                                    $jmldnr = $_POST['tjmld'];
+                                                                                                                    $donorke = $_POST['tjmld'] + 1;
+                                                                                                                    $tgl_lhr = $_POST['jtgllhr'];
+                                                                                                                    $pekerjaan = $_POST['jkerja'];
+                                                                                                                    $jenis_donor = $_POST['tjenis_donor'];
+                                                                                                                    $metode = $_POST['tmetode'];
+                                                                                                                    $lengan = $_POST['tlengan'];
+                                                                                                                    $tcetak = $_POST['tcetak'];
+                                                                                                                    $jk = $_POST['jjk'];
+
+                                                                                                                    $jam_donor = date("H:i:s");
+                                                                                                                    $year = date('Y');
+                                                                                                                    $thnpd = substr($tgl_lhr, 0, 4);
+                                                                                                                    $umur = $year - $thnpd;
 
 
-        //CARI TRANSAKSI SEBELUMNYA
-        $selectht = mysqli_num_rows(mysqli_query($dbi, "select * from htransaksi where KodePendonor='$kodep' AND date(Tgl)='$today1'"));
-        if ($selectht > 0) { ?>
+                                                                                                                    //CARI TRANSAKSI SEBELUMNYA
+                                                                                                                    $selectht = mysqli_num_rows(mysqli_query($dbi, "select * from htransaksi where KodePendonor='$kodep' AND date(Tgl)='$today1'"));
+                                                                                                                    if ($selectht > 0) { ?>
             <script>
                 alert("Pendonor Sudah Terdaftar di Antrian");
             </script><?php
-        } else {
-            //COMPARE PENDONOR DI LOKAL & NASIONAL --- START
-            //Cari di Lokal
-            $carilokal = mysqli_query($dbi, "select * from pendonor where Kode = '$id'");
-            $rowlokal = mysqli_num_rows($carilokal);
+                                                                                                                    } else {
+                                                                                                                        //COMPARE PENDONOR DI LOKAL & NASIONAL --- START
+                                                                                                                        //Cari di Lokal
+                                                                                                                        $carilokal = mysqli_query($dbi, "select * from pendonor where Kode = '$id'");
+                                                                                                                        $rowlokal = mysqli_num_rows($carilokal);
 
-            //Jika Lokal Ada
-            if ($rowlokal < 1) {
-                //$dtlokal = mysqli_fetch_array($carilokal);
-    
-                //Cari di Nasional
-                //Insert dari Nasional
-                $curl = curl_init();
-                curl_setopt_array($curl, array(
-                    CURLOPT_URL => "https://dbdonor.pmi.or.id/pmi/api/simdondar/caripendonor.php",
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => "",
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 10,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => "POST",
-                    CURLOPT_POSTFIELDS => array('kode' => $id),
-                ));
-                $response = curl_exec($curl);
-                curl_close($curl);
-                //echo $response;
-                $tgl = date("Y/m/d");
-                $data = json_decode($response, true);
-                $jmlad = count($data['data']);
+                                                                                                                        //Jika Lokal Ada
+                                                                                                                        if ($rowlokal < 1) {
+                                                                                                                            //$dtlokal = mysqli_fetch_array($carilokal);
 
-                $sekarang = date("Y-m-d H:i:s");
-                $now = date("Y-m-d");
-                $year = date("Y");
-                $mkodep = $data['data'][0]['pkode'];
-                $mnoktp = $data['data'][0]['pnoktp'];
-                $mnama = $data['data'][0]['pnama'];
-                $mjk = $data['data'][0]['pjk'];
-                $mtmplahir = $data['data'][0]['ptempatlahir'];
-                $malamat = $data['data'][0]['palamat'];
-                $mkelurahan = $data['data'][0]['pekelurahan'];
-                $mkecamatan = $data['data'][0]['pkecamatan'];
-                $mwilayah = $data['data'][0]['pwilayah'];
-                $mtelp = $data['data'][0]['ptelp2'];
-                $mgoldarah = $data['data'][0]['pgoldarah'];
-                $mrhesus = $data['data'][0]['prhesus'];
-                $mmenikah = $data['data'][0]['pstatus'];
-                $mpekerjaan = $data['data'][0]['ppekerjaan'];
-                $mtglkembali = $data['data'][0]['ptglkembali'];
-                $mtglkembaliaph = $data['data'][0]['ptglkembaliapheresis'];
-                $mjumdonor = $data['data'][0]['pjmldonor'];
-                $mdonorke = $mjumdonor + 1;
-                $mtgl_lhr = $data['data'][0]['ptgllahir'];
-                $idudd = $udd['nama'];
-                $tahun = date('Y');
-                $mthnpd = substr($mtgl_lhr, 0, 4);
-                $umur = $tahun - $mthnpd;
+                                                                                                                            //Cari di Nasional
+                                                                                                                            //Insert dari Nasional
+                                                                                                                            $curl = curl_init();
+                                                                                                                            curl_setopt_array($curl, array(
+                                                                                                                                CURLOPT_URL => "https://dbdonor.pmi.or.id/pmi/api/simdondar/caripendonor.php",
+                                                                                                                                CURLOPT_RETURNTRANSFER => true,
+                                                                                                                                CURLOPT_ENCODING => "",
+                                                                                                                                CURLOPT_MAXREDIRS => 10,
+                                                                                                                                CURLOPT_TIMEOUT => 10,
+                                                                                                                                CURLOPT_FOLLOWLOCATION => true,
+                                                                                                                                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                                                                                                                CURLOPT_CUSTOMREQUEST => "POST",
+                                                                                                                                CURLOPT_POSTFIELDS => array('kode' => $id),
+                                                                                                                            ));
+                                                                                                                            $response = curl_exec($curl);
+                                                                                                                            curl_close($curl);
+                                                                                                                            //echo $response;
+                                                                                                                            $tgl = date("Y/m/d");
+                                                                                                                            $data = json_decode($response, true);
+                                                                                                                            $jmlad = count($data['data']);
+
+                                                                                                                            $sekarang = date("Y-m-d H:i:s");
+                                                                                                                            $now = date("Y-m-d");
+                                                                                                                            $year = date("Y");
+                                                                                                                            $mkodep = $data['data'][0]['pkode'];
+                                                                                                                            $mnoktp = $data['data'][0]['pnoktp'];
+                                                                                                                            $mnama = $data['data'][0]['pnama'];
+                                                                                                                            $mjk = $data['data'][0]['pjk'];
+                                                                                                                            $mtmplahir = $data['data'][0]['ptempatlahir'];
+                                                                                                                            $malamat = $data['data'][0]['palamat'];
+                                                                                                                            $mkelurahan = $data['data'][0]['pekelurahan'];
+                                                                                                                            $mkecamatan = $data['data'][0]['pkecamatan'];
+                                                                                                                            $mwilayah = $data['data'][0]['pwilayah'];
+                                                                                                                            $mtelp = $data['data'][0]['ptelp2'];
+                                                                                                                            $mgoldarah = $data['data'][0]['pgoldarah'];
+                                                                                                                            $mrhesus = $data['data'][0]['prhesus'];
+                                                                                                                            $mmenikah = $data['data'][0]['pstatus'];
+                                                                                                                            $mpekerjaan = $data['data'][0]['ppekerjaan'];
+                                                                                                                            $mtglkembali = $data['data'][0]['ptglkembali'];
+                                                                                                                            $mtglkembaliaph = $data['data'][0]['ptglkembaliapheresis'];
+                                                                                                                            $mjumdonor = $data['data'][0]['pjmldonor'];
+                                                                                                                            $mdonorke = $mjumdonor + 1;
+                                                                                                                            $mtgl_lhr = $data['data'][0]['ptgllahir'];
+                                                                                                                            $idudd = $udd['nama'];
+                                                                                                                            $tahun = date('Y');
+                                                                                                                            $mthnpd = substr($mtgl_lhr, 0, 4);
+                                                                                                                            $umur = $tahun - $mthnpd;
 
 
-                $insertdonor = "insert into pendonor
+                                                                                                                            $insertdonor = "insert into pendonor
                 (`Kode`,`NoKTP`,`Nama`,`Alamat`,`Jk`,`Pekerjaan`,
                 `telp`,`TempatLhr`,`TglLhr`,`Status`,`GolDarah`,
                 `Rhesus`,`Call`,`kelurahan`,`kecamatan`,`wilayah`,`jumDonor`,`title`,
@@ -870,124 +884,123 @@
                 '$mrhesus','1','$mkelurahan','$mkecamatan','$mwilayah','$mjumdonor','-',
                 '$mtelp','$mumur','$mtglkembali',
                 'test data','','0','','$sekarang','$sekarang','0')";
-                //echo $insertdonor;
+                                                                                                                            //echo $insertdonor;
 
-                $qinsertdonor = mysqli_query($dbi, $insertdonor);
-            }
-
-
-
-            //COMPARE PENDONOR DI LOKAL & NASIONAL --- END
-    
+                                                                                                                            $qinsertdonor = mysqli_query($dbi, $insertdonor);
+                                                                                                                        }
 
 
-            //Shift Petugas
-            $shift = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT nama,jam,sampai_jam FROM `shift` WHERE time(now()) between time(jam) AND time(sampai_jam)"));
-            //$shif   = $shift['nama'];
-            if ($shift['nama'] == "I") {
-                $shif = "1";
-            } else if ($shift['nama'] == "II") {
-                $shif = "2";
-            } else if ($shift['nama'] == "III") {
-                $shif = "3";
-            } else {
-                $shif = "4";
-            }
-            //------------------------ set id transaksi ------------------------->
-    
-            $idtp = mysqli_query($dbi, "select * from tempat_donor where active='1'");
-            $idtp1 = mysqli_fetch_assoc($idtp);
-            $th = substr(date("Y"), 2, 2);
-            $bl = date("m");
-            $tgl = date("d");
-            $kdtp = substr($idtp1['id1'], 0, 2) . $tgl . $bl . $th . "-" . $udd['id'] . "-";
-            $idp = mysqli_query($dbi, "select NoTrans from htransaksi where NoTrans like '$kdtp%' order by NoTrans DESC");
-            $idp1 = mysqli_fetch_assoc($idp);
-            $idp2 = substr($idp1['NoTrans'], 14, 4);
-            if ($idp2 < 1) {
-                $idp2 = "0000";
-            }
-            $idp3 = (int) $idp2 + 1;
-            $id31 = strlen($idp2) - strlen($idp3);
-            $idp4 = "";
-            for ($i = 0; $i < $id31; $i++) {
-                $idp4 .= "0";
-            }
-            $id_transaksi_baru = $kdtp . $idp4 . $idp3;
-            //------------------------ END set id transaksi ------------------------->
-            $v_notransaksi = $id_transaksi_baru;
+
+                                                                                                                        //COMPARE PENDONOR DI LOKAL & NASIONAL --- END
 
 
-            if ($metode == "1") {
-                $aph = "0";
-                $tpk = "0";
-            } else {
-                $aph = "1";
-                $tpk = "0";
-            }
-            if ($mdonorke > 1) {
-                $donorbaru = '1';
-            } else {
-                $donorbaru = '0';
-            }
-            //if ($donorke == "1"){ $donorbaru = "0";}else{ $donorbaru = "1";}
-            if (substr($idtp1['id1'], 0, 1) == "M") {
-                $tempat = "M";
-                $rs1 = mysqli_fetch_assoc(mysqli_query($dbi, "select * from detailinstansi where aktif='1'"));
-                $namains = $rs1['nama'];
-            } else {
-                $tempat = "M";
-                $namains = "";
-            }
 
-            $q_htrans = "insert into htransaksi
+                                                                                                                        //Shift Petugas
+                                                                                                                        $shift = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT nama,jam,sampai_jam FROM `shift` WHERE time(now()) between time(jam) AND time(sampai_jam)"));
+                                                                                                                        //$shif   = $shift['nama'];
+                                                                                                                        if ($shift['nama'] == "I") {
+                                                                                                                            $shif = "1";
+                                                                                                                        } else if ($shift['nama'] == "II") {
+                                                                                                                            $shif = "2";
+                                                                                                                        } else if ($shift['nama'] == "III") {
+                                                                                                                            $shif = "3";
+                                                                                                                        } else {
+                                                                                                                            $shif = "4";
+                                                                                                                        }
+                                                                                                                        //------------------------ set id transaksi ------------------------->
+
+                                                                                                                        $idtp = mysqli_query($dbi, "select * from tempat_donor where active='1'");
+                                                                                                                        $idtp1 = mysqli_fetch_assoc($idtp);
+                                                                                                                        $th = substr(date("Y"), 2, 2);
+                                                                                                                        $bl = date("m");
+                                                                                                                        $tgl = date("d");
+                                                                                                                        $kdtp = substr($idtp1['id1'], 0, 2) . $tgl . $bl . $th . "-" . $udd['id'] . "-";
+                                                                                                                        $idp = mysqli_query($dbi, "select NoTrans from htransaksi where NoTrans like '$kdtp%' order by NoTrans DESC");
+                                                                                                                        $idp1 = mysqli_fetch_assoc($idp);
+                                                                                                                        $idp2 = substr($idp1['NoTrans'], 14, 4);
+                                                                                                                        if ($idp2 < 1) {
+                                                                                                                            $idp2 = "0000";
+                                                                                                                        }
+                                                                                                                        $idp3 = (int) $idp2 + 1;
+                                                                                                                        $id31 = strlen($idp2) - strlen($idp3);
+                                                                                                                        $idp4 = "";
+                                                                                                                        for ($i = 0; $i < $id31; $i++) {
+                                                                                                                            $idp4 .= "0";
+                                                                                                                        }
+                                                                                                                        $id_transaksi_baru = $kdtp . $idp4 . $idp3;
+                                                                                                                        //------------------------ END set id transaksi ------------------------->
+                                                                                                                        $v_notransaksi = $id_transaksi_baru;
+
+
+                                                                                                                        if ($metode == "1") {
+                                                                                                                            $aph = "0";
+                                                                                                                            $tpk = "0";
+                                                                                                                        } else {
+                                                                                                                            $aph = "1";
+                                                                                                                            $tpk = "0";
+                                                                                                                        }
+                                                                                                                        if ($mdonorke > 1) {
+                                                                                                                            $donorbaru = '1';
+                                                                                                                        } else {
+                                                                                                                            $donorbaru = '0';
+                                                                                                                        }
+                                                                                                                        //if ($donorke == "1"){ $donorbaru = "0";}else{ $donorbaru = "1";}
+                                                                                                                        if (substr($idtp1['id1'], 0, 1) == "M") {
+                                                                                                                            $tempat = "M";
+                                                                                                                            $rs1 = mysqli_fetch_assoc(mysqli_query($dbi, "select * from detailinstansi where aktif='1'"));
+                                                                                                                            $namains = $rs1['nama'];
+                                                                                                                        } else {
+                                                                                                                            $tempat = "M";
+                                                                                                                            $namains = "";
+                                                                                                                        }
+
+                                                                                                                        $q_htrans = "insert into htransaksi
         (NoTrans,KodePendonor,KodePendonor_lama,Tgl,Pengambilan,ketBatal,tempat,Instansi, JenisDonor,id_permintaan,Status,Nopol,apheresis,kendaraan,shift,kota,umur,donorbaru,jk, gol_darah,rhesus,pekerjaan,donorke,user,jam_mulai,rs, donor_tpk) value ('$v_notransaksi','$kodep','$kodep','$sekarang','-','-','0','$namains','$jenis_donor','','0','-','$aph','','$shif','$udd[id]','$umur','$donorbaru','$jk','$gol','$rh','$pekerjaan','$donorke','$namauser','$jam_donor','','$tpk')";
-            if (mysqli_query($dbi, $q_htrans)) {
-                //$msg .= '- Pendaftaran - berhasil<br>';
-                $lanjut = '0';
-            }
+                                                                                                                        if (mysqli_query($dbi, $q_htrans)) {
+                                                                                                                            //$msg .= '- Pendaftaran - berhasil<br>';
+                                                                                                                            $lanjut = '0';
+                                                                                                                        }
 
-            if ($lanjut == '0') {
-                //=======Audit Trial====================================================================================
-                $log_mdl = 'REGISTRASI';
-                $log_aksi = 'Registrasi: ' . $v_notransaksi . ' Donor: ' . $id . ' ' . $jenis_donor;
-                include_once "user_log.php";
-                //=====================================================================================================
-    
-                /////=========> Antrian Donor
-                $antri = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT count(nomor) as nomor from `antrian` where tgl= curdate() limit 1"));
-                $no_antri = $antri['nomor'] + 1;
+                                                                                                                        if ($lanjut == '0') {
+                                                                                                                            //=======Audit Trial====================================================================================
+                                                                                                                            $log_mdl = 'REGISTRASI';
+                                                                                                                            $log_aksi = 'Registrasi: ' . $v_notransaksi . ' Donor: ' . $id . ' ' . $jenis_donor;
+                                                                                                                            include_once "user_log.php";
+                                                                                                                            //=====================================================================================================
 
-                $q_antri = "INSERT INTO `antrian` (`transaksi`, `pendonor`, `nama`,`nomor`,`tgl`,`donorke`,`lengan`) VALUES ('$v_notransaksi', '$kodep','$nama','$no_antri','$today1','$donorke','$lengan')";
-                $antrikan = mysqli_query($dbi, $q_antri);
+                                                                                                                            /////=========> Antrian Donor
+                                                                                                                            $antri = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT count(nomor) as nomor from `antrian` where tgl= curdate() limit 1"));
+                                                                                                                            $no_antri = $antri['nomor'] + 1;
+
+                                                                                                                            $q_antri = "INSERT INTO `antrian` (`transaksi`, `pendonor`, `nama`,`nomor`,`tgl`,`donorke`,`lengan`) VALUES ('$v_notransaksi', '$kodep','$nama','$no_antri','$today1','$donorke','$lengan')";
+                                                                                                                            $antrikan = mysqli_query($dbi, $q_antri);
 
 
 
-                /////=========> Informed Consent
-                if ($tcetak == '1') {
-                    //echo "Data Telah berhasil dimasukkan, isikan inform concent pendonor<br>"; ?>
+                                                                                                                            /////=========> Informed Consent
+                                                                                                                            if ($tcetak == '1') {
+                                                                                                                                //echo "Data Telah berhasil dimasukkan, isikan inform concent pendonor<br>"; 
+                        ?>
                     <META http-equiv="refresh" content="1; url=Formulir23-st.php?kp=<?= $kodep ?>&trans=<?= $v_notransaksi ?>"><?php
 
-                } else { ?>
+                                                                                                                            } else { ?>
                     <script>
                         alert("Transaksi Donor berhasil disimpan");
                     </script>
-                    <?php
+                <?php
 
-                }
-
-            } else { ?>
+                                                                                                                            }
+                                                                                                                        } else { ?>
                 <script>
                     alert("Transaksi Donor Gagal disimpan");
                 </script>
-                <?php
+    <?php
 
-            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }
+                                                                                                                //Transaksi Donor -- End
 
-        }
-    }
-    //Transaksi Donor -- End
-    
     ?>
 
     <div class="container-fluid">
@@ -1035,7 +1048,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-lg-4">No. KTP</label>
                                         <div class="col-lg-8">
-                                            <input type="text" class="form-control" name="NoKTP" autocomplete="off"
+                                            <input type="text" class="form-control" id="idktp" name="NoKTP" autocomplete="off"
                                                 placeholder="No. KTP">
                                         </div>
                                     </div>
@@ -1135,7 +1148,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-lg-4">No. Handphone</label>
                                         <div class="col-lg-8">
-                                            <input type="text" class="form-control" name="telp" autocomplete="off"
+                                            <input type="text" class="form-control" name="telp" id="telp" autocomplete="off"
                                                 placeholder="Nomor Handphone">
                                         </div>
                                     </div>
@@ -1247,7 +1260,7 @@
         $qtelp = "";
     }
     //Query dinamis end
-    
+
     //Tombol Cari
     if (isset($_POST['cari'])) {
         //cek koneksi inet
@@ -1259,7 +1272,7 @@
         $num = mysqli_num_rows($qjd);
 
         if ($num > 0) {
-            ?>
+    ?>
             <div class="container-fluid">
                 <div class="panel with-nav-tabs panel-primary" id="shadow1">
                     <div class="text-center" <h5><strong>DATA SERVER LOKAL</strong></h5>
@@ -1309,7 +1322,7 @@
                                     $imltd = "OK";
                                 }
 
-                                ?>
+                            ?>
                                 <tr <?php echo $style; ?> onMouseOver="this.className='highlight'"
                                     onMouseOut="this.className='normal'">
                                     <td align="center">
@@ -1325,11 +1338,11 @@
                                                     title='Daftarkan donor' class="btn btn-icon btn-outline btn-danger btn-sm"><img
                                                         src="../images/bloodbag.png" width=15
                                                         height=15 /></a><?php }
-                                        } else if (date('Y-m-d') >= $data['tglkembali'] and ($data['Cekal'] == '0')) { ?>
-                                                <a href="#" data-target="#MdlDonor" data-toggle="modal"
-                                                    data-id="<?php echo $data['Kode'] . '*' . $data['Nama'] . '*' . $data['jumDonor'] . '*' . $data['GolDarah'] . '*' . $data['Rhesus'] . '*' . $data['TglLhr'] . '*' . $data['Pekerjaan'] . '*' . $data['Jk']; ?>"
-                                                    title='Daftarkan donor' class="btn btn-icon btn-outline btn-danger btn-sm"><img
-                                                        src="../images/bloodbag.png" width=15 height=15 /></a><?php } ?>
+                                                                } else if (date('Y-m-d') >= $data['tglkembali'] and ($data['Cekal'] == '0')) { ?>
+                                            <a href="#" data-target="#MdlDonor" data-toggle="modal"
+                                                data-id="<?php echo $data['Kode'] . '*' . $data['Nama'] . '*' . $data['jumDonor'] . '*' . $data['GolDarah'] . '*' . $data['Rhesus'] . '*' . $data['TglLhr'] . '*' . $data['Pekerjaan'] . '*' . $data['Jk']; ?>"
+                                                title='Daftarkan donor' class="btn btn-icon btn-outline btn-danger btn-sm"><img
+                                                    src="../images/bloodbag.png" width=15 height=15 /></a><?php } ?>
 
                                         <a href="#" data-target="#MdlEdit<?php echo $data['Kode']; ?>" data-toggle="modal"
                                             title='Edit data pendonor' class="btn btn-icon btn-outline btn-success btn-sm"> <img
@@ -1710,7 +1723,7 @@
                                         <!-- Modal History Donor-->
                                         <div class="modal modal-danger fade modal-fade-in-scale-up" id="Mdlhistori<?php echo $data['Kode']; ?>"
                                             aria-hidden="true" aria-labelledby="Mdlhistori" role="dialog" tabindex="-1">
-                                            
+
                                             <div class="modal-dialog modal-lg modal-simple modal-center">
                                                 <div class="modal-content">
                                                     <div class="modal-header shadow">
@@ -1769,31 +1782,31 @@
                 </div>
             </div><?php
 
-        }//DARI NASIONAL
-        else {
-            //Cari Nasional
-            $curl = curl_init();
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => "https://dbdonor.pmi.or.id/pmi/api/simdondar/caripendonor.php",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 10,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => array('kode' => $srckode, 'nama' => $nama, 'NoKTP' => $srcktp, 'alamat' => $srcalamat, 'kelurahan' => $srckelurahan, 'kecamatan' => $srckecamatan, 'wilayah' => $srcwilayah, 'tmplahir' => $srctmplahir, 'tgllhr' => $srctgl, 'goldarah' => $srcgoldarah, 'rhesus' => $srcrhesus, 'telp2' => $srctelp),
-            ));
-            $response = curl_exec($curl);
-            curl_close($curl);
-            //echo $response;
-            $tgl = date("Y/m/d");
-            $data = json_decode($response, true);
-            $jmlad = count($data['data']);
-            //echo "<pre>"; print_r($response); echo "</pre>";
-            //echo "jumlah data ====> ".$jmlad;
-            //JIKA ADA DARI NASIONAL
-            if ($jmlad > 0) { ?>
+                } //DARI NASIONAL
+                else {
+                    //Cari Nasional
+                    $curl = curl_init();
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => "https://dbdonor.pmi.or.id/pmi/api/simdondar/caripendonor.php",
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => "",
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 10,
+                        CURLOPT_FOLLOWLOCATION => true,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => "POST",
+                        CURLOPT_POSTFIELDS => array('kode' => $srckode, 'nama' => $nama, 'NoKTP' => $srcktp, 'alamat' => $srcalamat, 'kelurahan' => $srckelurahan, 'kecamatan' => $srckecamatan, 'wilayah' => $srcwilayah, 'tmplahir' => $srctmplahir, 'tgllhr' => $srctgl, 'goldarah' => $srcgoldarah, 'rhesus' => $srcrhesus, 'telp2' => $srctelp),
+                    ));
+                    $response = curl_exec($curl);
+                    curl_close($curl);
+                    //echo $response;
+                    $tgl = date("Y/m/d");
+                    $data = json_decode($response, true);
+                    $jmlad = count($data['data']);
+                    //echo "<pre>"; print_r($response); echo "</pre>";
+                    //echo "jumlah data ====> ".$jmlad;
+                    //JIKA ADA DARI NASIONAL
+                    if ($jmlad > 0) { ?>
                 <div class="container-fluid">
                     <div class="panel with-nav-tabs panel-primary" id="shadow1">
                         <div class="text-center" <h5><strong>DATA SERVER NASIONAL</strong></h5>
@@ -1846,7 +1859,7 @@
                                         } else {
                                             $imltd = "OK";
                                         }
-                                        ?>
+                                ?>
                                         <tr <?php echo $style; ?> onMouseOver="this.className='highlight'"
                                             onMouseOut="this.className='normal'">
 
@@ -1862,12 +1875,12 @@
                                                                 width=15 height=15 /></a>
                                                     <?php }
                                                 } else if (date('Y-m-d') >= $data['data'][$a]['ptglkembali'] and ($data['data'][$a]['pcekal'] == '0')) { ?>
-                                                        <a href="#" data-target="#MdlDonor" data-toggle="modal"
-                                                            data-id="<?php echo $data['data'][$a]['pkode'] . '*' . $data['data'][$a]['pnama'] . '*' . $data['data'][$a]['pjmldonor'] . '*' . $data['data'][$a]['pgoldarah'] . '*' . $data['data'][$a]['prhesus'] . '*' . $data['data'][$a]['ptgllahir'] . '*' . $data['data'][$a]['ppekerjaan'] . '*' . $data['data'][$a]['pjk']; ?>"
-                                                            class="btn btn-icon btn-outline btn-danger btn-sm"><img src="../images/bloodbag.png"
-                                                                width=15 height=15 /></a> <?php }
-                                                //echo '<a href="#" data-target="#MdlAdd" data-toggle="modal" data-id="'.implode('*',$row).'" class="btn btn-icon btn-outline btn-success btn-sm"> <i class="icon wb-edit" aria-hidden="true"></i></a>';
-                                                ?>
+                                                    <a href="#" data-target="#MdlDonor" data-toggle="modal"
+                                                        data-id="<?php echo $data['data'][$a]['pkode'] . '*' . $data['data'][$a]['pnama'] . '*' . $data['data'][$a]['pjmldonor'] . '*' . $data['data'][$a]['pgoldarah'] . '*' . $data['data'][$a]['prhesus'] . '*' . $data['data'][$a]['ptgllahir'] . '*' . $data['data'][$a]['ppekerjaan'] . '*' . $data['data'][$a]['pjk']; ?>"
+                                                        class="btn btn-icon btn-outline btn-danger btn-sm"><img src="../images/bloodbag.png"
+                                                            width=15 height=15 /></a> <?php }
+                                                                                    //echo '<a href="#" data-target="#MdlAdd" data-toggle="modal" data-id="'.implode('*',$row).'" class="btn btn-icon btn-outline btn-success btn-sm"> <i class="icon wb-edit" aria-hidden="true"></i></a>';
+                                                                                        ?>
                                                 <a href="#" data-target="#MdlEditnas<?php echo $data['data'][$a]['pkode']; ?>"
                                                     data-toggle="modal" class="btn btn-icon btn-outline btn-success btn-sm"> <img
                                                         src="../images/ubah.png" width=15 height=15 /></a>
@@ -2321,7 +2334,7 @@
 
 
 
-                                        <?php }
+                                    <?php }
                                 }
                                 if ($no == '0') {
                                     echo '<tr>';
@@ -2331,22 +2344,22 @@
                                 echo '</tbody>
                                     </table>';
                                 // TOMBOL SERVER NASIONAL END
-                                ?>
+                                    ?>
                         </div>
                     </div>
                 </div>
-                <?php
+    <?php
 
 
 
 
 
+                    }
+                    //}//cek net
+                    //else{ echo "internet DOWN <br>"; }
+                }
             }
-            //}//cek net
-            //else{ echo "internet DOWN <br>"; }
-        }
-    }
-    //POST END
+            //POST END
     ?>
 
 
@@ -2713,14 +2726,14 @@
 
 </html>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip();
         $(".loader").fadeOut();
         if (document.getElementById('cari').clicked == true) {
             document.getElementById("cari").disabled = true;
         }
     });
-    $("#MdlDonor").on('show.bs.modal', function (e) {
+    $("#MdlDonor").on('show.bs.modal', function(e) {
         var id = $(e.relatedTarget).attr('data-id');
         var x = document.getElementById("tnorm");
         x.disabled = true;
@@ -2739,7 +2752,7 @@
         $('#MdlDonor #Mjk').val(ide[7]);
 
 
-        $('#tjenis_donor').on('change', function () {
+        $('#tjenis_donor').on('change', function() {
             var jdonor = $("#tjenis_donor option:selected").val();
             if (jdonor == '1') {
                 x.disabled = false;
@@ -2750,11 +2763,11 @@
         });
     });
 
-    $("#MdlAdd").on('show.bs.modal', function (e) {
+    $("#MdlAdd").on('show.bs.modal', function(e) {
         var s = document.getElementById("mnorm");
         s.disabled = true;
         s.setAttribute("type", "hidden");
-        $('#mjenis_donor').on('change', function () {
+        $('#mjenis_donor').on('change', function() {
             var jdonor = $("#mjenis_donor option:selected").val();
             if (jdonor == '1') {
                 s.disabled = false;
@@ -2766,11 +2779,11 @@
     });
 
 
-    $("#MdlEdit").on('show.bs.modal', function (e) {
+    $("#MdlEdit").on('show.bs.modal', function(e) {
         var e = document.getElementById("enorm");
         e.disabled = true;
         e.setAttribute("type", "hidden");
-        $('#ejenis_donor').on('change', function () {
+        $('#ejenis_donor').on('change', function() {
             var jdonor = $("#ejenis_donor option:selected").val();
             if (jdonor == '1') {
                 e.disabled = false;
@@ -2780,31 +2793,46 @@
             }
         });
     });
-
-
-
 </script>
 
 <script type="text/javascript">
     function validasiregistrasi() {
-        if (document.getElementById('iddonor').value == '') {
+        if (document.getElementById('iddonor').value && document.getElementById('iddonor').value.length < 10) {
+            alert('Masukan Kode Pendonor minimal 10 Karakter !');
+            document.getElementById("iddonor").focus();
+            return false;
+        }
+        if (document.getElementById('idktp').value && document.getElementById('idktp').value.length < 16) {
+            alert('Masukan No. KTP minimal 16 Karakter !');
+            document.getElementById("idktp").focus();
+            return false;
+        }
+        if (document.getElementById('telp').value && document.getElementById('telp').value.length < 8) {
+            alert('Masukan No. Handphone minimal 8 Karakter !');
+            document.getElementById("telp").focus();
+            return false;
+        }
+        if (document.getElementById('iddonor').value == '' && document.getElementById('idktp').value == '' && document.getElementById('telp').value == '') {
             if (document.getElementById('nama').value.length < 3) {
                 alert(' Lengkapi Nama minimal 3 Karakter !');
-                document.getElementById("nama").focus(); return false;
+                document.getElementById("nama").focus();
+                return false;
             }
             if (document.getElementById('tgl').value == '') {
                 alert('Masukan Tanggal Lahir !');
-                document.getElementById("tgl").focus(); return false;
+                document.getElementById("tgl").focus();
+                return false;
             }
             if (document.getElementById('bln').value == '') {
                 alert('Masukan Bulan Lahir !');
-                document.getElementById("bln").focus(); return false;
+                document.getElementById("bln").focus();
+                return false;
             }
             if (document.getElementById('thn').value == '') {
                 alert('Masukan Tahun Lahir !');
-                document.getElementById("thn").focus(); return false;
+                document.getElementById("thn").focus();
+                return false;
             }
         }
-
     }
 </script>

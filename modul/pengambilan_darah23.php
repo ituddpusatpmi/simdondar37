@@ -434,13 +434,13 @@
                   </div>
 
                   <div class="form-group">
-                    <label class="control-label col-lg-4">Menit Mulai</label>
+                    <label class="control-label col-lg-4">Jam Mulai</label>
                     <div class="col-lg-3">
                       <input type="hidden" name="caraambil" value="0" class="form-control" id="caraambil">
                       <input name="ambil" value="" class="form-control" id="jam_ambil" placeholder="mm:dd" autocomplete="off" required>
                     </div>
                     <div class="col-lg-2">
-                      <label class="control-label"> Menit Selesai</label>
+                      <label class="control-label"> Jam Selesai</label>
                     </div>
                     <div class="col-lg-3">
                       <input name="selesai" value="" class="form-control" id="jam_selesai" placeholder="mm:dd" autocomplete="off" required>
