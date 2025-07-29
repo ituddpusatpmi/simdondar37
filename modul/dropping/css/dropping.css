@@ -1,0 +1,200 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+h1 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #343a40;
+}
+
+.table {
+    margin-top: 10px;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #cbcbcb !important;
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: #ffffff !important;
+}
+
+
+.table th,
+.table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table thead th {
+    background-color: #c23205;
+    /* background-color: #ffffff; */
+    color: white;
+}
+
+.table-stok {
+    margin-top: 10px;
+}
+
+.table-stok th,
+.table-stok td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table-stok thead th {
+    /* background-color: #8a2405; */
+    background-color: #e2e2e2;
+    color: rgb(59, 59, 59);
+    font-weight: 400;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0.5rem;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    margin-left: 0.5rem;
+}
+
+.dataTables_wrapper .dataTables_info {
+    margin-top: 1rem;
+}
+
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.no-gutters>.col,
+.no-gutters>[class*="col-"] {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.container-fluid {
+    border: 0.2px solid rgb(143, 143, 143);
+    padding: 0.9rem;
+}
+
+.cell {
+    min-height: 100px;
+    /* border: 2px solid green;
+    margin: 1rem; */
+}
+
+.cell__big {
+    /* border-color: red; */
+    height: auto;
+    display: flex;
+    height: calc(100% - 2rem);
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    /* Lebar toggle switch */
+    width: 70px;
+    /* Tinggi toggle switch */
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    /* Spasi di dalam switch */
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    border-radius: 50%;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked+.slider {
+    /* Biru Muda */
+    background-color: #2196F3;
+    /* Merah */
+    background-color: red;
+}
+
+input:checked+.slider:before {
+    /* Sesuaikan dengan lebar slider */
+    /* transform: translateX(86px); */
+    transform: translateX(36px);
+}
+
+.switch-label {
+    color: white;
+    font-size: 14px;
+    /* Ukuran font untuk label */
+    position: absolute;
+    width: 50%;
+    text-align: center;
+    line-height: 34px;
+    /* Vertikal center label dalam slider */
+
+}
+
+.switch-label-off {
+    right: 5px;
+    display: inline;
+}
+
+.switch-label-on {
+    left: 0;
+    display: none;
+}
+
+input:checked+.slider .switch-label-off {
+    display: none;
+}
+
+input:checked+.slider .switch-label-on {
+    display: inline;
+}
+
+.form-control {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.custom-select {
+    width: 100%;
+    /* Atur lebar sesuai kebutuhan */
+    border-radius: 4px;
+    /* Atur bentuk sudut */
+    font-size: 14px;
+    /* Atur ukuran font */
+    padding: 8px;
+    /* Atur padding */
+    color: #333;
+    /* Atur warna teks */
+    background-color: #f9f9f9;
+    /* Atur warna latar belakang */
+}

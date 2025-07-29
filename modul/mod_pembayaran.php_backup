@@ -1,0 +1,256 @@
+<link href="modul/thickbox/thickbox.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="modul/thickbox/thickbox.js"></script>
+<script type="text/javascript" src="js/disable_enter.js"></script>
+
+<script language="javascript">
+function selectBayar(Kode){
+	$('input[name=kodeBia]').val(Kode);
+	tb_remove(); 
+}
+</script>
+
+<?
+include ("config/db_connect.php");
+$tgl_permintaan=date("Y-m-d");
+if (!isset($_POST[submit1])){
+?>
+	<h1 class="table">Pembayaran Permintaan Darah</h1>
+	<form name="cari" method="post" action="<?echo $PHPSELF?>">
+    <table class="form" cellspacing="0" cellpadding="0">
+		<tr>
+			<td>No Formulir</td>
+            <td class="input">
+				<input name="no_form" type="text" size="20" value="<?=$_GET[noform]?>" onChange="checkform()">
+			</td>
+		</tr>
+	</table>
+    <br>
+    <input name="submit1" type="submit" value="Cari">
+    </form>
+<?}
+
+if (isset($_POST['submit2'])) {
+	$noform=$_POST['noform'];
+	$kode=$_POST['kodeBia'];
+	$biaya=mysql_fetch_assoc(mysql_query("select * from biaya where Kode='$kode'"));
+	for ($i=0;$i<$_POST[jumkantong];$i++) {
+		$stat1="3";
+		$stat=$_POST['status'][$i];
+		$nokan=$_POST['nokantong'][$i];
+		if ($stat=="B") $stat1="2";
+		
+		$myfile="bdrs/$tgl_permintaan.zip";
+		if (file_exists($myfile)) {
+			$fh=fopen($myfile,'a') or die ("Cant open file");
+		} else {
+			$fh=fopen($myfile,'w') or die ("Cant open file");
+		}
+		
+		$transaksi1_sql="UPDATE dtransaksipermintaan
+				SET Status='$stat' where (NoKantong='$nokan' and NoForm='$noform')";
+		$update_sql="UPDATE stokkantong SET Status='$stat1' where NoKantong='$nokan'";
+		$transaksi1=mysql_query($transaksi1_sql);
+		$update=mysql_query($update_sql);
+		fwrite($fh,$transaksi1_sql);
+		fwrite($fh,";\n");
+		fwrite($fh,$update_sql);
+		fwrite($fh,";\n");
+		fclose($fh);
+		$jumk=0;
+		if ($stat=="1") {
+			$jumk=$jumk+1;
+			$biaya1=mysql_fetch_assoc(mysql_query("select * from biaya where Kode='Ce01'")); 
+			$kod=$biaya1[Kode];
+			$bayar=$jumk*$biaya1[Harga];
+			$nama_bia=$biaya1[NamaBiaya]; 
+			$harga=$biaya1[Harga];
+		}else{ 
+			$jumk=$jumk+1;
+			$kod=$biaya[Kode];
+			$bayar=$jumk*$biaya[Harga]; 
+			$nama_bia=$biaya[NamaBiaya];
+			$harga=$biaya[Harga];
+		}
+		
+		$pembayaran_sql="insert into dpembayaranpermintaan (
+								notrans,kodeBrg,jum,subTotal,namabrg,harga,temphj,no_kantong)
+							values (
+								'$noform','$kod','$jumk','$bayar','$nama_bia','$harga','$harga','$nokan')
+							ON DUPLICATE KEY UPDATE
+								subTotal='$bayar',namabrg='$nama_bia',harga='$harga',temphj='$harga'";
+		$pembayaran=mysql_query($pembayaran_sql);
+		fwrite($fh,$pembayaran_sql);
+		fwrite($fh,";\n");
+	}
+	if ($transaksi1){ 
+		$noform10=explode('/',$noform);
+		$noform1=$noform10[0]."-".$noform10[1];
+		if (sizeof($noform10)<2) $noform1=$noform;
+		$noform1=$noform;
+		echo ("Pembayaran No. <b>'$_POST[noform]'</b> telah diproses !!
+		<meta HTTP-EQUIV=\"REFRESH\" CONTENT=\"1; URL=pmikasir.php?module=bayar&noform=$noform1\">");
+		$_POST['periksa']="";
+	}
+}
+
+if (isset($_POST[submit1])) {
+	$tambah=mysql_query("select * from htranspermintaan where NoForm='$_POST[no_form]'");
+	$nrow=0;
+	if ($tambah) {
+		$nrow=mysql_num_rows($tambah);
+		$tambah1=mysql_fetch_assoc($tambah);
+$rs=mysql_fetch_assoc(mysql_query("select NamaRs from rmhsakit where Kode='$tambah1[rs]'"));
+	}	
+	if ($nrow<1){
+	echo "Nomor formulir belum terdaftar, isi form permintaan dahulu";
+	?> <META http-equiv="refresh" content="2; url=pmikasir.php?module=permintaan">
+	<?} else {
+	$bayar=mysql_query("select * from dtransaksipermintaan where noForm='$_POST[no_form]' and (status='0' or status='1')");
+	$nbayar=mysql_num_rows($bayar);
+	if ($nbayar==0) {
+	echo "Sudah dibayar atau darah belum dicrossmatch";
+	?> <META http-equiv="refresh" content="2; url=pmikasir.php?module=pembayaran">
+	<?} else {
+		?>
+	<h1 class="table">FORM PEMBAYARAN</h1>
+	<table border="0" cellpadding="10">
+		<tr valign="top">
+			<td><h2 class="table">Data Pasien</h2>
+				<table class="form" cellspacing="1" cellpadding="2">
+				<tr> 
+					<td>No. Formulir</td>
+					<td class="input"><?=$tambah1[NoForm]?></td>
+				</tr>
+				<tr> 
+					<td>Nama RS</td>
+					<td class="input"><?=$rs[NamaRs]?></td>
+				</tr>
+				<tr> 
+					<td>Bagian</td>
+					<td class="input"><?=$tambah1[bagian]?></td>
+				</tr>
+				<tr> 
+					<td>Kelas</td>
+					<td class="input"><?=$tambah1[kelas]?></td>
+				</tr>
+				<tr> 
+					<td>Jenis Transaksi</td>
+					<td class="input"><?=$tambah1[Diagnosa]?></td>
+				</tr>
+				<tr> 
+					<td>Nama Dokter</td>	
+					<td class="input"><?=$tambah1[NamaDokter]?></td>
+				</tr>
+				<tr> 
+					<td>Nama Pasien</td>
+					<td class="input"><?=$tambah1[NamaOS]?></td>
+				</tr>
+				<tr> 
+					<td>Alamat</td>
+					<td class="input"><?=$tambah1[Alamat]?></td>
+				</tr>
+				</table>
+			</td>
+			<td>
+				<?$jenis=mysql_query("select * from dtranspermintaan where NoForm='$_POST[no_form]'");
+				$jenis1=mysql_fetch_assoc($jenis);?>
+				<h1 class="table">Jumlah yang diminta</h1>
+				<table class="form" cellspacing="1" cellpadding="2">
+					<tr>
+						<td>Jenis Darah</td>
+						<td class="input"><?=$jenis1[JenisDarah]?></td>
+					</tr>
+					<tr>
+						<td>Golongan Darah</td>
+						<td class="input"><?=$jenis1[GolDarah]?></td>
+					</tr>
+					<tr>
+						<td>Rhesus</td>
+						<td class="input"><?=$jenis1[Rhesus]?></td>
+					</tr>
+					<tr>
+						<td>Volume</td>
+						<td class="input"><?=$jenis1[cc]?></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<h1 class="table">LD</h1>
+			<form name=periksa method="post" action="<?=$PHP_SELF?>"> 
+			<table class="form" width="400" cellspacing="1" cellpadding="0" align="left">
+				<tr>
+					<td>No.</td>
+					<td>No Kantong</td>
+					<td>Nama Produk</td>
+					<td>Status</td>
+				</tr>
+				<?
+				//$produk=mysql_query("select * from dtransaksipermintaan where NoForm='$_POST[no_form]'"); 
+				$produk=mysql_query("select * from dtransaksipermintaan where noForm='$_POST[no_form]' and (status='0' or status='1')");
+				if ($produk) {
+					$no=0;
+					$jum=0;
+					while ($produk1=mysql_fetch_assoc($produk)) {
+						$jum=$jum+1;
+						$nokantong=$produk1[NoKantong];	$namaproduk=$produk1[MetodeCross];
+						$status=$produk1[Status]; $no++; $pilih0=""; $pilih1=""; $pilihB="";
+						switch ($status) {
+								case "0":
+									$pilih0="selected";
+									break;
+								case "1":
+									$pilih1="selected";
+									break;
+								case "B":
+									$pilihB="selected";
+										break;
+						}
+						echo "
+				<tr>
+					<td class=\"button\">$no</td>
+					<td class=\"button\"><input name=nokantong[] value='$nokantong'></td>
+					<td class=\"button\">$namaproduk</td>";
+				?>
+					<td class="input">
+						<select name='status[]'>
+							<option value='0' <?=$pilih0?>>Dibawa</option>
+							<option value='1' <?=$pilih1?>>Titip</option>
+							<option value='B' <?=$pilihB?>>Batal</option>
+						</select>
+					</td>
+				</tr>
+					<?}
+				}?>
+				<tr>
+					<td bgcolor="#FFFFFF" colspan=4>
+					<h2 class="table">Pembayaran</h2>
+					</td>
+				</tr>
+				<tr>
+					<td>Kode Biaya</td>
+					<td class="input" colspan=3>
+						<input name="kodeBia" type="text" size="15">
+						<a href="modul/daftar_bayar.php?&width=500&height=400" class="thickbox">
+						<img src="images/button_search.png" border="0" />
+						</a>
+					</td>
+				</tr>
+				<tr>
+					<td  bgcolor="#FFFFFF" colspan=4>
+						<input type="hidden" value="1" name="periksa">
+						<input type="hidden" value="<?=$no?>" name="jumkantong">
+						<input type="hidden" value="<?=$jum?>" name="jumlah">
+						<input type="hidden" value="<?=$tambah1[NoForm]?>" name="noform">
+						<input type="submit" name="submit2" value="Simpan">
+					</td>
+				</tr>
+			</table>
+			</td>
+		</tr>
+	</table>
+</form>
+<?  
+}}}
+?>

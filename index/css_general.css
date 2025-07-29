@@ -1,0 +1,259 @@
+html, body, div, p, table, td, form, img, h1, h2, h3, h4, h5, h6, input{
+    font: 11px "verdana", tahoma, serif;
+    padding: 0 auto;
+    margin: 0 auto;
+}
+body{
+    font-size: 100%;
+	text-align:left;
+    padding: 0px;
+}
+
+p, td, h1, h2, h3, h4, h5, h6{
+    line-height: 1.2em;
+    color: #07519A;
+}
+
+a, a:visited{
+    color: #07519A;
+    text-decoration: none;
+}
+
+a:active, a:hover{
+    color: #07519A;
+    text-decoration: underline;
+}
+
+ul, li{
+    margin: 0px;
+    padding: 0px;
+}
+
+h4{
+    font-weight: bold;
+    line-height: 1.4em;
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 1em;
+}
+
+h3{
+    font-size: 1.5em;
+    color: #6c7275;
+    font-weight: normal;
+    font-family: Verdana,sans-serif;
+    margin-bottom: 13px;
+}
+
+h2{
+    color: #4F6372;
+    font-family: Verdana, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    margin-top: 10px;
+}
+
+p{
+    line-height: 1.4em;
+    font-size: 1em;
+}
+
+li{
+    margin: 0 0 7px 0;
+    line-height: 127%;
+}
+
+#header{
+    width: 982px;
+	margin: 0 auto;
+    background-color: #FFFFFF;
+    padding: 0px;
+    border-left: #D9D9D9 solid 1px;
+    border-right: #D9D9D9 solid 1px;
+    border-top: #2F78AC solid 1px;
+}
+
+#header .banner{
+    height: 76px;
+	background: #FFFFFF url(images/banner_pmi.jpg) no-repeat;
+    border: #FFFFFF 1px;
+    padding: 1px;
+    margin: 1px 0 1px 0;
+}
+
+#header .link{
+    text-align: right;
+    color: #4F6372;
+    padding: 7px 8px 0 0;
+    font-size: 10px;
+}
+
+#header a{
+	color: #4F6372;
+}
+
+#header a:hover{
+    color: #4F6372;
+}
+
+#header .smalltop{
+    /*background: #FFFFFF url(images/bgsmall.gif) repeat-x; */
+    border: #FFFFFF 1px;
+
+}
+
+#header .date{
+    text-align: left;
+    color: #07519A;
+
+}
+
+
+#menu{
+    background: #FFFFFF url(images/bg_menu.gif) repeat-x;
+    background-position: 30px;
+    border-left: #83ACD0 1px solid;
+    border-right: #83ACD0 1px solid;
+    border-top: #83ACD0 1px solid;
+    border-bottom: #83ACD0 1px solid;
+    margin: 0 auto;
+    color: #336699;
+    padding: 0;
+}
+
+#menu .horizontalcssmenu  ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    height: 27px;
+}
+
+/*Top level list items*/
+#menu .horizontalcssmenu  ul li{
+    position: relative;
+    display: block;
+    float: left;
+    height: 28px;    color: #FFFFF;
+}
+
+/*Top level menu link items style*/
+#menu .horizontalcssmenu  ul li a{
+    display: block;
+    width: auto; /*Width of top level menu link items*/
+    padding-top: 6px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 7px;
+    border-right: 1px solid #4076A7;
+    text-decoration: none;
+    float: left;
+    color: #FFFFFF;
+
+}
+
+#menu .horizontalcssmenu  ul li a:hover{
+    color: #FF6600;
+}
+
+/*Sub level menu*/
+#menu .horizontalcssmenu  ul li ul{
+    left: 0;
+    top: 0;
+    border-top: 1px solid #AACCEE;
+    position: absolute;
+    display: block;
+    visibility: hidden;
+    z-index: 100;
+    margin-left: -1px;
+}
+
+/*Sub level menu list items*/
+#menu .horizontalcssmenu  ul li ul li{
+    display: inline;
+    float: none;
+}
+
+
+/* Sub level menu links style */
+#menu .horizontalcssmenu  ul li ul li a{
+    width: 150px; /*width of sub menu levels*/
+    font-weight: normal;
+    padding-top: 6px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 6px;
+    background: #EEF3FA;
+    border: 1px solid #AACCEE;
+    border-width: 0 1px 1px 1px;
+    color: #3D3D3D;
+}
+
+#menu .horizontalcssmenu  ul li a:hover{
+    background: #184F88;
+    color: #FFFFFF;
+}
+
+#menu .horizontalcssmenu  ul li ul li a:hover{
+    color: #3D3D3D;
+    background: #FEF9DB;
+}
+
+#menu .horizontalcssmenu  .arrowdiv{
+    /*position: absolute;  */
+    background: transparent url(images/arrow_down.gif) no-repeat right;
+}
+
+#menu .zeromenu{
+   border-right: 1px solid #4076A7;
+   width: 10px;
+}
+
+#menu .zeromenulong{
+   width: 60px;
+}
+
+
+/* Holly Hack for IE \*/
+* html #menu .horizontalcssmenu  ul li { float: left; height: 1%; }
+* html #menu .horizontalcssmenu  ul li a { height: 1%; }
+* html #menu .horizontalcssmenu  ul li ul { margin-top: 1px; }
+/* End */
+
+#footer{
+	width: 982px;
+	margin-bottom: 5px;
+    margin-top: 0px;
+    background: #F5F5F5;
+    border-left: #D9D9D9 1px solid;
+    border-right: #D9D9D9 1px solid;
+    border-bottom: #D9D9D9 1px solid;
+    color: #666666;
+    padding: 10px 0;
+}
+
+#footer .right{
+    text-align: right;
+    float: right;
+    width: 471px;
+}
+
+#footer .left{
+    text-align: left;
+    float: left;
+    width: 491px;
+    margin-left: 10px;
+}
+
+*html #footer{
+	width: 982px;
+	margin-bottom: 10px;
+    margin-top: 0px;
+    background: #F5F5F5;
+    border-left: #CCCCCC 1px solid;
+    border-right: #CCCCCC 1px solid;
+    border-bottom: #CCCCCC 1px solid;
+    color: #666666;
+    padding: 10px 0 0 0;
+}
+
+
+

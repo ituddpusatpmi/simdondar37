@@ -1,0 +1,37 @@
+/* ------------------
+ styling for the tables 
+   ------------------   */
+
+
+body
+{
+	line-height: 1.6em;
+}
+
+#box-table-b
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 10px;
+	align: left;
+	text-align: left;
+	border-collapse: collapse;
+	border-top: 5px solid #ed6161;
+	border-bottom: 5px solid #ed6161;
+}
+#box-table-b th
+{
+	font-size: 10px;
+	font-weight: normal;
+	background: #fcc5c5;
+	border-right: 1px solid #ed6161;
+	border-left: 1px solid #ed6161;
+	color: #000;
+}
+#box-table-b td
+{
+	background: #fcc5c5;
+	border-right: 1px solid #ed6161;
+	border-left: 1px solid #ed6161;
+	color: #669;
+}
+

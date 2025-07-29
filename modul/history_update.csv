@@ -1,0 +1,328 @@
+05-06-2025| SELEKSI : menghilangkan menu Pengambilan dari level Seleksi
+05-06-2025| DATABASE : Penambahan table koneksi NAT Panther
+05-06-2025| RELEASE : Update input Pelulusan, validasi pemeriksaan KGD (sudah dilakukan / belum), jika belum, Pelulusan produk tidak dapat dilanjutkan
+04-06-2025| DATABASE : Perbaikan Trigger NAT
+19-04-2025| KOMPONEN : UPDATE Penambahan Cetak Label Komponen (pada Pengolahan dan Cetak Label Manual).
+18-04-2025| DONOR : UPDATE Penambahan Filter (Lolos MCU & Gagal MCU) pada pencarian data Antrian Donor.
+12-04-2025| PROLIS : UPDATE label Release, penambahan pilihan ukuran label yang dipakai di UDD
+12-04-2025| BARCODE : Update label barcode, dengan penambahan identitas metode (TR,TT,TBF) di kanan atas, dan menambah opsi apakah informasi kantong (volume, Lot & ED) akan ditampilkan/tidak
+06-04-2025| IMLTD : Penambahan menu Release hasil Duplo dan penambahan table duplo_release pada database
+03-04-2025| P2DDS : Pergantian Modul Kategori Instansi dan Master Instansi
+29-03-2025| KOMPONEN : Penambahan Modul Pemenuhan Permintaan Dropping darah dari BDRS.OR.ID.
+25-03-2025| LOGISTIK : Update Barcode Kantong (Penambahan jenis kantong TB, TBF, TT)
+24-02-2025| ADMIN : Update Index
+27-02-2025| ADMIN : Update Pengiriman Laporan Online
+21-02-2025| ADMIN : Update Cek Laporan
+20-02-2025| ADMIN : Perubahan sistem Upload Stok
+20-02-2025| ADMIN : Perubahan Setting Server di Level Admin, penambahan input PORT
+20-02-2025| DATABASE : Re-struktur table db_server penambahan port akses server
+12-02-2025| KGD : Perbaikan Bug, Log Audit trail belum dimasukkan sebelumnya
+10-02-2025| KOMPONEN : Update bugs pada Proses Simpan dan Lanjutkan.
+08-02-2025| KGD : Mengganti Modul Pemeriksaan KGD dan Rekap Pemeriksaan KGD
+08-02-2025| DATABASE : Re-struktur table dkonfirmasi
+06-02-2025| KGD : Perbaikan modul Rekap Konfirmasi Golongan Darah
+06-02-2025| ADMIN : Perubahan data login
+05-02-2025| KOMPONEN : perubahan modul Komponen
+04-02-2025| PUF : Penambahan modul Distribusi PUF
+04-02-2025| ADMIN : Pergantian modul Audit Trail
+02-02-2025| FIX : Perubahan ceklogin (menghilangkan beberapa session yang tidak diperlukan dan tidak ada pada field user dan perubahan query)
+02-02-2025| PUD : Data Stok PUF
+02-02-2025| PUD : Penambahan Dashboar PUF pada level fraksionasi
+02-02-2025| DATABASE : Melakukan re-struktur table release
+02-02-2025| ABS : Penambahan Pemeriksaan Antibody Screening input Manual
+25-01-2025| NAT : Perubahan modul Input Pemeriksaan NAT Manual
+24-01-2025| PUF : Input Kantong untuk stok PuF
+24-01-2025| PUF : Icon2 dan Menu-menu PUF
+24-01-2025| INDEX : Pergantian modul stok di file index
+23-01-2025| PUF : Cek Kantong
+23-01-2025| PUF : Cek Stok
+23-01-2025| DATABASE : Pembuatan View 
+23-01-2025| DATABASE : Re-strukture table hasilnat
+23-01-2025| DATABASE : Re-strukture table dikonfirmasi
+23-01-2025| IMLTD : Penambahan modul Koneksi Alat Panther NAT
+23-01-2025| ADMIN : Pergantian modul Catatan Perbaikan SIMDONDAR (History Update oleh TIM SIM)
+23-01-2025| SYSTEM : Pemasangan cronjob Sinkron data donor dan Proses Background IMLTD untuk PMF
+23-01-2025| PMF : Modul Loop Back
+23-01-2025| PMF : Modul Upload Plasma Master File
+23-01-2025| PMF : Modul Prevalensi Jenis Donor
+23-01-2025| PMF : Modul Prevalensi
+23-01-2025| PMF : Modul Insidensi
+23-01-2025| PMF : Modul Hasil Reaktif
+23-01-2025| PMF : Modul Background Process untuk dukungan data PMF
+23-01-2025| DATABASE : Re-Struktur table imltd
+23-01-2025| PMF : Modul Penolakan Donor
+23-01-2025| PMF : Modul Audit Trial
+23-01-2025| PMF : Modul Dokumen Mutu
+23-01-2025| PMF : Modul Master Kantong
+23-01-2025| PMF : Modul antikoagulan
+23-01-2025| PMF : Modul Master Reagen IMLTD
+23-01-2025| PMF : Modul Audit Internal
+23-01-2025| PMF : Modul Inspeksi
+23-01-2025| PMF : Modul Master UDD
+23-01-2025| DATABASE : Penambahan table  Dokumen Mutu
+23-01-2025| DATABASE : penambahan table-table untuk Plasma Master File
+23-01-2025| DATABASE : Penambahan table master provinsi,kabupaten/kota, kecamatan dan kelurahan
+23-01-2025| DATABASE : Re-strukture table <b>utd</b>
+22-01-2025| LOGISTIK : Pergantian dan penambahan modul <b>Barcode</b> kantong
+22-01-2025| DATABASE : Penambahan table <b>stokkantong_mutasi</b>
+22-01-2025| DATABASE : Re-strukture table stokkantong
+21-01-2025| DATABASE : Penambahan table merk_kantong
+21-01-2025| DATABASE : Penambahan level Fraksionasi Plsama di Ganti Level
+21-01-2025| ADMIN : Pergantian Icon Level
+21-01-2025| ADMIN: Pergantian Modul User
+21-01-2025| DATABASE : Re-strukture table <b>user</b>
+21-01-2025| DATABASE : Re-strukture table <b>level</b>
+21-01-2025| =============================== PUF MODUL ====================================
+10-12-2023| Update css asset dan improve index2
+30-03-2020| Update penelusuran <i>cek kantong</i> ke kantong asal untuk produk Split dan Pooled ,,,,,,,,
+30-03-2020| <b>QA</b> Menambahkan modul serah terima kantong dari rilis ke distribusi darah ,,,,,,,,
+30-03-2020| <b>QA</b> Update Rilis data kantong menghilangkan interval pengambilan - pengolahan pada produk WB, Produk Split dan Pooled,,,,,,,
+30-03-2020| <b>QA</b> Update Rilis data donasi untuk kantong split dan pooled,,,,,,,,
+30-03-2020| <b>QC</b> Update kartu stok data bahan dan peralatan penting,,,,,,,,
+30-03-2020| <b>QC</b> Update logbook bahan dan peralatan penting,,,,,,,,
+30-03-2020| <b>QC</b> Penambahan modul rekap sampel QC,,,,,,,,
+30-03-2020| <b>QC</b> Penambahan modul penerimaan sampel QC,,,,,,,,
+30-03-2020| <b>Komponen</b> Penambahan modul serah terima darah dari komponen ke produk rilis,,,,,,,,
+30-03-2020| <b>Komponen</b> update ED produk PRC kantong Quadriple (42 hari),,,,,,,,
+30-03-2020| <b>Komponen</b> Update modul rekap dan rincian pembuatan komponen,,,,,,,,
+30-03-2020| <b>Komponen</b> update modul komponen dengan penambahan input waktu pengolahan, kecepatan pemutaran dan suhu pembekuan (plasma),,,,,,,
+30-03-2020| <b>Komponen</b> Penambahan modul komponen metode pooled,,,,,,,,
+30-03-2020| <b>Komponen</b> Penambahan modul komponen metode split ,,,,,,,,
+30-03-2020| <b>Aftap</b> Perubahan modul pengesahan menjadi modul serah terima darah dan sampel ,,,,,,,,
+30-03-2020| <b>Aftap</b> Perbaikan tgl. Aftap menjadi tanggal dan jam mulai pengambilan darah ,,,,,,,,
+30-03-2020| <b>Aftap</b>  Perbaikan tgl. Aftap menjadi tgl registrasi donor,,,,,,,,
+30-03-2020| <b>Logistik</b> Penambahan menu master kantong,,,,,,,,
+30-03-2020| <b>Logistik</b> Penambahan ED kantong terbuka pada label Kantong A,,,,,,,,
+30-03-2020| <b>Logistik</b> Penambahan opsi tipe Codabar di penambahan kantong,,,,,,,,
+28-01-2020| Update menu <b>Rekap Permintaan Barang dari Bagian</b> pada level <b>Logistik</b>, menambahkan kolom Keterangan dan fasilitas pencarian data berdasarkan Nama Bagian dan atau Keterangan untuk kemudahan penelusuran data,,,,,,,
+13-01-2020| Menon-aktifkan menu <b>Kirim BDRS</b>, <b>Kirim UDD</b> dan <b>Terima BDRS</b> yang lama dan menata ulang susunan menu <b>Distribusi</b> pada level <b>Komponen</b>,,,,,,,
+13-01-2020| Update menu dropping dengan menambahkan <b>Daftar Darah Kembali</b> dan perbaikan menu pengembalian produk dimana sebelumnya thd dropping darah yang dilakukan sebelum modul dropping diupdate, sistem tidak dapat meng-update table pengiriman ke bdrs atau udd PMI,,,,,,,
+09-01-2020| Penambahan modul <b>Dropping Produk Darah</b> ke BDRS maupun UDD (Permintaan Dropping &#10137 Droppping Darah &#10137 Pengembalian Dropping)<li>Tambahan 2 table dan view pada database `drop_h` dan `drop_d`</li><li>Restruktur table `kirimbdrs` dan `kirimudd`</li><li>Modul ini menggantikan menu : <b>Kirim BDRS, Kirim UDD, Terima BDRS</b></li>,,,,,,
+21-12-2019| Update level <b>P2DDS</b> Cetak kartu donor dengan tambahan pilihan mencetak ID Card Donor dengan model QR,,,,,,,,
+18-12-2019| Menambah log pada saat auto backup : Mulai Backup, Sukses/Gagal Backup data,,,,,,,
+18-12-2019| Menambahkan log pada saat <b>CRON</b> melakukan pemindahan file-file backup ke HDD 2,,,,,,,,
+18-12-2019| Update Disable Log pada index sebelum user login untuk mengurangi beban database,,,,,,,,
+18-12-2019| Update menu <b>RELEASE PRODUK</b> menghilangkan perhitungan lama pengolahan darah pada tab <i>Trace</i> kantong terhadap produk WB karena tidak melewati proses pengolahan darah,,,,,,,,
+17-12-2019| Update layout History Pendonor ,,,,,,,,
+17-12-2019| Update tampilan backup file : menampilkan tanggal, jam, nama file backup dan ukuran file backup,,,,,,
+16-12-2019| Update Check Kantong pada Prolis, BDRS tertulis BRSD pada bagian distribusi,,,,,,,
+16-12-2019| Update history donor dengan menampilkan hasil KGD pada masing-masing transaksi donor,,,,,,,,
+04-12-2019| Update stok darah pada level Komponen dan Release tambahan kolom Sisa Hari menjelang Kadaluwarsa,,,,,,,,
+25-11-2019| Penambahan <i>manual book</i> pada level Tata Usaha (Manual Laporan SIMDONDAR),,,,,,,,
+25-11-2019| Fix Bug : Rekap Darah Titip, nowrap column, dan pada kolom jenis, apabila jenis permintan tidak diisi maka akan muncul ""ARRAY"" pd kolom tsb",,,,,,,,
+22-11-2019| Update informasi stok, menambahkan toolstip informasi stok minimal dan maksimal khususnya pada stok release jenis darah PRC dan TC,,,,,,,
+22-11-2019| Fix Bug Laporan (Laporan Komponen Darah), pada kolom Permintaan, permintaan jenis FP (Fresh Plasma) belum masuk, sehingga total permintaan darah menjadi tidak seimbang. Permintaan jenis FP dijadikan satu dengan Permintaan Jenis LP (Liquid Plasma),,,,,
+16-11-2019| Update Check Stok pada bagian Distribusi dan Crossmatch, tambahan rincian kantong darah yang dititipkan (MK Request),,,,,,,
+08-11-2019| Update Level Logistik : tambahan filter barang pada saat rekap Baarang masuk dan barang keluar,,,,,,,,
+01-11-2019| Update menu info stok di bagian komponen dan prolis,,,,,,,,
+31-10-2019| Update design sub domain /mu ,,,,,,,,
+08-10-2019| Update Informasi Stok (Check Stok pada seluruh level) Quick Load  dan (pembuatan view pada MySQL Server),,,,,,,,
+17-09-2019| Tambahan sub domain pmi_tangguh untuk informasi stok dan mobile unit beberapa hari ke depan untuk di<i>share</i> pada media sosial,,,,,,,,
+07-08-2019| Update Interface Architect i2000,,,,,,,,
+05-07-2019| <i>UPGRADE build SIMDONDAR V3.5.1</i> Tambahan Level Tata Usaha yang memuat:<br>- Pendataan Umum, Ketenagaan, Sistem Pelayanan Darah dan Immunohematologi<br>- Laporan Bulanan dan Tahunan<br>- Pengiriman Laporan Online<br>- Statistik Pelayanan Darah,,,,,,
+22-06-2019| Perubahan Setting Server database untuk seting server Ayodonor dan server Pelaporan Online,,,,,,,,
+22-06-2019| Perubahan mod user utk akses level TATA USAHA,,,,,,,,
+15-06-2019| <i>Fix bug</i> Rekap Permintaan darah tidak ada jumlah pada tab permintaan per bagian di rumah sakit,,,,,,,,
+14-06-2019| Update Front SIMDONDAR yang menampilkan poster secara acak pada folder /poster ,,,,,,,,
+18-05-2019| Update tampilan Laporan/rincian transaksi donor pada mobile unit,,,,,,,,
+18-05-2019| Update tampilan antrian check up pendonor dan antrian pengambilan (aftap) - menambahkan nomor urut,,,,,,,,
+10-05-2019| Penambahan table untuk persiapan Laporan Online,,,,,,,,
+04-05-2019| Update <b>Edit Registrasi Pendonor</b> : memblokir perubahan tanggal kembali donor,,,,,,,,
+26-04-2019| Perubahan penampilan Rincian Transaksi Donor,,,,,,,,
+19-03-2019| Penambahan merk kantong CompoFlex ,,,,,,,,
+19-03-2019| Update Rincian Pemeriksaan IMLTD, penambahan kolom Jenis Donor, Donor Baru/Lama dan Umur,,,,,,
+15-03-2019| <i>Fix Bug</i> pada Check Kantong level QA (release) & Level Pimpinan (<i>Bug</i> : Data Serah terima yang ditampilkan tidak sesuai) --> <i>Fix</i> perbaikan script INNER JOIN ON KEY,,,,,,,,
+17-01-2019| Update menu <b>Evaluasi Kegiatan Mobile Unit</b> pada level Mobile Unit-Rekap untuk ekspor data ke XLS,,,,,,,,
+17-01-2019| Update aplikasi timbangan Prolis untuk mencegah <i>database disconnect</i> saat aplikasi <i>idle</i> dalam waktu yang lama,,,,,,,,
+31-12-2018| Tambahan menu pada level <b>IMLTD</b>: <br>1. Rincian Pemeriksaan Uji Saring IMLTD<br>2. Rekap Pemeriksaan Uji Saring IMLTD,,,,,,,,
+31-12-2018| Update menu pada level <b><i>Crossmatch</b></i>:<br>1.Perbaikan Tampilan Rincian Pemeriksaan Uji Silang Serasi<br>2. Rekap Pemeriksaan Uji Silang Serasi,,,,,,,,
+31-12-2018| Update menu pada level <b>Pasien Service</b>:<br>1. Perbaikan Rincian Permintaan Darah<br>2.Perbaikan Tampilan Rincian Pengeluaran Darah,,,,,,,,
+31-12-2018| Tambahan menu pada level <b>Pasien Service</b>:<br>1. Rekap Permintaan Darah<br>2. Rekap Pengeluaran Darah,,,,,,,,
+31-12-2018| Tambahan menu pada level <b>Komponen</b><br>1. Rekap Dropping & Pengembalian Darah ke & dari  BDRS<br>2. Rekap Dropping Darah ke UDD PMI,,,,,,,,
+16-12-2018| Penambahan menu <b>Rekap Konfirmasi Golongan Darah</b> dan <b>Penggunaan Reagensia Anti-A,B dan D</b> pada Level Konfirmasi ,,,,,,,
+11-12-2018| Penambahan menu <b>Evaluasi Kegiatan Mobile Unit</b> pada level Mobile Unit-Rekap,,,,,,,,
+03-12-2018| Update modul jadwal MU, penambahan field <b>koordinator</b> pada setiap kegiatan,,,,,,,
+27-11-2018| Penambahan modul <b>cetak barcode kantong</b> untuk label barcode 1 baris,,,,,,,,
+19-11-2018| Update <i>script</i> backup, penambahan informasi <i>file size</i> hasil backup ke <i>audit trail</i> untuk mengetahui trend semakin besar ukuran file backup (dalam keadaan normal, semakin hari akan bertambah besar file backup),,,,,,
+19-11-2018| Update menu check kantong pada level QA, Tgl dan Waktu Pengambilan disisi kiri diubah menjadi Tgl dan Waktu Registrasi sedangkan Tgl dan Waktu Pengambilan ditambahkan di sisi kanan pada sub bagian Pengambilan Darah,,,,,,,
+19-11-2018| Update menu logout, dimana sebelumnya masih mempergunakan <b>SIMUDDA</b> diganti menjadi <b>SIMDONDAR</b>,,,,,,,
+23-10-2018| Update modul <b>Release</b> untuk mengupdate volume di table <i>stokkantong</i> dimana sebelumnya belum melakukan update pada volume produk di table <i>stokkantong</i> sesuai dengan hasil konversi penghitungan dari berat produk yang dilakukan pengukuran menggunakan timbangan digital.,,,,,,,,
+23-10-2018| Perubahan menu Check kantong pada level Pimpinan dan Konseling seperti pada level QA (Release Produk), tetapi menampilkan data pendonor,,,,,,,
+23-10-2018| Perubahan menu Check Kantong pada level QA (Release Produk) menampilkan seluruh informasi kantong yang terkait : Data Umum, Data Distribusi/Pemusnahan, Data Logistik, Data Pengambilan tdk termasuk nama donor, Data Pengujian, Data Pengolahan, DataPengesahan, termasuk Audit Trail Kantong,
+23-10-2018| Perubahan modul Upload dan Download, menambah report download dan upload. Menambah menu report pada level Rekap Mobile Unit,,,,,,,
+23-10-2018| Update modul login pada pergantian password, password minimal 8 karakter,,,,,,,
+15-10-2018| Update Bug modul <b>RELEASE</b> <br>1. Sebelumnya pada saat history IMLTD terdapat hasil reaktif, modul belum otomatis menonaktifkan check list. <br>2. Lama Pengambilan tidak muncul pada saat kantong satelite dilakukan release,,,,,,,
+25-09-2018| Update modul <b>KOMPONEN</b> Menu Check Stok, dengan tambahan rincian stok darah sehat,,,,,,,
+12-09-2018| Update modul <b>KOMPONEN</b> tambahan cetak pada list pengolahan produk,,,,,,,,
+12-09-2018| Update modul <b>QC</b> tambahan cetak list produk yang sudah dilakukan pelulusan produk,,,,,,,,
+24-08-2018| update modul <b>PENGAMBILAN</b> pada baris <i>audit trail</i> sebelumnya status pengambilan sesuai dengan field yang disimpan (0,1,2), diubah pada insert audit trail menjadi : Berhasil,Batal,Gagal,,,
+24-08-2018| Update modul <b>IMLTD</b> menu <b>Check Kantong</b>  perbaikan bug pada informasi LOT dan ED REAGEN, dimana terdapat 2 data berbeda yang tersimpan pada table elisa pada field LOT Reagen<br>1. Kode Reagen<br>2.Lot Reagen.<br>Menambah pencabangan terhadap hal tersebut sehingga informasi LOT dan ED Reagen dapat ditampilkan,,,,,,,
+24-08-2018| Update modul <b>RELEASE</b> perbaikan bug pada tab Pemeriksaan IMLLTD dan Jejak Pemeriksaan IMLTD dimana terhadap data hasil elisa yang mencantumkan nomor lot pada table elisa semula tidak dapat ditampilkan Lot Reagen pada Release. Mode update data pada modul elisa ada 2 metode penyimpanan lot yaitu dengan menyimpan LOT dan menyimpan KODE REAGEN, sehingga sebelumnya apabila berbeda, informasi yang ditampilkan akan kosong,,,,,,
+17-08-2018| Update modul <b>RELEASE</b> tambahan pilihan cetak label release produk yang terdiri dari 2 jenis ukuran:<br> - Label besar (95mm x 50mm)<br> - Label kecil (75mm x 35mm),,,,,,,,
+20-07-2018| Update modul <b>RELEASE</b> parameter kantong 450ml dan release darah WB (dengan variabel tambahan volume antikoagulan),,,,,,,,
+06-06-2018| Upgrade <b>Pengesahan Kantong</b> pada level <b>KOMPONEN</b> menjadi <b>Serah Terima Kantong dan Sample Aftap</b> ke Bagian Komponen dan Uji Saring,,,,,,,,
+20-05-2018| Tambahan Rekap Release Produk,,,,,,,,
+18-05-2018| Update Rekap Pembuatan Komponen pada level <b>KOMPONEN</b> ,,,,,,,,
+18-05-2018| Update Rekap Pemusnahan Komponen pada level <b>KOMPONEN</b> ,,,,,,,,
+28-03-2018| Tambahan cetak label pada level QA untuk mencetak label produk yang sudah diluluskan melalui <b>Produk Release</b> ,,,,,,,,
+24-03-2018| Tambahan Modul <b>RELEASE PRODUK</b> (Trial) pada level QA,,,,,,,,
+23-03-2018| Tambahan Modul pada level QA (<b>Release Produk</b>) : Berat Jenis Komponen untuk mengedit Berat Jenis Komponen dan Spesifikasi Komponen Darah lainnya untuk Release Produk,,,,,,,,
+23-03-2018| Tambahan Modul pada level QA (<b>Release Produk</b>) : Berat Kantong kosong , untuk data berat kantong kosong keperluan Release Produk,,,,,,,
+23-03-2018| Tambahan Modul pada level QA (<b>Release Produk</b>) : List Penimbangan Produk Darah dari aplikasi Timbangan Produk Darah,,,,,,,,
+23-03-2018| Tambahan <b>Aplikasi Timbangan Produk</b> terkoneksi ke SIMDONDAR untuk Moodul <b>Release Produk</b>,,,,,,,,
+19-03-2018| Update <i>news</i> SIMDONDAR --khususnya <i>news</i> kegiatan  kegiatan mobile unit,,,,,,,,
+22-02-2018| Tamhahan menu <b>Perubahan Status Kantong</b> pada level IMLTD. Status kantong hanya bisa diubah apabila darah belum keluar. Status Kantong hanya bisa diubah ke SEHAT atau CEKAL,,,,,,,,
+20-02-2018| Tambahan menu Laporan Kegiatan Mobile Unit (sesuai Permenkes) pada level Mobile Unit - Rekap Transaksi,,,,,,,,
+06-02-2018| Tambahan modul interface untuk pemeriksaan IMLTD menggunakan instrument <b>Roche Cobas 6000</b>,,,,,,,,
+02-02-2018| Re-Build Interface <b>Abbott Architect <i>i</i>2000SR</b> (interface) <i>auto detect</i> apabila pemeriksaan sample dilakukan dengan system BATCH,,,,,,,,
+05-01-2018| Update Rincian Dropping darah ke BDRS, tambahan Rekap Dropping dan Kembali di bagian bawah Rincian,,,,,,,
+01-01-2018| Penambahan <b>Manual SIMDONDAR</b> pada setiap Level  ,,,,,,,,
+31-12-2017| Perubahan urutan letak informasi stok darah dari <b>(A,B,AB,O)</b> menjadi <b>(A,B,O,AB)</b>,,
+25-12-2017| Penyisipan script audit trail setiap script yang berhubungan dengan akses data (insert, update, delete) dan menambah menu Audit Trail pada level Admin dan Pimpinan,,,,,,
+25-12-2017| <b>Restruktur menu</b> tiap-tiap level sesuai Pertemuan TIM SIMDONDAR PMI di Banjarmasin tanggal 4-8 Desember 2017,,,,,,,,
+07-08-2017| Penambahan modul pada level IMLTD untuk koneksi dengan Alat <b>Abbott Architect <i>i</i>2000SR</b>, sekaligus restrukturirasi table elisa dan dan rapid pada index agar sample yang sama diperiksa ulang dapat ter-<i>insert</i> Modul ini berhubungan dengan <b>SIMDONDAR-Abbott Architect <i>i</i>2000SR Interface</b>,,,,,,,
+01-08-2017| Edit Tata letak cetakan Label komponen dan menghilangkan identitas pasien (Khusus label komponen darah),,,,,,,,
+18-07-2017| Edit Front SIMDONDAR : Penambahan grafik perolehan darah untuk tahun sebelum tahun saat ini,,,,,,,,
+10-07-2017| FIX modul Konfirmasi Golongan darah (<i>INSERT ONLY</i>), dimana sebelumnya apabila KGD thd kantong yang sudah pernah dilakukan, maka data KGD sebelumnya di-UPDATE, sehingga tidak dapat melakukan pelacakan pemeriksaan KGD berulang. Dan perbaikan tampilan Rekap Pemeriksaan Konfirmasi Golongan Darah.,,,,,
+28-06-2017| Tambahan modul Ucapan Ultah pada staf di front,,,,,,,,
+25-04-2017| Finishing cron upload ke <b>Data Nasional</b> Data Pendonor, Data Donasi, Data Kantong, Data TTI, Data Konfirmasi Golongan Darah, Data Pengolahan Komponen, Data QA, Data User UTD, Data Dokter UTD
+19-04-2017| Update content pada kolom Jenis Permintaan pada menu Rekap Transaksi Permintaan Darah Pasien.,,,,,,,,
+18-04-2017| Perbaikan Bug pada input permintaan pasien dengan ketidaksesuaian pada field UMUR yang belum terdapat pada tabel pasien.,,,,,,,,
+14-04-2017| Penambahan modul cron untuk upload ke <b>Data Nasional</b> : Pendonor, Dokter UTD, User,,,,,,
+14-04-2017| Update <b>Edit Registrasi/Data Pendonor</b>, modul <b>user</b> dan modul <b>dokter</b> menambahkan field untuk keperluan sinkronisasi Data Nasional,,,,,,,
+13-04-2017| Update file Encrypt <b>Grafik Pendonor</b> pada tampilan depan agar jalan pada Ubuntu Versi 12.04 LTS,,,,,,,,
+13-04-2017| Update Modul IMLTD Procleix Ultrio NAT, konfirmasi pemeriksaan mencekal pendonor dengan Cekal NAT apabila hasil NAT reactive,,,,,,,
+13-04-2017| Update Pengesahan kantong aftap : tambahan informasi status dan keberadaan apabila kantong tidak berhasil disahkan, dan penambahan menu Pengesahan di Level Komponen, utk validasi petugas komponen pada saat penerimaan kantong dari aftap,,,,,,
+12-04-2017| Update Tampilan Nama Bagian & Nama Barang pada Form-Form input Orber, Pembelian, Barang Bantuan, Jual Barang, Kirim ke Bagian, dan Form Permintaan barang di bagian Logistik.,,,
+12-04-2017| Update penambahan Fungsi Aktif/NonAktif pada submenu Master Barang di bagian Logistik.,,,,,,,,
+08-04-2017| Update penambahan Radio Button untuk pencarian data pendonor Apheresis, yang di set default ""Tidak"".",,,,,,,,
+08-04-2017| update file Encrypt pada file (background_*.php),,,,,,,,
+04-04-2017| Perbaikan css front (top margin peta/video 5px),,,,,,,,
+04-04-2017| Perbaikan tampilan Agenda UTD (menampilkan isi agenda yang sebelumnya tidak ada) --> Agenda ini akan ditampilkan pada front SIMDONDAR sesuai dengan tanggal mulai sampai tangal berakhir.,,,,,,,,
+04-04-2017| - Perbaikan BUG pada Pencarian Data Pendonor, perbaikan terdapat pada apabila data pendonor memiliki salah satu data (ex : Wilayah, Alamat, Tgl Lahir, dls) Kosong/Tidak Terisi, maka pendonor tersebut tidak akan muncul pada pencarian.,,,
+04-04-2017| - Perbaikan BUG pada Input Permintaan Darah Pasien.,,,,,,,,
+18-03-2017| - Update modul backup (dari folder gerai ke folder backup_data) serta menampilkan semua file backup yang ada <br> - Menambahkan modul untuk update otomatis sesuai jadwal,,,,,,,,
+24-02-2017| Update modul pada level IMLTD untuk koneksi Instrument Autoanalyzer <b>Diasorin Liaison<sup>&reg</sup>XL</b>,,,,,,,,
+10-02-2017| Udpate Front (Header dan footer),,,,,,,,
+10-02-2017| Update Register Donor (Penambahan atau Edit Data) dengan otomatis merubah format penulisan nama sesuai standar nasional,,,,,,,,
+10-02-2017| Fitur untuk melakukan penambahan, perubahan, serta penghapusan data ganda baik Medis, Kelas, hingga Diagnosa oleh petugas Kasir, yang belum terdapat pada SIMDONDAR.,,,
+10-02-2017| Update - Level Logistik semua transaksi merujuk pada Nomor Anggaran Biaya,,,,,,,,
+10-02-2017| BUG level aftap - setelah simpan pada transaksi donor mobile unit, menuju ke search pendonor yang lama,,,,,,,
+10-02-2017| Update modul Medical Check up - Setelah pencarian data donor, langsung menuju ke medical check up,,,,,,,
+10-02-2017| Update penambahan field Nomor Rekam Medis Pasien pada formulir permintaan darah,,,,,,,,
+10-02-2017| Perbaikan BUG pengeluaran darah,,,,,,,,
+10-02-2017| Update penambahan donor cekal per instansi,,,,,,,,
+10-02-2017| Update Logistik fitur barang sudah tidak aktif,,,,,,,,
+10-02-2017| UPDATE penambahan jenis barang pada logistik,,,,,,,,
+10-02-2017| Perbaikan BUG pencaharian donor dengan perubahan fungsi SQL mengabaikan NULL pada field data pendonor,,,,,,,,
+10-02-2017| Perbaikan BUG level logistik input barang bantuan yang belum menmperbaharui stok barang,,,,,,,,
+10-02-2017| Update logistik penambahan fitur manajemen paket donor ,,,,,,,,
+03-12-2016| Update Menu baru Input, Baca, Update, serta Hapus data <b>Diagnosa Klinis</b> pada Level <b>Pasien Service</b>.,,,,,
+03-12-2016| Update Menu baru Input, Baca, Update, serta Hapus data <b>Medis (Bagian)</b> pada Level <b>Pasien Service</b>.,,,,,
+02-12-2016| Perbaikan pada menu Edit Barang pada Level Logistik : </br>1. Tidak men-<b>Auto POST</b> jenis Barang yang diEdit reagen atau bukan reagen.</br>2. Tidak ada jenis Barang ""<b>Service Donor</b>"" dalam fitur Edit Barang.",,,,,,,,
+02-12-2016| Perbaikan Cetak Kwitansi pada Level Pasien Service, setelah close kwitansi maka didirect pada level yang aktif.,,,,,,,
+02-12-2016| Perbaikan fitur Logistik, dimana ketika melakukan input data transaksi Order pembelian yang muncul pada field Supplier dan Barang harusnya Nama Supplier dan Nama Barang.,,,,,,,
+01-12-2016| Update struktur tabel kwitansi yang membuat cetak kwitansi tidak muncul pada waktu cetak kwitansi.,,,,,,,,
+30-11-2016| Perbaikan Fitur Tambah Kategori, yang sebelumnya tidak bisa berfungsi secara maximal pada level P2D2S.,,,,,,,
+30-11-2016| Perbaikan Menu BDRS, tambah, edit, serta Hapus data BDRS yang awalnya tidak bisa dilakukan pada level Komponen.,,,,,
+29-11-2016| Update nama UTD yang tidak memiliki ID/Kode Wilayah, yang menyebabkan error pada fitur Cek Status Darah.,,,,,,,
+28-11-2016| Perbaikan modul sms inbox, yang awalnya dari level p2d2s tidak bisa melakukan balas sms.,,,,,,,
+28-11-2016| Perbaikan fitur SMS Gateway, seperti : <br>INFO STOK<br>INFO STOK goldarah</br> yang error apabila mendapat sms dari luar.<br>Yakni dengan cara Update data tabel produk field sosA,sosB,sosO,serta sosAB, yang awalnya berisikan NULL pada semua data.,,,
+27-11-2016| Update Struktur database dari data SIMUDDA ke Struktur data SIMDONDAR.<br>Migrasi Data dari SIMUDDA ke SIMDONDAR.,,,,,,,,
+08-08-2016| Update Update penggabungan fitur setelah pertemuan timsim, P2D2S,search Pendonor,Pasien service,QC,QA,,,
+06-06-2016| Update Proses ubah/edit pembayaran, bug hilang kan - update gol_darah menu komponen.,,,,,,,
+23-04-2016| Update Donor kembali 60 hari, menu input untuk crossmatch dengan hasil INCOMPATIBLE TIDAK BOLEH KELUAR,,,,,,,
+01-11-2015| Update pada menu P2D2S untuk database detailinstansi kegiatan dan pada proses download upload untuk menghitung tgl donor instansi berikut nya ,,,,,,,,
+28-10-2015| Update pada rekap pencetakan barcode, pindahan darah, dan rekap kantong belum terpakai,,,,,,
+10-10-2015| Update pada rekap darah keluar, dipisah antara rincian dan rekap, perubahan database dtransaksipermintaan,,,,,,
+01-10-2015| Update menurekap darah keluar edit database crossmatch oenambahan produk gol dan rh darah, update menu konfirmasi goldar metode cukup kklik sekali, menu pembuatan komponen yang tdk usah input tgl kadaluwarsa,,,,,,
+14-09-2015| Update pada rekap darah buang dan cetak formulir donor untuk shift biar langsung masuk ke transaksi,,,,,,,,
+09-09-2015| Update menu input kantong tambah tgl exp.ktg dan nolot, logistik, pada input barang dan rekap barang keluar,rekap transaksi donor harian,pembuatan dan rekap pembuatan komponen, cet stok dipisah dengan cek kantong,cek stok di export ke excel,input konfirmasi goldar,
+27-08-2015| Update form nota, dan jenis layanan pasien,,,,,,,
+12-08-2015| Update menu input untuk history data donor lama sebelum ada simudda (data manual) dan pemeriksaan imltd reaktif otomatis masuk darah buang, serta menu pemusnahan darah tidak ada lagi alasan reaktif,,,,,,,
+10-08-2015| Update pada history donor, untuk bisa di eksport ke excel,,,,,,,
+07-08-2015| Update Cetak formulir donor bisa dilakukan disaat searching data donor (level aftap donorservice mobileunit p2d2s), dan jka dicetak, maka akan langsung masuk antrian donor,,,,,,
+23-05-2015| Update SMS 10 digit nomor pada SMS broadcast, menampilkan diagnosa pada cetak cross,,,,,,,
+21-05-2015| Update SMS untuk donor apheresis dan penambahan kata BPK/IBU/SDR/SDRI dan menu cetak formulir donor, untuk bisa dipakai di Mobil Unit,,,,,,,
+30-04-2015| Update fixed Bug pada data donor yang tgl kembali dan tanggal entry berupa 1970..,,,,,,,,
+29-04-2015| Update Rekap pendonor eksport le excel level administrator,,,,,,,,
+15-04-2015| Update LTTD III,,,,,,,,
+27-03-2015| Update rekap pengiriman ke BDRS dan UTD lain,,,,,,,,
+12-03-2015| Update rekap IMLTD ditambah umur,jenis donor, dan jenis kelamin,,,,,,
+25-02-2015| Update form rekap hasil imltd.ditambah jenis kantong,,,,,,,,
+22-01-2015| Update di level konseling untuk bisa kirim surat konfirmasi donor reaktif, dan rekap darah keluar,,,,,,,
+20-01-2015| Update Bug dimenu konfirmasi goldarah, untuk bisa ubah data pendonor dan transaksi sesuai dengan gol darah dan rhesus darah,,,,,,,
+12-01-2014| Update upload file hasil export DAVINCI QUARTO,,,,,,,,
+29-12-2014| Update Cetak  hasil IMLTD untuk melengkapi data pendonor,,,,,,,,
+24-11-2014| Update upload file hasil export ATIMEX3000,,,,,,,,
+22-11-2014| Update Disable ENTER pada proses Input nilai hasil IMLTD,,,,,,,,
+21-11-2014| Update Bug NoTrans nilai kosong di table transaksi,,,,,,,,
+18-11-2014| Update bug upload MU tang gagal, untuk bisa diulang kembali,,,,,,,
+30-09-2014| Update Penggolongan menu di masing masing bagian,,,,,,,,
+17-09-2014| Update check stok dan hasil print barcode,,,,,,,,
+15-09-2014| Update penyesuaian menu konfirmasi GOLDAR,,,,,,,,
+04-09-2014| Update pembuatan menu rekap ddarah keluar untuk data lama (data pasien jadi saatu dg data permintaan),,,,,,,,
+03-09-2014| Fixing bug menu crossmatch dan upload data MU serta rekap darah keluar,,,,,,,,
+02-09-2014| Update menu edit permintaan darah,,,,,,,,
+01-09-2014| Update menu rekap darah keluar dan export excel nya,,,,,,,,
+26-08-2014| Update bug menu Permintaan ulang dari datapasien,Crossmatch jmlh cross = jml permintaan,komponen metode pembuatan dan pemisahan<br>dan rekap pembuatan komponen dan crossmatch yang ditambha rekap dibawah rincian,,,,,,
+25-08-2014| Update bug menu crossmatch,konfirmasi goldarah,cetak label crossmatch, <br> Shift di menu cross,permintaan,transaksi donor yang mengaktifkan tabel shift,,,
+22-08-2014| Update menu rekap permintaan darah berdasarkan jenis layanan,RS,SHIFT,,,,,,
+21-08-2014| Update menu crossmatch tambahan tabel fase1, fase2, fase3, ,,,,,
+13-08-2014| Update transaksi dan pengambilan donor, dengan menambah field donorke di table transaksi , dan menu upload data MU untuk field terbaru di tabel transaksi,,,,,,
+12-08-2014| Update file upload MU ke SERVER untuk ambil field umur, jk, pekerjaan, gol. darah, rhesus dari hasil mu di table transaksi,,,,
+11-08-2014| Update menu upload ulang untuk upload ulang hasil MU jika diperlukan upload ulang,,,,,,,,
+10-08-2014| Update rekap transaksi donor harian dalam bentuk rekap, dan menambahkan jenis kantong pada rekap transaksi nya pada rekap transaksi donor harian yang lama, serta menu rekap apheresis dan rekap BUS, pada menu rekap di level aftap,,,,,
+08-08-2014| Update menu pengambilan darah, degnan aktifkan umur,goldarah,rhesus,jk,pekerjaan,jeniskantong di table transaksi,,
+05-08-2014| Update menu rekap permintaan darah yang dipisah antara baru dan lama, menyesuaikan tanggal update terbaru dari masing masing server,,,,,,,
+03-08-2014| Update menu permintaan darah dan bisa di edit dan pembuatan table pasien dan tabel permintaan baru, serta copy table permintaan lama, yang dipisah menu rekapnya.,,,,,,
+01-08-2014| Update menu login dengan memakai kode capcha dan menu edit pengambilan dari berhasil ke gagal atau sebaliknya,,,,,,,,
+17-07-2014| Update menu input permintaan darah, padakolom rumah sakit, tidak memilih tapi dibuat dengan cara <br>ketik nama RS jika belum ada nama, maka tambah pada master rumah sakit,,,,,
+22-06-2014| Tambah|Rekap Pengambilan Darah sebagai pengganti Rekap Transaksi harian pada saat perpindahan level ke Laboratorium atau Aftap,,,,,,,,
+05-06-2014| Update pengesahan kantong yang masuk untuk cetak rekap bukti srah terima sampel dan kantong darah dari aftap,ALTER tabel pengesahan untuk diaktifkan <br> Edit di NOTA pembayaran untuk ada penjelasan dibagian bawah nota,,,,,,,
+31-05-2014| Update menu pembuatan Komponen untuk produk TC kembali ke kantong B dan hanya bisa muncul pada kantong bukan Double, dan update pada rekap pembuatan komponen <b> dan database dpengolahan,,,,,,,
+26-05-2014| Update cek file upload MU untuk double upload, karna yang lama membuat nama produk dan status darah berubah,<br> jika upload dilakukan lebih dari sekali dan menu cek pulsa untuk provider 3, <br><b> MOHON LAPTOP MU DI UPDATE SEMUA BOLEH KE SERVER UDDP ATAU SERVER LOCAL BARU DOWNLOAD DATA.,,,,,
+21-05-2014|Update menu cek pulsa sesuai dengan masing-masing operator,,,,,,,,
+14-05-2014|Update rekap Aftap berhasil,batal,gagal DG dan MU, update file transaksi donor, medical checkup, dan pengambilan,,,
+25-04-2014|Update cetak kwitansi,,,,,,,,
+14-04-2014|Tambah|Modul kendaraan dan transaksi pembiayaan kendaraan pada level mobile unit,,,,,,,,
+11-04-2014|update cetak barcode kantong apheresis 2 KIT dan proses pengambilan apheresis untuk 2 produk dalam satu transaksi, serta update laporan rekap untuk lebih lengkap dan menyesuaikan dengan datetime, dan penambahan database kirimbdrs,kirimudd,terimaudd,,,,
+10-04-2014|update timezone GMT untuk menyesuaikan dengan waktu WIB,WIT,WITA dan update file-file php dari ""Y-m-d"" menjadi ""Y-m-d H:i:s""",,,,,,,,
+08-04-2014|update pada ukuran kertas label komponen,,,,,,,,
+27-03-2014|update pada input cetak formulir permintaan darah untuk bisa sesuai dengan current datetime,<b> diikuti dengan perubahan tabel nya, penambahan field ""petugas""",,,,,,,,
+27-03-2014|update ukuran cetak hasil CROSSMATCH untuk dibuat lebih jelas dan sesuai dengan kertas label,<b> serta merapikan informasi di hasil cetak label,,,,,,,
+26-03-2014|update rekap laporan reaktif ELISA dan RAPID erta NONREAKTIF untuk bisa di rekap berdasarkan tanggal, serta rekap permintaan darah,,,,,,,
+25-03-2014|update menu trnsaksi donor, penambahan suggest kelurahan dan kecamatan, sehingga tabel kelurahan dan kecamatan bisa difungsikan, dan untuk mempercepat input,,,,,
+30-01-2014|Penambahan modul <b>Tambah Kantong</b> pada level Logistik agar bisa dibaca pada Autoanalyzer Eti-Max 3000, dan adanya pemilihan tipe barcode yang disesuaikan dengan masing-masing UDD. ,,,,,,,
+01-01-2014|Penambahan menu Update pekerjaan data donor sesuai dengan SIMMUDDA dimenu admin utility,,,,,,,,
+31-12-2013|Update Grafik Balok,,,,,,,,
+28-12-2013|Update Grafik Pie Donor dan Donasi dan LTTD III,,,,,,,,
+13-12-2013|Update upload data stok darah ke SERVER PUSAT,,,,,,,,
+05-12-2013|Update rekap terima darah dari UDD lain,,,,,,,,
+04-12-2013|update menu laporan LTTD I dan II,,,,,,,,
+04-12-2013|Update menu rekap terima darah dari UTD lain.,,,,,,,,
+05-11-2013|Penambahan modul Upload data ke server PMI Pusat dan Penambahan modul cetak hasil uji saring IMLTD.,,,,,,,,
+02-11-2013|Transaksi MU memilih Mobil Bus atau Mobil MU, serta rekapan harian disertai dengan rekapan BUS MU,,,,,,,
+22-08-2013|Tambahan Modul Import Hasil Diasorin Eti-Max 3000,,,,,,,,
+21-08-2013|Perbaikan modul update, agar file js dan css ikut terupdate ke cabang,,,,,,,
+17-08-2013|Perbaikan modul backup dan restore data<br>Perubahan nama file backup dari ""<b>Backup-yyyy-mm-dd.zip</b>"" menjadi ""<b>PMI_Backup-yyyy-mm-dd</b>"" serta penambahan parameter pada mysqldump sehingga procedure yang ada di database ikut dalam file backup.<br>Penambahan modul backup dan restore database SMS dengan nama file ""<b>SMS_Backup-yyyy-mm-dd.zip</b>""<br>Penambahan modul history perbaikan dan pengembangan SIMUDDA dari <b>TIM Source</b><br>Perbaikan modul Update agar file csv untuk menampung history ini ikut terupdate ke UDD yang mengapdate SIMUDDA",,,,,,,,
+14-08-2013|Fix modul check stok, dimana sebelumnya apabila kantong satelit yang di masukkan maka data pendonor tidak akan ditampilkan,,,,,,,
+10-08-2013|Fix modul pengesahan kantong, dimana kantong utama otomatis menjadi WB,,,,,,,
+13-08-2013|Fix modul check stok, dimana sebelumnya apabila kantong satelit di check maka data IMLTD tidak ditampilkan,,,,,,,
+10-08-2013|Fix modul input Elisa dan Komponen terhadap status kantong pada kantong satelite,,,,,,,,
+02-08-2013|Update modul pengambilan darah dengan menambahkan default produk menjadi WB pada kantong utama,,,,,,,,
+24-07-2013|Update query stok kantong,,,,,,,,
+24-07-2013|Update modul Rincian Kwitansi pembayaran,,,,,,,,
+24-07-2013|Penambahan modul input kantong Apheresis,,,,,,,,
+22-07-2013|Update rekap transaksi harian xls, cetak kartu donor di level MU, Upload & Download MU,,,,,,
+21-07-2013|Fix modul penerimaan darah dari UDD lain,,,,,,,,
+17-07-2013|Update modul Apheresis dan Rekap transaksi donor,,,,,,,,
+16-07-2013|Index dengan marquee tulisan UDD di bagian bawah layar,,,,,,,,
+15-07-2013|Penambahan modul Apheresis,,,,,,,,
+07-07-2013|Koreksi stok barang, apabila yang ditambahkan adalah reagen IMLTD maka otomatis akan menambahkan data reagen dan proses pengeluarannya tetap melalui ""pindahkan reagen""",,,,,,,,
+26-06-2013|Pertemuan TIM SSOURCE di UDD Pusat<br>Kompilasi menu dan modul. Perombakan SMS Getway, Perombakan total menu Logistik, stok kantong, tampilan monitor dll.,,,,,
+14-06-2013|- Searching Pendonor dengan tambahan Gol, Alamat, Tgl Lahir<br>- Cetak ID Barcode Pendonor dengan tambahan Nama, Gol, Tgl Lahir,,,,
+05-06-2013|Update pemusnahan kantong darah, penggantian query pemusnahan kantong kadaluarsa dan ditambahkan aksi untuk memusnahkan semua kantong kadaluarsa.,,,,,,,
+30-11-2012|Penambahan modul pengambilan plebotomi pasien,,,,,,,,
+01-11-2012|Penggantian total modul piagam,,,,,,,,
+12-09-2012|Pertemuan di UDD Pusat<br>Kompilasi modul, update pengesahan kantong, Master barang, entry barang, konfirmasi golongan darah (sebelumnya apabila rhesus berubah hasil tetap cocok),Rekap transaksi harian

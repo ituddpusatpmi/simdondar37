@@ -1,0 +1,70 @@
+<link type="text/css" href="css/blitzer/jquery-ui-1.8.9.custom.css" rel="stylesheet" />
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.9.custom.min.js"></script>
+<script type="text/javascript" src="js/tgl_lahir_minta.js"></script>
+<script type="text/javascript" src="js/tgl_rekap.js"></script>
+<link type="text/css" href="css/blitzer/suwena.css" rel="stylesheet" />
+
+
+<?php
+include('clogin.php');
+include('config/db_connect.php');
+$namauser   =$_SESSION[namauser];
+$namabagian =$_SESSION[namabagian];
+$levelusr   =$_SESSION[leveluser];  
+
+$today=date("Y-m-d");
+
+  $notrans	= $_GET['id'];
+  $utd		= mysql_fetch_assoc(mysql_query("select * from utd where aktif=1"));
+  $petugas	= mysql_fetch_assoc(mysql_query("select * from petugasmu where NoTrans='$notrans'"));
+  $kegiatan	= mysql_fetch_assoc(mysql_query("select * from kegiatan where NoTrans='$notrans'"));
+  $donor	= mysql_fetch_assoc(mysql_query("select * from pendonor where Kode='$kodependonor'"));
+  
+<?
+$ptgs=mysql_query("SELECT * from petugasmu where NoTrans='$_GET[id]'");
+?>
+<table border=1 cellpadding=5 cellspacing=1 style="border-collapse:collapse" width="600px">
+	<tr class="ui-widget-header">
+     	<th >No.</th>
+	<th >Nama Petugas</th>
+	<th >Jabatan</th>
+	<th >Shift</th>
+	<th >Keterangan</th>
+	<!--th >Edit</th-->
+	</tr>
+	<?
+	while($a_ptgs=mysql_fetch_assoc($ptgs)){
+	$no++;
+
+	echo "<tr>";
+	echo "<td >".$no."</td>".
+	    "<td>".$a_ptgs[nama]."</td>".
+	    "<td>".$a_ptgs[jabatan]."</td>".
+            "<td>".$a_ptgs[shift]."</td>".
+            "<td>".$a_dr[ket]."</td>";
+	/*echo "<td>
+		<a href=\"".$PHP_SELF."?module=data_jadwal_mobile&aksi=hapus&id=".$a_dr[NoTrans]."\">
+       		<li class=\"ui-state-default ui-corner-all\" title=\"Hapus\">
+       		<span class=\"ui-icon ui-icon-closethick\"></span></li>
+       		</a>";
+	echo "<td>";*/		
+
+	
+	echo "</tr>";
+}?>
+</table>
+
+
+
+<tfoot>
+<table width=750px>
+  <tr>
+    <?$waktu=date('d/m/Y');?>
+    <td align=right><a href="javascript:window.print()"><?=$waktu?></a></td>
+    <td align=center></td>
+    </tr>
+</table>
+</tfoot>
+  
+

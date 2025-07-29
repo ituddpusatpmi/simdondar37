@@ -1,0 +1,97 @@
+<?php
+$sql1 = "CREATE TABLE IF NOT EXISTS pmi.imltd_nat_lis (
+      id INT NOT NULL AUTO_INCREMENT ,
+      tgl TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+      namafile VARCHAR( 255 ) NULL ,
+      runnumber VARCHAR( 50 ) NULL ,
+      tipe_lis TINYINT( 11 ) NOT NULL DEFAULT 2,
+      konfirmasi TINYINT( 11 ) NOT NULL DEFAULT 0,
+      userkonfirmasi VARCHAR( 50 ) NULL ,
+      waktukonfirmasi DATETIME NULL, 
+      PRIMARY KEY (id)
+      ) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+$sql2 = "CREATE TABLE IF NOT EXISTS `imltd_procleix_tmp` (
+	`sample_id` varchar(50) DEFAULT NULL,
+	`interpretation` varchar(50) DEFAULT NULL,
+	`protocol` varchar(50) DEFAULT NULL,
+	`run_number` varchar(50) DEFAULT NULL,
+	`date` DATETIME NOT NULL  DEFAULT  '0000-00-00 00:00:00',
+	`flag` varchar(20) DEFAULT NULL,
+	`internal_control_rlu` varchar(20) DEFAULT NULL,
+	`internal_Control_result` varchar(20) DEFAULT NULL,
+	`analyte_rlu` varchar(20) DEFAULT NULL,
+	`analyte_s_co` varchar(20) DEFAULT NULL,
+	`kinetic_index` varchar(20) DEFAULT NULL,
+	`operator_name` varchar(20) DEFAULT NULL,
+	`internal_control_cutoff` varchar(20) DEFAULT NULL,
+	`analyte_cutoff` varchar(20) DEFAULT NULL,
+	`neg_calibrator_analyte_avg` varchar(20) DEFAULT NULL,
+	`neg_calibrator_ic_avg` varchar(20) DEFAULT NULL,
+	`hiv_pos_analyte_avg` varchar(20) DEFAULT NULL,
+	`hiv_pos_calibrator_ic_avg` varchar(20) DEFAULT NULL,
+	`hcv_pos_analyte_avg` varchar(20) DEFAULT NULL,
+	`hcv_pos_calibartor_ic_avg` varchar(20) DEFAULT NULL,
+	`lot_number` varchar(20) DEFAULT NULL,
+	`lot_date` DATE NOT NULL  DEFAULT  '0000-00-00',
+	`procleix_sn` varchar(20) DEFAULT NULL,
+	`procleix_firmware` varchar(20) DEFAULT NULL,
+	`run_number_prefix` varchar(20) DEFAULT NULL,
+	`type_of_tube` varchar(50) DEFAULT NULL,
+	`hbv_pos_calibrator_avg` varchar(20) DEFAULT NULL,
+	`hbv_pos_calibrator_ic_avg` varchar(20) DEFAULT NULL,
+	`userinput` varchar(20) DEFAULT NULL,
+	`date_import` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+	) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+
+$sql3 = "CREATE TABLE IF NOT EXISTS `imltd_procleix_raw` (
+  `id` INT NULL AUTO_INCREMENT PRIMARY KEY,
+	`date_transfer` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`sample_id` varchar(50) DEFAULT NULL,
+	`interpretation` varchar(50) DEFAULT NULL,
+	`protocol` varchar(50) DEFAULT NULL,
+	`run_number` varchar(50) DEFAULT NULL,
+	`date` DATETIME NOT NULL  DEFAULT  '0000-00-00 00:00:00',
+	`flag` varchar(20) DEFAULT NULL,
+	`internal_control_rlu` varchar(20) DEFAULT NULL,
+	`internal_Control_result` varchar(20) DEFAULT NULL,
+	`analyte_rlu` varchar(20) DEFAULT NULL,
+	`analyte_s_co` varchar(20) DEFAULT NULL,
+	`kinetic_index` varchar(20) DEFAULT NULL,
+	`operator_name` varchar(20) DEFAULT NULL,
+	`internal_control_cutoff` varchar(20) DEFAULT NULL,
+	`analyte_cutoff` varchar(20) DEFAULT NULL,
+	`neg_calibrator_analyte_avg` varchar(20) DEFAULT NULL,
+	`neg_calibrator_ic_avg` varchar(20) DEFAULT NULL,
+	`hiv_pos_analyte_avg` varchar(20) DEFAULT NULL,
+	`hiv_pos_calibrator_ic_avg` varchar(20) DEFAULT NULL,
+	`hcv_pos_analyte_avg` varchar(20) DEFAULT NULL,
+	`hcv_pos_calibartor_ic_avg` varchar(20) DEFAULT NULL,
+	`lot_number` varchar(20) DEFAULT NULL,
+	`lot_date` DATE NOT NULL  DEFAULT  '0000-00-00',
+	`procleix_sn` varchar(20) DEFAULT NULL,
+	`procleix_firmware` varchar(20) DEFAULT NULL,
+	`run_number_prefix` varchar(20) DEFAULT NULL,
+	`type_of_tube` varchar(50) DEFAULT NULL,
+	`hbv_pos_calibrator_avg` varchar(20) DEFAULT NULL,
+	`hbv_pos_calibrator_ic_avg` varchar(20) DEFAULT NULL,
+	`userinput` varchar(20) DEFAULT NULL,
+	`konfirmasi` INT NOT NULL DEFAULT  '0' COMMENT  'Apakah sudah dikonfirmasi',
+	`tgl_konfirmasi` DATE NOT NULL  DEFAULT  '0000-00-00',
+	`userkonfirmasi` varchar(20) DEFAULT NULL
+	) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+$stok_nat="select produk.no, produk.lengkap,
+	sum(case when (stokkantong.gol_darah='A' and produk.nama=stokkantong.produk) then 1 else 0 end) as golA,
+	sum(case when (stokkantong.gol_darah='B' and produk.nama=stokkantong.produk) then 1 else 0 end) as golB,
+	sum(case when (stokkantong.gol_darah='AB' and produk.nama=stokkantong.produk) then 1 else 0 end) as golAB,
+	sum(case when (stokkantong.gol_darah='O' and produk.nama=stokkantong.produk) then 1 else 0 end) as golO
+	from stokkantong, produk
+	where stokkantong.Status='2'  and (stokkantong.stat2='0' or stokkantong.stat2 is null) and stokkantong.sah='1' and date(stokkantong.kadaluwarsa) > current_date and stokkantong.hasilNAT=1
+	group by produk.no, produk.lengkap";
+$col=mysql_query("SELECT hasilNAT FROM stokkantong");if (!$col){mysql_query("ALTER TABLE  `stokkantong` ADD  `hasilNAT` VARCHAR( 1 ) NULL DEFAULT  '0' COMMENT  '0:Tidak ada; 1:Negatif; 2:Reaktif; 3:Grayzone'");}
+$col=mysql_query("SELECT cekalNAT FROM pendonor");if (!$col){mysql_query("ALTER TABLE `pendonor` ADD `cekalNAT` VARCHAR(1) NULL DEFAULT '0' COMMENT '0:Tidak; 1:Cekal NAT'");}
+$msg1="eSAS Procleix<sup>&reg</sup> Ultrio Plus SIMDONDAR Modul";
+$msg2="Modul ini berhubungan dengan SIMDONDAR-eSAS Procleix Interface";
+$msg3="SIMUDDA-eSAS Procleix Interface dipasang pada NAT site";
+$msg4="Transfer data otomatis dilakukan setelah selesai pemeriksaan NAT oleh SIMDONDAR-eSAS Procleix Interface";
+$msg5="Transfer data juga bisa juga dilakukan secara manual";
+?>

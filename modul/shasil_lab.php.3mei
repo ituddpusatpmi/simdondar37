@@ -1,0 +1,377 @@
+<script language=javascript src="js/hasil.js" type="text/javascript"> </script>
+<script language=javascript src="js/jquery-latest.js" type="text/javascript"> </script>
+<script language=javascript src="js/alert.js" type="text/javascript"> </script>
+<script language=javascript src="js/jquery-1.4.2.min.js"></script>
+<script language=javascript src="js/jquery-ui-1.8.6.custom.min.js"></script>
+<link type="text/css" href="css/blitzer/jquery-ui-1.8.9.custom.css" rel="stylesheet" />
+<style type="text/css">
+	.alert { font: 62.5% "Trebuchet MS", sans-serif; }
+</style>
+
+<?
+include('clogin.php');
+include('config/db_connect.php');
+require_once('modul/background_process.php');
+
+$namauser=$_SESSION[namauser];
+function print_r_html ($arr) {
+    ?><pre><?
+    print_r($arr);
+    ?></pre><?
+}
+//------------------------------ Submit ----------------------------//
+if (isset($_POST[submit])) {
+	$reag0=$_POST[reagen0];
+	$reag0_ex=explode('*',$reag0);
+	$reag1=$_POST[reagen1];
+	$reag1_ex=explode('*',$reag1);
+	$reag2=$_POST[reagen2];
+	$reag2_ex=explode('*',$reag2);
+	$reag3=$_POST[reagen3];
+	$reag3_ex=explode('*',$reag3);
+	//--update jumlah test untuk masing-masing reagen---
+	$rgn0=mysql_query("update reagen set jumTest='$_POST[jumTest0]' where kode='$reag0_ex[0]'");
+	$rgn1=mysql_query("update reagen set jumTest='$_POST[jumTest1]' where kode='$reag1_ex[0]'");
+	$rgn2=mysql_query("update reagen set jumTest='$_POST[jumTest2]' where kode='$reag2_ex[0]'");
+	$rgn3=mysql_query("update reagen set jumTest='$_POST[jumTest3]' where kode='$reag3_ex[0]'");
+	for ($i=0;$i<count($_POST[no_kantong]);$i++) {
+		//---Input dari form-------
+		$nkt=$_POST[no_kantong][$i];
+		$njt=$_POST[jenis_test][$i];
+		$nht=$_POST[hasiltest][$i];
+		$ngd=$_POST[gol_darah][$i];
+		$nrd=$_POST[RhesusDrh][$i];
+		//--------------------------
+
+		//---Minta Id pendonor untuk set data pendonor----
+		$pendonor=mysql_query("select ht.kodePendonor as kp, st.gol_darah as gd from htransaksi as ht,stokkantong as st
+				      where ht.NoKantong='$nkt' and st.noKantong='$nkt'");
+		$datapendonor=mysql_fetch_assoc($pendonor);
+		$idpendonor=$datapendonor[kp];
+		$gol_darah=$datapendonor[gd];
+		//----------------------------------------------
+
+		$jenis=substr($njt,0,3); 
+		if ($jenis=="HBs") $njt1="0";
+		if ($jenis=="HCV") $njt1="1";
+		if ($jenis=="HIV") $njt1="2";
+		if ($jenis=="Syp") $njt1="3";
+	
+		//------------ Generate no transaksi ---------------
+		$idp=mysql_query("select NoTrans from drapidtest
+				 where NoTrans like '$jenis%' order by NoTrans DESC");
+		$idp1=mysql_fetch_assoc($idp);
+		$idp2=substr($idp1[NoTrans],3,5);
+		if ($idp2<1) {$idp2="00000";}
+		$idp3=$idp2+1;
+		$id31=strlen($idp2)-strlen($idp3)+1;
+		$idp4="";
+		for ($i2=0; $i2<$id31; $i2++){
+			$idp4 .="0";
+		}
+		$notest=$jenis.$idp4.$idp3;
+	//------------ END Generate no transaksi ---------------
+
+		$today=date("Y-m-d");
+		$tambah=mysql_query("insert into testrapid (nokantong,jenisPeriksa,Hasil,tgl_tes) 
+		values ('$nkt','$njt1','$nht','$today')");
+		$kontrol='1';
+		$tambah=mysql_query("insert into drapidtest (NoTrans,noKantong,Kontrol,Hasil,dicatatoleh) 
+			values ('$notest','$nkt','$kontrol','$nht','$namauser')");
+	
+		//---Cek sudah di tes berapa kali?----
+		$nrapid1=mysql_num_rows(mysql_query("select nokantong from testrapid where nokantong='$nkt'"));
+		$nelisa1=mysql_num_rows(mysql_query("select noKantong from hasilelisa where noKantong='$nkt'"));
+		if (($nrapid1+$nelisa1)=='4') {
+			$tambah3=mysql_query("UPDATE pendonor
+					     SET GolDarah='$ngd',RhesusDrh='$nrd'
+					     where Kode='$idpendonor'");
+			$tambah2=mysql_query("UPDATE stokkantong
+					     SET produk='WB',gol_darah='$ngd',RhesusDrh='$nrd'
+					     where NoKantong='$nkt'");
+			$tambah1=mysql_query("UPDATE htransaksi
+					     SET status_test='0'
+					     where NoKantong='$nkt'");
+			$nrapid=mysql_query("select sum(Hasil) as hasil from testrapid where nokantong='$nkt'");
+			$nelisa=mysql_query("select sum(Hasil) as hasil from hasilelisa where noKantong='$nkt'");
+			if ($nrapid) $nrapid3=mysql_fetch_assoc($nrapid);
+			if ($nelisa) $nelisa3=mysql_fetch_assoc($nelisa);
+			if (($nrapid3[hasil]+$nelisa3[hasil])=="0") {
+				$tambah2=mysql_query("UPDATE stokkantong
+						     SET Status='2'  
+						     where NoKantong='$nkt'");
+				$tambah3=mysql_query("UPDATE pendonor
+						     SET Cekal='0'
+						     where Kode='$idpendonor'");
+				//update stok udd & server
+				switch ($gol_darah){
+				    case 'A':
+					$update_wb=mysql_query("UPDATE stok SET wb_a = wb_a - 1 where status ='1'");
+					$update_wb0=mysql_query("UPDATE stok SET wb_a = wb_a + 1 where status ='0'");
+					break;
+				    case 'B':
+					$update_wb=mysql_query("UPDATE stok SET wb_b = wb_b - 1 where status ='1'");
+					$update_wb0=mysql_query("UPDATE stok SET wb_b = wb_b + 1 where status ='0'");
+					break;
+				    case 'AB':
+					$update_wb=mysql_query("UPDATE stok SET wb_ab = wb_ab - 1 where status ='1'");
+					$update_wb0=mysql_query("UPDATE stok SET wb_ab = wb_ab + 1 where status ='0'");
+					break;
+				    case 'O':
+					$update_wb=mysql_query("UPDATE stok SET wb_o = wb_o - 1 where status ='1'");
+					$update_wb0=mysql_query("UPDATE stok SET wb_o = wb_o + 1 where status ='0'");
+					break;
+				    default:
+					$update_wb=mysql_query("UPDATE stok SET wb_x = wb_x - 1 where status ='1'");
+					$update_wb0=mysql_query("UPDATE stok SET wb_x = wb_x + 1 where status ='0'");
+				}
+				backgroundPost('http://localhost/simudda/modul/background_up_wb.php');
+			} else {
+				$tambah2=mysql_query("UPDATE stokkantong
+						     SET Status='4'
+						     where NoKantong='$nkt'");
+				$tambah3=mysql_query("UPDATE pendonor
+						     SET Cekal='1'
+						     where Kode='$idpendonor'");
+			}
+		}
+	}
+	//-----------------------------------
+	if ($tambah) {
+                echo "Data Telah berhasil dimasukkan<br>";
+		echo $nkt;
+                ?><META http-equiv="refresh" content="2; url=pmilaboratorium.php?module=shasil_lab"><?
+	}
+}
+//------------------------------ END Submit ----------------------------//
+?>
+
+<form name="hasillab" id="hasillab" onsubmit="return ok()" method="POST" action="<?=$PHPSELF?>">
+	No Kantong :
+	<INPUT type="text"  name="nokantong" id="nokantong" onkeydown="chang(event,this);" onchange="check2(),clearForm()"/>
+	<table border=0 width=100%>
+		<tr>
+			<td>Jenis Test</td>
+			<td>:</td>
+			<td>
+				<select name="jenis_tes0">
+					<option value="" selected>Pilih</option>
+					<option value="HBsAg">HBsAg</option>
+				</select>
+			</td>
+			<td width="400">Reagen:
+				<select name="reagen0" onChange="show0()">
+					<option value="">Pilih reagen</option>
+					<? 
+					$jreagen=mysql_query("select * from reagen where Nama like '%HBsAg%' and aktif='1' and metode='rapid' and jumTest>0");
+					while ($jreagen1=mysql_fetch_assoc($jreagen)) { 
+
+						?>
+					<option value="<?=$jreagen1[kode]?>*<?=$jreagen1[jumTest]?>"><?=$jreagen1[Nama]?>-<?=$jreagen1[kode]?></option>
+					<? } ?>
+				</select>
+				<input type="text" size='5' name="jumTest0" onkeydown="chang(event,this);">
+				<script>
+					function show0(){
+						var campur = document.hasillab.reagen0.value;
+						var jumtest = campur.split('*');
+						jt0 = jumtest[1];
+						document.hasillab.jumTest0.value=jumtest[1];
+					} 
+				</script>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=4>
+				<TABLE class="form" id="box-table-b0" width="100%">
+					<tr class="field">
+						<th width="20"></th>
+						<th>No Kantong</th>
+						<th>Jenis Test</th>
+						<th>Hasil Test</th>
+						<th>Gol. Darah</th>
+						<th>Rhesus</th>
+					</tr>
+				</TABLE>
+			<!--<INPUT type="button" value="Delete Row" onclick="deleteRow('box-table-b0')" />-->
+			</td>
+		</tr>
+		<tr>
+			<td>Jenis Test</td>
+			<td>:</td>
+			<td>
+				<select name="jenis_tes1">
+					<option value="" selected>Pilih</option>
+					<option value="HCV">HCV</option>
+				</select>
+			</td>
+			<td width="400">Reagen:
+				<select name="reagen1" onChange="show1()">
+					<option value="">Pilih reagen</option> <? 
+					$jreagen=mysql_query("select * from reagen where Nama like '%Hcv%' and metode='rapid' and aktif='1' and jumTest>0");
+					while ($jreagen1=mysql_fetch_assoc($jreagen)) { 
+?>
+					<option value="<?=$jreagen1[kode]?>*<?=$jreagen1[jumTest]?>"><?=$jreagen1[Nama]?>-<?=$jreagen1[kode]?></option>
+					<? } ?>
+				</select>
+				<input type="text" size='5' name="jumTest1" onkeydown="chang(event,this);">
+				<script>
+					function show1(){
+						var campur1 = document.hasillab.reagen1.value;
+						var jumtest1 = campur1.split('*');
+						jt1 = jumtest1[1]; 
+						document.hasillab.jumTest1.value=jumtest1[1];
+					} 
+				</script>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=4>
+				<TABLE class="form" id="box-table-b1" width="100%">
+					<tr class="field">
+						<th width="20"></th>
+						<th>No Kantong</th>
+						<th>Jenis Test</th>
+						<th>Hasil Test</th>
+						<th>Gol. Darah</th>
+						<th>Rhesus</th>
+					</tr>
+				</TABLE>
+			<!--<INPUT type="button" value="Delete Row" onclick="deleteRow('box-table-b1')" />-->
+			</td>
+		</tr>
+		<tr>
+			<td> Jenis Test </td>
+			<td>:</td>
+			<td>
+				<select name="jenis_tes2">
+					<option value="" selected>Pilih</option>
+					<option value="HIV">HIV</option>
+				</select>
+			</td>
+			<td width="400">Reagen:
+				<select name="reagen2" onChange="show2()">
+					<option value="">Pilih reagen</option> <? 
+					$jreagen=mysql_query("select * from reagen where Nama like '%Hiv%' and metode='rapid' and aktif='1' and jumTest>0");
+					while ($jreagen1=mysql_fetch_assoc($jreagen)) { 
+?>
+					<option value="<?=$jreagen1[kode]?>*<?=$jreagen1[jumTest]?>"><?=$jreagen1[Nama]?><?=$jreagen1[kode]?></option>
+					<?  }?>
+				</select>
+				<input type="text" size='5' name="jumTest2" onkeydown="chang(event,this);">
+					<script>
+						function show2(){
+							var campur2 = document.hasillab.reagen2.value;
+							var jumtest2 = campur2.split('*');
+							jt2 = jumtest2[1]; 
+							document.hasillab.jumTest2.value=jumtest2[1];
+						} 
+					</script>
+			</td>
+		</tr>
+		<tr>
+			<td colspan=4>
+				<TABLE class="form" id="box-table-b2" width="100%">
+					<tr class="field">
+						<th width="20"></th>
+						<th>No Kantong</th>
+						<th>Jenis Test</th>
+						<th>Hasil Test</th>
+						<th>Gol. Darah</th>
+						<th>Rhesus</th>
+					</tr>
+				</TABLE>
+			<!--<INPUT type="button" value="Delete Row" onclick="deleteRow('box-table-b2')" />-->
+			</td>
+		</tr>
+		<tr>
+			<td> Jenis Test</td>
+			<td>:</td>
+			<td>
+				<select name="jenis_tes3">
+					<option value="" selected>Pilih</option>
+					<option value="Syp">Syp</option>
+				</select>
+			</td>
+			<td width="400">Reagen:
+				<select name="reagen3" onChange="show3(),document.hasillab.nokantong.focus()">
+					<option value="">Pilih reagen</option> <? 
+					$jreagen=mysql_query("select * from reagen where Nama like '%Syp%' and metode='rapid' and aktif='1' and jumTest>0");
+					while ($jreagen1=mysql_fetch_assoc($jreagen)) { 
+?>
+					<option value="<?=$jreagen1[kode]?>*<?=$jreagen1[jumTest]?>"><?=$jreagen1[Nama]?><?=$jreagen1[kode]?></option>
+					<?  }?>
+				</select>
+				<input type="text" size='5' name="jumTest3" onkeydown="chang(event,this);">
+				<script>
+					function show3(){
+						var campur3 = document.hasillab.reagen3.value;
+						var jumtest3 = campur3.split('*');
+						jt3 = jumtest3[1]; 
+						document.hasillab.jumTest3.value=jumtest3[1];
+					} 
+				</script>
+			</td></tr>
+		<tr>
+			<td colspan=4>
+				<TABLE class="form" id="box-table-b3" width="100%">
+					<tr class="field">
+						<th width="20"></th>
+						<th>No Kantong</th>
+						<th>Jenis Test</th>
+						<th>Hasil Test</th>
+						<th>Gol. Darah</th>
+						<th>Rhesus</th>
+					</tr>
+				</TABLE>
+			<!--<INPUT type="button" value="Delete Row" onclick="deleteRow('box-table-b3')" />-->
+			</td>
+		</tr>
+		<tr>
+			<td>Dicek Oleh</td>
+			<td>:</td>
+			<td><? echo $namauser;?></td>
+			<td></td>
+		</tr>
+	<tr>
+		<td>Disahkan Oleh</td>
+		<td>:</td>
+		<td>
+			<select name="sah" > <?
+				$user="select * from dokter_periksa";
+                $do=mysql_query($user);
+					while($data=mysql_fetch_assoc($do)) {
+						$select=""; ?>
+						<option value="<?=$data[Nama]?>"<?=$select?>>
+						<?=$data[Nama]?>
+						</option>
+				<? } ?>
+			</select>
+		</td><td></td></tr>
+</table>
+	<input type="submit" value="submit" name="submit">
+</form>
+
+
+
+<div class="alert" id="alert">
+	<div id="pilih_tes" title="Pilih jenis tes..!">
+		<p>Silahkan pilih jenis tes</p>
+	</div>
+	<div id="ganti_reagen" title="Waktu Ganti Reagen..!">
+		<p>Silahkan isikan hasil test dan submit terlebih dahulu. Ganti reagen yang telah habis</p>
+	</div>
+	<div id="kantong_tdk_sesuai" title="Kantong tidak sesuai..!">
+		<p>Silahkan cek kembali kantong yang anda masukkan, atau masukkan kantong lain</p>
+	</div>
+	<div id="pilih_reagen" title="Pilih reagen..!">
+		<p>Silahkan pilih reagen terlebih dahulu sebelum memasukkan nomor kantong</p>
+	</div>
+	<div id="kantong_sudah_diinput" title="Kantong sudah diinput..!">
+		<p>Silahkan masukkan kantong yang lain</p>
+	</div>
+	<div id="kantong_reaktif" title="Kantong sudah ditest...!">
+		<p>Silahkan masukkan kantong yang lain</p>
+	</div>
+</div>
+</body>

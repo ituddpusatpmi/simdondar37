@@ -1,0 +1,13 @@
+<img src="Arci2000SR604x454.png" width="605" height="454" border="0" usemap="#map" />
+
+<map name="map">
+<!-- #$-:Image map file created by GIMP Image Map plug-in -->
+<!-- #$-:GIMP Image Map plug-in by Maurits Rijk -->
+<!-- #$-:Please do not edit lines starting with "#$" -->
+<!-- #$VERSION:2.3 -->
+<!-- #$AUTHOR:root -->
+<area shape="poly" coords="422,33,517,34,518,108,422,108" alt="Melihat Data Transfer" href="datatransfer.php" />
+<area shape="poly" coords="74,185,182,186,180,198,180,208,179,219,69,218,69,206,71,196,73,185" alt="Konfirmasi pemeriksaan" href="konfirmasi.php" />
+<area shape="poly" coords="290,188,289,199,288,208,288,220,180,219,180,205,181,197,183,186,291,187" alt="Pencarian hasil pemeriksaan" href="carikantong.php" />
+<area shape="poly" coords="397,188,398,206,398,219,289,220,289,206,289,196,290,187,397,188" alt="Laporan Pemeriksaan Architect i2000SR" href="laporanpemeriksaan.php" />
+</map>

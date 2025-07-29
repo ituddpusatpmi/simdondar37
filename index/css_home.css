@@ -1,0 +1,610 @@
+#tour{
+    height: 257px;
+    width: 960px;
+    background: #FBFDFE url(images/pmi.jpg)no-repeat;
+    color: #FFFF33;
+    /*border: #AACCEE 1px solid;   */
+    margin-top: 2px;
+}
+
+* html #tour  /* hack ie */
+{
+    height: 257px;
+    width: 960px;
+    background: #FBFDFE url(images/pmi.jpg) no-repeat;
+    color: #FFFF33;
+    /*border: #AACCEE 1px solid; */
+    margin-top: 0px;
+    margin-bottom: 5px;
+}
+
+#tour .login
+{
+    padding : 40px 0 0 755px;
+    font-size: 10px;
+    color: #000000;
+    width: 209px;
+}
+
+#tour .login h1
+{
+    font-family: verdana;
+    font-size: 10px;
+    color: #000000;
+    font-weight: bold;
+}
+
+
+/* form elements */
+form {
+	margin: 0; padding: 5px 0 10px 0;
+    font-family: verdana;
+    font-size: 10px;
+    color: #000000;
+}
+
+select {
+    font-family: verdana;
+}
+label {
+	display:block;
+	font-weight:normal;
+	margin: 4px 0;
+}
+input {
+	padding: 2px;
+	border:1px solid #FF9900;
+    margin-bottom: 5px;
+    color: #000000;
+}
+textarea {
+
+	padding:2px;
+	border:1px solid #eee;
+	height:100px;
+	display:block;
+	color:#777;
+}
+
+input.button {
+	margin: 10px 0 10px 0;
+	font: 1em Verdana;
+	border: 1px solid #CCC;
+	/*background: #FFFFFF url(images/bg_box_caption.gif) repeat-x;*/
+	padding: 2px 3px;
+    width: 80px;
+}
+
+
+.leftbar
+{
+	float: left;
+	width: 577px;
+    margin-right: 20px;
+    margin-top: 0px;
+    background: #FFFFFF;
+}
+
+
+.pagebox
+{
+   margin: 0 0 10px 5px;
+   background: #FFFFFF;
+}
+
+
+
+.pagebox .caption
+{
+    padding: 5px 0 10px 0;
+    border-bottom: #F0F0F0 1px dashed;
+    font-family: Verdana ;
+    font-weight: bold;
+    font-size: 12px;
+    color: #4F6372;
+}
+
+.pagebox .content
+{
+    padding-left: 0px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    background-color: #FFFFFF;
+}
+
+.pagebox p
+{
+   line-height: 1.5em;
+   margin-bottom: 9px;
+   text-align: left;
+   color: #4F6372;
+}
+
+.pagebox h1
+{
+   line-height: 1.5em;
+   margin-bottom: 9px;
+   text-align: left;
+   color: #4F6372;
+   font-size: 11px;
+}
+
+.pagebox img
+{
+   margin-right: 10px;
+   float: left;
+}
+
+.pagebox .content h2
+{
+   background: #fff url(media/folder_open.png)no-repeat;
+   padding: 2px 25px 25px 25px;
+   text-align: left;
+   color: #4F6372;
+   font-size: 11px;
+   font-weight: bold;
+   margin-bottom: 10px;
+   border-bottom: 1px dashed #F4F4F4;
+}
+
+.pagebox h3
+{
+   background: #fff;
+   padding: 10px 25px 7px 0px;
+   text-align: left;
+   color: #006699;
+   font-size: 12px;
+   font-weight: normal;
+   margin-bottom: 10px;
+   border-bottom: 1px dashed #EBEBEB;
+}
+
+.pagebox h5
+{
+   background: #fff;
+   padding: 10px 25px 3px 0px;
+   text-align: left;
+   color: #4F6372;
+   font-size: 12px;
+   font-weight: normal;
+   border-bottom: 1px dashed #EBEBEB;
+   margin: 0 auto;
+}
+
+.pagebox h6
+{
+   background: #fff;
+   margin: 10px 25px 5px 0px;
+   text-align: left;
+   color: #336699;
+   font-size: 12px;
+   font-weight: bold;
+   margin: 0 auto;
+}
+
+.pagebox h7
+{
+   background: #fff;
+   margin: 10px 25px 5px 0px;
+   text-align: left;
+   color: #4F6372;
+   font-size: 12px;
+   font-weight: normal;
+   margin: 0 auto;
+}
+
+
+.pagebox h4
+{
+   background: #fff;
+   padding: 10px 25px 7px 0px;
+   text-align: left;
+   color: #4F6372;
+   font-size: 12px;
+   font-weight: normal;
+   margin-bottom: 0px;
+   border-bottom: 1px dashed #EBEBEB;
+}
+
+/* rightbar [:content]                          */
+/* -------------------------------------------- */
+
+.rightbar
+{
+	float: left;
+	width: 360px;
+    margin-top: 0px;
+    background: #FFFFFF;
+}
+
+
+.img_navi
+{
+    border: #AACCEE 1px solid;
+    margin-bottom: 10px;
+}
+
+
+.box
+{
+   border: #AACCEE 1px solid;
+   margin-bottom: 10px;
+   padding-bottom: 0px;
+   background-color: #FFFFFF;
+}
+
+.box .caption
+{
+    padding: 5px;
+    border-bottom: #AACCEE 1px solid;
+    background: #EBF3FB url(images/bg_box_caption.gif);
+    font-weight: bold;
+}
+
+.box .content
+{
+    padding-left: 6px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
+    background-color: #FFFFFF;
+}
+
+.box p
+{
+   line-height: 1.5em;
+}
+
+.box ul
+{
+    margin-left: 0;
+    padding-left: 0;
+}
+
+
+.box li
+{
+   line-height: 1.4em;
+   list-style-position: outside;
+   margin-left: 15px;
+   margin-bottom: 3px;
+   padding: 0px;
+}
+
+.box li a,  .box li a:visited
+{
+   text-decoration: none;
+}
+
+.box li a:hover
+{
+   text-decoration: underline;
+}
+
+.box .img
+{
+   margin-right: 10px;
+   float: left;
+}
+
+.box .image_with_list
+{
+   margin-right: 20px;
+   margin-bottom: 5px;
+   float: left;
+}
+
+.box td
+{
+    text-align: center;
+}
+
+
+
+.box .shadegrey
+{
+    color:#D9D9D9;
+}
+
+.dotline{border-top: #AACCEE dashed 1px; }
+
+.solidline
+{
+    border-top: #AACCEE solid 1px;
+}
+
+.clear {clear: both; height: 10px;}
+
+.imgvisi
+{
+    border: 1px solid #D9D9D9;
+    margin-bottom: 10px;
+}
+
+.obj
+{
+    border: 1px solid #AACCEE;
+}
+
+
+.pagebox .content {
+    margin : 10px 0 0 0;
+    font-family: Verdana;
+    font-size: 11px;
+    color: #4F6372;
+}
+
+.pagebox .content table
+{
+    width: 100%;
+    /*border : 1px solid #C0D5EA;*/
+    border-collapse: collapse;
+    border-spacing: 0px;
+    background: #FFFFFF ;
+    color: #4F6372;
+    margin: 3px 0 10px 0px;
+
+
+}
+
+.pagebox .content th
+{
+    padding: 5px 10px;
+    border : 1px solid #C0D5EA;
+    background: #EEF3FA ;
+    font-size: 12px;
+}
+
+.pagebox .content td
+{
+    /* padding: 5px 10px; */
+    border : 1px solid #C0D5EA;
+    background: #FFFFFF;
+    color: #4F6372;
+    vertical-align: top;
+    line-height: 15px;
+    font-size: 12px;
+}
+
+
+.pagebox .content td a
+{
+
+    color: #4F6372;
+    
+}
+
+.pagebox .content .agenda
+{
+    background: #FEF9DB;
+}
+
+.pagebox .content .subagenda
+{
+    background: #F3F8FC;
+}
+
+.pagebox .content .program
+{
+    background: #FFFFFF;
+    font-weight: bold;
+}
+
+.pagebox .content .normal
+{
+    background: #FFFFFF;
+    font-weight: normal;
+}
+
+.pagebox .content .noright
+{
+    background: #FFFFFF;
+    font-weight: normal;
+    border-right: 0px;
+    padding: 5px 5px 5px 10px;
+}
+
+.pagebox .content .noleft
+{
+    background: #FFFFFF;
+    font-weight: normal;
+    border-left: 0px;
+    padding: 5px 10px 5px 5px;
+    text-align: left;
+}
+
+/* form elements */
+.pagebox .content form {
+	margin: 0; padding: 0px 0 10px 0;
+    font-family: verdana;
+    font-size: 11px;
+    color: #000000;
+}
+
+.pagebox .content select
+{
+    padding: 3px;
+    /*border : 1px solid #C0D5EA;*/
+    font-size: 12px;
+    color: #4F6372;
+    width: 100%;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.pagebox .content label {
+	display:block;
+	font-weight:normal;
+	margin: 4px 0;
+}
+
+.pagebox .content input {
+	padding: 2px;
+	border:1px solid #FF9900;
+    margin-bottom: 0;
+    color: #000000;
+}
+.pagebox .content textarea {
+
+	padding:0px;
+	/*border:1px solid #eee;*/
+    border: none;
+	height:30px;
+	display:block;
+	color:#777;
+    width: 100%;
+    font-family: Verdana;
+    font-size: 12px;
+}
+.pagebox .content input.button {
+	margin: 1px;
+	font: 1em Verdana;
+    border:1px solid #FF9900;
+	background: #FFFFFF url(images/bg_box_caption.gif) repeat-x;
+	padding: 3px 3px;
+    width: 80px;
+}
+
+.pagebox .content .likebutton {
+	margin: 0px;
+	font: 1em Verdana;
+    border:1px solid #FF9900;
+	background: #FFFFFF url(images/bg_box_caption.gif) repeat-x;
+	padding: 5px 10px;
+    text-decoration: none;
+    color: #000000;
+    width: 50px;
+    float: left;
+margin-right: 5px;
+margin-top: 1px;
+height: 16px;
+}
+
+
+/* table for name of kegiatan */
+.pagebox .content .table2
+{
+    border : 0px;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    background: #FFFFFF ;
+    color: #4F6372;
+    margin: 0 0 10px 0px;
+}
+
+.pagebox .content .table2 td
+{
+    padding: 3px 0px;
+    /*border : 1px #4F6372 solid;*/
+    border: 0;
+    background: #FFFFFF;
+    color: #4F6372;
+    vertical-align: top;
+}
+
+.pagebox .content .table2 .num
+{
+    padding: 3px 0px;
+    border : 1px #FFFFFF solid;
+    background: #EFEFEF;
+    color: #4F6372;
+    vertical-align: top;
+    text-align: center;
+}
+
+.pagebox .content .table2 .det
+{
+    padding: 4px 0px;
+    background: #FFF;
+    color: #336699;
+    vertical-align: top; 
+}
+
+
+/* table for name of indikator */
+.pagebox .content .table3
+{
+    border : 0px;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    background: #FFFFFF ;
+    color: #4F6372;
+    margin: 0px 0px 10px 0px;
+
+}
+
+.pagebox .content .table3 th
+{
+    padding: 5px 10px;
+    border : 1px solid #C0D5EA;
+    background: #EEF3FA ;
+    text-align: center;
+}
+
+.pagebox .content .table3 td
+{
+    padding: 5px 10px;
+    border : 1px solid #C0D5EA;
+    background: #FFFFFF;
+    color: #4F6372;
+    vertical-align: top;
+}
+
+.pagebox .content .table3 .no-right
+{
+    border-right : 0px;
+    padding-right: 10px;
+}
+
+.pagebox .content .table3 .no-left
+{
+    border-left : 0px;
+}
+
+.center
+{
+  text-align: center;
+}
+
+.msg
+{
+   	margin: 0; padding: 7px 50px 0 0;
+    font-family: verdana;
+    font-size: 10px;
+    color: #000000;
+}
+
+.msg-empty
+{
+    height: 10px;
+}
+
+.pagebox .content td a, .pagebox .content td a:visited{
+    display: block;
+    text-decoration: none;
+    padding: 3px 0px 3px 5px;
+}
+
+.pagebox .content td a:hover{
+    display: block;
+    background: #FFFFCC;
+    text-decoration: none;
+
+}
+
+.pagebox .content .no
+{
+    padding: 3px 0px 3px 5px;
+    border : 1px solid #C0D5EA;
+    background: #FFFFFF;
+    color: #4F6372;
+    vertical-align: top;
+    line-height: 15px;
+    font-size: 12px;
+}
+
+.red{
+  color: red;
+  font-size: 12px;
+}

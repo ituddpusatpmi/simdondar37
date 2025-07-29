@@ -1,0 +1,41 @@
+Petugas:
+	disahkan_oleh
+	operator
+	konfirmasi
+	
+Per record:
+	aksi : 0(-),1(Sehat),2(Cekal),3(tunda)
+	$statuskantong
+	syp
+		syp_ket[]
+		syp_result[] : R, NR, GZ
+		syp_lotr[]
+		syp_od[]
+	HIV
+		hiv_ket[]
+		hiv_result[]
+		hiv_lotr[]
+		hiv_od[]
+	HCV
+		hcv_ket[]
+		hcv_result[]
+		hcv_lotr[]
+		hcv_od[]
+	HBV
+		hbsag_ket[]
+		hbsag_result[]
+		hbsag_lotr[]
+		hbsag_od[]
+	kantong[]
+	sample[] --> id
+	carrier[]
+	position[]
+	run_time[]
+All
+	user
+	trans_time
+	arc_serial
+	instrument
+	Reagen Record All Parameter
+		
+		

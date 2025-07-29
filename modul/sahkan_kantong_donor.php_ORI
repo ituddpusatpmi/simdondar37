@@ -1,0 +1,119 @@
+<link type="text/css" href="css/ui-lightness/jquery-ui-1.8.6.custom.css" rel="stylesheet" />
+<link type="text/css" href="css/calender.css" rel="stylesheet" />
+<link type="text/css" href="css/table1.css" rel="stylesheet" />
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.6.custom.min.js"></script>
+<script type="text/javascript" src="js/tgl_rekap.js"></script>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link type="text/css" href="css/blitzer/jquery-ui-1.8.9m.custom.css" rel="stylesheet" />
+<script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.9.custom.min.js"></script>
+<link type="text/css" href="css/blitzer/suwena.css" rel="stylesheet" />
+<script type="text/javascript">
+  jQuery(document).ready(function(){
+       document.getElementById('terima').focus();
+ $('#instansi').autocomplete({source:'modul/suggest_zipnama.php', minLength:2});
+	});
+</script>
+
+<?
+require_once("modul/background_process.php");
+include('config/db_connect.php');
+
+$namauser=$_SESSION[namauser];
+$today=date('Y-m-d H:i:s');
+$today1=$today;
+
+if (isset($_POST[terima])) {
+	$no_kantong = mysql_real_escape_string($_POST[terima]);
+	$ck=mysql_fetch_assoc(mysql_query("select Status,sah from stokkantong where noKantong='$no_kantong' and Status='1' and (sah='0' or sah is null or sah='')"));
+	$cek1=mysql_fetch_assoc(mysql_query("select * from stokkantong where nokantong='$no_kantong'"));
+	$cek2=mysql_fetch_assoc(mysql_query("select * from htransaksi where nokantong='$no_kantong'"));
+	$pengesahan=mysql_query("insert into pengesahan (nokantong,tgl,ygmenyerahkan,jns,ket,shift) value ('$no_kantong','$today','$namauser','$cek1[jenis]','$cek2[Pengambilan]','$cek2[shift]')");
+	//Tampilkan informasi kantong singkat --> Status (keberadaan)
+	
+	if ($ck[Status]=='1')  {
+		$updatektg=mysql_query("update stokkantong set sah='1' where noKantong='$no_kantong'");
+                   //Eksekusi SMS
+                    //---Get ID Pendonor
+                    $pendonor=mysql_query("select kodependonor from stokkantong where nokantong='$no_kantong'");
+                    $datapendonor=mysql_fetch_assoc($pendonor);
+                    $idpendonor=$datapendonor[kodependonor];
+                    //---End Minta Id pendonor untuk set data pendonor----
+                    //kirim ucapan terimakasih
+                    $dk=mysql_query("select nama,telp,telp2 from pendonor where Kode='$idpendonor' and LENGTH(telp2)>9");
+                    if (mysql_num_rows($dk)==1) {
+                            $dk1=mysql_fetch_assoc($dk);
+                            $ud=mysql_fetch_assoc(mysql_query("select pesan from sms_setting where id='3'"));
+                            $telp=$dk1[telp2];
+                            $pesan='Yth. '.$dk1[nama].', '.$ud[pesan];
+                            $kirim=mysql_query("insert into sms.outbox (DestinationNumber,TextDecoded,CreatorID) 
+                                            values ('$telp','$pesan','1')");
+                     }
+                    // end ucapan
+        
+	echo  "<font size=5 color=black> Darah dengan NoKantong<b> $no_kantong </b>Telah Berhasil disahkan </font>";
+		backgroundPost('http://localhost/simudda/modul/background_up_karantina.php');
+		//=======Audit Trial====================================================================================
+		$log_mdl ='KOMPONEN';
+		$log_aksi='Pengesahan kantong aftap: '.$no_kantong.' BERHASIL';
+		include_once "user_log.php";
+		//=====================================================================================================
+
+	} else {
+		switch ($cek1[Status]) {
+		case '0':
+			$ckt_status="Kosong";
+			if($cek1[StatTempat]==NULL) $ckt_status="Kosong Di logistik";
+			if($cek1[StatTempat]=='0') $ckt_status="Kosong DI Logistik";
+			if($cek1[StatTempat]=='1') $ckt_status="Kosong Di Aftap";
+			break;
+		case '1':
+			$ckt_status="Aftap";
+			if ($cek1[sah]=='1') $ckt_status="Baru Isi/Karantina (Sudah disahkan)";
+			break;
+		case '2':
+			$ckt_status="Sehat";
+			if (substr($cek1[stat2],0,1)=='b') $ckt_status="Sehat di BDRS";;
+			break;
+		case '3':
+			$ckt_status="Keluar_Bawa";
+			if ($bawa[Status]=='1') $ckt_status="Keluar_Titip";
+			break;
+		case '4':
+			$ckt_status="Rusak";
+			break;
+		case '5':
+			$ckt_status="Rusak-Gagal";
+			break;
+		case '6':
+			$ckt_status="Dimusnahkan";
+		default : $ckt_status="Kantong Belum Terdaftar";
+		break;
+		}
+		//if ($cek1!==0){$ckt_status="Kantong Belum Terdaftar";}
+		echo "<font size=5 color=red>Pengesahan TIDAK BERHASIL<br>Status nomor kantong:<b> $no_kantong </b>($ckt_status)</font>";
+		//=======Audit Trial====================================================================================
+		$log_mdl ='KOMPONEN';
+		$log_aksi='Pengesahan kantong aftap: '.$no_kantong.' TIDAK BERHASIL, status: '.$ckt_status;
+		include_once "user_log.php";
+		//=====================================================================================================
+	}	
+} //Status 1
+
+//Starting
+$perbln=substr($today,5,2);
+$pertgl=substr($today,8,2);
+$perthn=substr($today,0,4);
+$perbln1=substr($today1,5,2);
+$pertgl1=substr($today1,8,2);
+$perthn1=substr($today1,0,4);
+ 
+if (($_SESSION[leveluser]=='laboratorium') or ($_SESSION[leveluser]=='kasir') or ($_SESSION[leveluser]=='aftap') or ($_SESSION[leveluser]=='komponen')){ ?>
+	<div>
+		<form name=sahdarah method=post><h3>Pengesahan Penerimaan Darah, Masukkan No Kantong -->
+		<input type=text name=terima id=terima size=15 placeholder="Jika Diketik, ENTER" onChange="this.form.submit();"> </h3>
+		</form>
+	</div>
+<? } ?>
+

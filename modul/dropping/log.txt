@@ -1,0 +1,95 @@
+Array
+(
+    [0] => Array
+        (
+            [nP] => 1
+            [nK] => 317425008AA
+            [nT] => NA310325-3172-001
+            [noSelang] => 
+            [tglProses] => 2025-03-31 00:52:41
+            [ptgs] => IRAWANDB
+            [jn] => 2
+            [voll] => 219
+            [merk] => TERUMO ONE BAG
+            [prodd] => PRC
+            [ABOAB] => A
+            [rh] => +
+            [statTempat] => BDRS3173-0002
+            [asalUTD] => 3509
+            [aftap] => 2025-02-14 09:00:00
+            [olah] => 2025-02-14 14:20:25
+            [ed] => 2025-05-25 21:20:00
+            [periksa] => 2025-02-14 13:46:04
+            [tK] => bdrs.or.id03312025
+        )
+
+    [1] => Array
+        (
+            [nP] => 1
+            [nK] => 3174250057A
+            [nT] => NA310325-3172-001
+            [noSelang] => Y12345678
+            [tglProses] => 2025-03-31 00:52:37
+            [ptgs] => IRAWANDB
+            [jn] => 2
+            [voll] => 199
+            [merk] => TERUMO ONE BAG
+            [prodd] => PRC
+            [ABOAB] => AB
+            [rh] => +
+            [statTempat] => BDRS3173-0002
+            [asalUTD] => 3509
+            [aftap] => 2025-02-07 10:25:00
+            [olah] => 2025-02-11 12:30:43
+            [ed] => 2025-05-25 21:20:00
+            [periksa] => 2025-02-11 09:02:35
+            [tK] => bdrs.or.id03312025
+        )
+
+    [2] => Array
+        (
+            [nP] => 1
+            [nK] => 31742500FEA
+            [nT] => NA310325-3172-001
+            [noSelang] => 1265TY7
+            [tglProses] => 2025-03-31 00:52:33
+            [ptgs] => IRAWANDB
+            [jn] => 3
+            [voll] => 201
+            [merk] => CompoFlex
+            [prodd] => PRC
+            [ABOAB] => B
+            [rh] => +
+            [statTempat] => BDRS3173-0002
+            [asalUTD] => 3509
+            [aftap] => 2025-02-18 20:02:00
+            [olah] => 2025-02-19 01:30:32
+            [ed] => 2025-05-25 21:20:00
+            [periksa] => 2025-02-18 22:59:04
+            [tK] => bdrs.or.id03312025
+        )
+
+    [3] => Array
+        (
+            [nP] => 1
+            [nK] => 317425005DA
+            [nT] => NA310325-3172-001
+            [noSelang] => 
+            [tglProses] => 2025-03-31 00:52:29
+            [ptgs] => IRAWANDB
+            [jn] => 2
+            [voll] => 210
+            [merk] => TERUMO ONE BAG
+            [prodd] => PRC
+            [ABOAB] => O
+            [rh] => +
+            [statTempat] => BDRS3173-0002
+            [asalUTD] => 3509
+            [aftap] => 2025-02-11 13:13:00
+            [olah] => 2025-02-11 12:30:47
+            [ed] => 2025-05-25 21:20:00
+            [periksa] => 2025-02-11 14:18:19
+            [tK] => bdrs.or.id03312025
+        )
+
+)

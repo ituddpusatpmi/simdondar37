@@ -1,0 +1,71 @@
+                <style>
+  .addcomment
+  {
+    background-color:#EDEFF4;
+    width:380px;
+    height:80px;
+    padding:5px;
+  }
+  .addcomment .icon, .list .icon
+  {
+    width:50px;
+    height:50px;
+    float:left;
+  }
+  .addcomment .input
+  {
+    width:315px;
+    float:left;
+    border:solid 1px #BDC7D8;
+    margin-left:5px;
+  }
+  .addcomment .submit
+  {
+    float:right;
+    color:#fff;
+    cursor:pointer;
+    font-family:Tahoma,Verdana;
+    font-size:11px;
+    font-weight:bold;
+    padding:1px 0 2px;
+    margin-right:9px;
+    margin-top:3px;
+    border-color:#29447E;
+    background-color:#617AAC;
+  }
+  #listdiv
+  {
+    clear:left;
+  }
+  /* list of comments style */
+  .list
+  {
+    width:380px;
+    height:50px;
+    padding:5px;
+    background-color:#EDEFF4;
+    margin-bottom:2px;
+  }
+  .list .message
+  {
+    width:315px;
+    float:left;
+    margin-left:5px;
+    margin-top:2px;
+    font-family:Tahoma,Verdana;
+    font-size:11px;
+  }
+  .list span.name
+  {
+    color:#3B5998;
+    font-weight:bold;
+    margin-right:5px;
+    float:left;
+  }
+  .list span.date
+  {
+    margin-top:3px;
+    float:left;
+    color:#808080;
+  }
+</style>

@@ -1,0 +1,14 @@
+<img src="Arci2000SR604x454 kanan.xcf" width="605" height="454" border="0" usemap="#map" />
+
+<map name="map">
+<!-- #$-:Image map file created by GIMP Image Map plug-in -->
+<!-- #$-:GIMP Image Map plug-in by Maurits Rijk -->
+<!-- #$-:Please do not edit lines starting with "#$" -->
+<!-- #$VERSION:2.3 -->
+<!-- #$AUTHOR:root -->
+<area shape="poly" coords="74,186,71,200,70,207,69,213,70,217,178,219,178,203,180,193,182,187,182,186" alt="ListKonfirmasi" href="List_konfirmasi" />
+<area shape="poly" coords="421,33,517,34,517,103,422,101" alt="Konfirmasi"  nohref="nohref" />
+<area shape="poly" coords="95,225,179,226,180,265,96,264" alt="CariSample"  nohref="nohref" />
+<area shape="poly" coords="289,188,397,188,399,206,399,220,289,220" alt="CekSample"  nohref="nohref" />
+<area shape="poly" coords="143,302,201,303,205,304,207,307,208,310,209,339,208,349,206,353,202,356,149,355,143,350,143,337,143,326,147,322,149,320,191,320,191,330,152,329,152,345,154,346,198,346,199,345,200,313,198,312,143,311" alt="Reagen"  nohref="nohref" />
+</map>

@@ -1,0 +1,13 @@
+.odometer{
+	margin:10px auto;
+	border:1px inset #FFB119;
+}
+
+.loading{
+	height:26px;
+	width:26px;
+	background-image:url('refresh.gif');
+	margin-left:5px;
+	font-size:0;
+	line-height:0;
+}

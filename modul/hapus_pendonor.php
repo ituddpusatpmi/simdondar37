@@ -1,0 +1,1 @@
+<?session_start();if ($_SESSION[leveluser]=='admin') {$hapus=mysql_query("delete from pendonor where Kode='$_GET[Kode]'");if ($hapus) {echo ("Data Pendonor dengan Kode: $_GET[Kode] telah berhasil dihapus<meta HTTP-EQUIV=\"REFRESH\" CONTENT=\"1; URL=pmiadmin.php?module=search_pendonor\">");}}?>

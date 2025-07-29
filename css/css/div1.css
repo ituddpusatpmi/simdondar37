@@ -1,0 +1,85 @@
+<style>
+ #content{
+	border-radius: 15px;
+            width: 962px;
+        height: auto;
+            margin: 0 auto;
+        padding: 10px;
+        border-left: #D9D9D9 1px solid;
+        border-right: #D9D9D9 1px solid;
+        background: #FFFFFF;
+        color: #4F6372;
+}
+.container {
+	margin-left:auto;
+	margin-right:auto;
+	width: 970px;
+	height: 530px;
+	background: #FF6346;
+	border-radius: 15px;
+	border:3px solid #ddd;
+}
+.kiri1 {
+	border-radius: 10px;
+	background: #EFE8DC;
+	position: relative;
+	width: 358px;
+	height: 520px;
+	left: -300px;
+	top: 5px;
+	border-right: 4px solid #353535;
+	border-bottom: 4px solid #353535;
+}
+.kiri2{
+	border-radius: 10px;
+	background: #9ca0a3;
+	position: relative;
+	width: 358px;
+	height: 166px;
+	left: -300px;
+	top: 10px;
+	border-right: 4px solid #353535;
+	border-bottom: 4px solid #353535;
+}
+.kiri3 {
+	border-radius: 10px;
+	background: #f4f4f4;
+	background-image:url('../images/blood.png');
+	background-repeat:no-repeat;
+	position: relative;
+	width: 358px;
+	height: 166px;
+	left: -300px;
+	top: 15px;
+	border-right: 4px solid #353535;
+	border-bottom: 4px solid #353535;
+}
+.kanan {
+	border-radius: 10px;
+	background: #E34839;
+	position: relative;
+	width: 595px;
+	height: 520px;
+	left: 183px;
+	top: -508px;
+}
+.kanan0{
+	border-radius: 10px;
+	background: #fFf4f4;
+	position: relative;
+	width: 585px;
+	height: 510px;
+	left: 0px;
+	top: +5px;
+}
+
+/* style judul */
+h2.judul {
+	text-decoration: none;  
+	color: red;  
+	position: absolute;  
+	text-shadow: 0 2px 0 black;  
+}
+
+/* style judul */
+</style>

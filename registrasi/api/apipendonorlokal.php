@@ -1,0 +1,40 @@
+<?php
+error_reporting (E_ALL ^ E_NOTICE);
+$ip		= $_POST['ip'];
+//koneksi
+$con = mysqli_connect($ip, 'root', 'F201603907', 'pmi');
+if(mysqli_connect_errno()) {
+	echo mysqli_connect_error();
+}
+
+$response = array("error" => FALSE);
+  $kode = $_POST['id'];
+  
+    
+      //$query =   "select * from pendonor where `Kode`='$kode' and (tglkembali <= curdate() OR tglkembali_apheresis <= curdate()) AND Cekal='0'  limit 1";
+	  $query =   "select * from pendonor where `Kode`='$kode' AND Cekal='0'  limit 1";
+   
+
+
+
+    $result = mysqli_query($con, $query);
+    $number_of_rows = mysqli_num_rows($result);
+
+    $response = array();
+
+    if($number_of_rows > 0) {
+        while($row = mysqli_fetch_assoc($result)) {
+                $response[] = $row;
+        }
+
+
+        $check = mysqli_fetch_array($result);
+        echo json_encode(array("data"=>$response));
+
+    } else {
+        /*echo "<p>
+          <center> <img src='../dist/img/cloud.png' width='300'><br>MAAF, BELUM SAATNYA ANDA DONOR. SILAHKAN HUBUNGI ADMINISTRASI DONOR
+          <meta http-equiv='refresh' content='5; url=donordarah.php'>";*/
+        echo json_encode(array("error"=>TRUE));
+    }
+mysqli_close()
