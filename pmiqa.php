@@ -4,17 +4,18 @@ if (empty($_SESSION['namauser']) and empty($_SESSION['passuser'])) {
    echo "<link href='config/adminstyle.css' rel='stylesheet' type='text/css'>
  <center>Untuk mengakses modul, Anda harus login <br>";
    echo "<a href=index.php target=\"_top\"><b>LOGIN</b></a></center>";
+
 }
 if (($_SESSION['leveluser']) == 'qa') {
-?>
+   ?>
 
-<head>
-    <title>SIMDONDAR</title>
-    <script language=javascript src="idcard.js" type="text/javascript"> </script>
-    <script language=javascript src="util.js" type="text/javascript"> </script>
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
-</head>
-<?php
+   <head>
+      <title>SIMDONDAR</title>
+      <script language=javascript src="idcard.js" type="text/javascript"> </script>
+      <script language=javascript src="util.js" type="text/javascript"> </script>
+      <link href="css/style.css" rel="stylesheet" type="text/css" />
+   </head>
+   <?php
 
    $act = isset($_GET['act']) ? $_GET['act'] : '';
    $rstock = isset($_GET['rstock']) ? $_GET['rstock'] : '';
@@ -53,8 +54,8 @@ if (($_SESSION['leveluser']) == 'qa') {
          //=========SERAH TERIMA=======
          elseif ($module == 'serahterima') {
             include "komponen_serahterima.php";
-         } elseif ($module == 'sr_rilis') {
-            include "modul/st_komponen_rilis/index_komponen.php";
+         } elseif ($module == 'sr_aftap') {
+            include "serahterima/sr_aftap_komponen.php";
          } elseif ($module == 'delrow') {
             include "serahterima/sr_proces.php";
          } elseif ($module == 'batal') {
@@ -146,19 +147,20 @@ if (($_SESSION['leveluser']) == 'qa') {
          } elseif ($module == 'cetak_rekap') {
             include "release/qa_list_release_xls.php";
          } elseif ($module == 'cetak_release') {
-
+/*
             require_once('color.inc');
             include "release/qa_label.php";
-            //2025-04-12
-            //  include "release/qa_release_label_2025.php";
+*/
+//2025-04-12
+	 include "release/qa_release_label_2025.php";
          } elseif ($module == 'releaseload') {
             include "release/qa_release_inputkantongload.php";
          }
-         //==============================================
+      //==============================================
    }
 
    ?>
 
-<?php
+   <?php
 }
 ?>

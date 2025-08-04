@@ -48,6 +48,15 @@ $("ul.thumb li").hover(function() {
 <ul class="thumb">
     <li><a href="pmikasir.php?module=dokter&jenis=0"><img src="images/periksa_dokter.png" alt=""/></a></li>
     <li><a href="pmikasir.php?module=hb&jenis=1"><img src="images/periksa_gol.png" alt=""/></a></li>
+    <!--li><a href="pmikasir.php?module=check"><img src="images/medical_checkup.png" alt=""/></a></li-->
+	<li><a href="pmikasir.php?module=spengambilan"><img src="images/aftap_pengambilandarah1.png" alt=""/></a></li>
+	<li><a href="pmikasir.php?module=gantikantong"><img src="images/pergantian_kantong.png" alt=""/></a></li>
+	<li><a href="pmikasir.php?module=daftar_permintaan_plebotomi"><img src="images/transaksi_plebotomi.png" alt=""/></a></li>
+    <li><a href="pmikasir.php?module=ambilsampel"><img src="images/ambilsampel.png" alt=""/></a></li>
+<!--li><a href="pmiaftap.php?module=daftar_permintaan_plebotomi"><img src="images/a.png" alt=""/></a></li>
+	<!--<li><a href="pmiaftap.php?module=pengesahan_pengambilan"><img src="images/aftap_pengesahan_kantong1.png" alt="" /></a></li>-->
+</ul>
+</ul>
 </ul>
 </div>
 

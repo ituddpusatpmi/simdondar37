@@ -43,15 +43,6 @@ $s1=$s2=$s3=$s4="";
 		if (isset($_POST['waktu'])) {$tglawal=$_POST['waktu'];$hariini=$hariini;}
 		if ($_POST['waktu1']!='') $hariini=$_POST['waktu1'];
         $status=$_POST['status'];
-        $param = $_POST['param'];
-            switch($param){
-                case "4" : $wparam=" ";$h0="selected";break;
-                case "0" : $wparam="  AND (`jenisPeriksa`='0') ";$h1="selected";break;
-                case "1" : $wparam="  AND (`jenisPeriksa`='1') ";$h2="selected";break;
-                case "2" : $wparam="  AND (`jenisPeriksa`='2') ";$h3="selected";break;
-                case "3" : $wparam="  AND (`jenisPeriksa`='3') ";$h4="selected";break;
-                default  : $wparam=" ";break;
-            }
         switch($status){
             case "0" : $whasil=" ";$s1="selected";break;
             case "1" : $whasil="  AND (`Hasil`='0') ";$s2="selected";break;
@@ -73,15 +64,6 @@ $s1=$s2=$s3=$s4="";
                         <option value="1" <?php echo $s2;?>>Non Reaktif</option>
                         <option value="2" <?php echo $s3;?>>Greyzone</option>
                         <option value="3" <?php echo $s4;?>>Reaktif</option>
-                    </select>
-                </td>
-                <td align="right" nowrap>Parameter
-                    <select name="param" style="background-color: white; border: none;width: 4cm;padding: 3px;font-size: 12px;cursor: pointer;">
-                        <option value="4" <?php echo $h0;?> >Semua</option>
-                        <option value="0" <?php echo $h1;?>>HBsAg</option>
-                        <option value="1" <?php echo $h2;?>>HCV</option>
-                        <option value="2" <?php echo $h3;?>>HIV</option>
-                        <option value="3" <?php echo $h4;?>>TPHA</option>
                     </select>
                 </td>
 				<td><input type=submit name=submit class="swn_button_red" value="Tampilkan data"><a href="#bawah" class="swn_button_blue">Ke bawah</a></td>
@@ -162,7 +144,7 @@ $s1=$s2=$s3=$s4="";
                 h.`DisahkanOleh`,
                 h.`umur`, h.`jns_donor`,h.`baru_ulang`	";
 	$no=0;
-    $sql=$sql_s.$sql_w.$whasil.$wparam.$sql_gb;
+    $sql=$sql_s.$sql_w.$whasil.$sql_gb;
     // echo $sql;
     $hasil_b="";$hasil_c="";$Hasil_i="";$hasil_s="";
 	$qraw=mysqli_query($dbi,$sql);

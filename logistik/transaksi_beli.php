@@ -13,6 +13,8 @@
 <script language="javascript" src="thickbox/thickbox.js"></script>
 <script language="javascript" src="js/jquery.js"></script>
 <link href="thickbox/thickbox.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <style>
 .frmSearch {border: 1px solid #a8d4b1;background-color: #c6f7d0;margin: 2px 0px;padding:40px;border-radius:4px;}
@@ -107,7 +109,12 @@ $("#suggesstion-box").hide();
                     //meload file proses dengan operator ambil barang dimana nantinya
                     //isinya akan masuk di combo box
                     $("#kode").load("transaksi_beli_proses.php","op=ambilbarang");
-                    $("#kodesup").load("transaksi_beli_proses.php","op=ambilkodesupplier");
+                     $("#kodesup").load("transaksi_beli_proses.php", "op=ambilkodesupplier", function() {
+                $("#kodesup").select2({
+                    placeholder: "Pilih Supplier",
+                    allowClear: true
+                });
+            });
                     
                     //meload isi tabel
                     $("#barang").load("transaksi_beli_proses.php","op=barang");

@@ -47,11 +47,9 @@ $("ul.thumb li").hover(function() {
 <div class="container">
 <ul class="thumb">
 	<li><a href="pmikasir2.php?module=inputstok"><img src="distribusi/images/input_stok.png" alt="" /></a></li>
-	
 	<li><a href="pmikasir2.php?module=pembayaran"><img src="images/pembayaran1.png" alt=""/></a></li>
 	<li><a href="pmikasir2.php?module=form_pengantar"><img src="images/cetak_pengantar_darah.png" alt=""/></a></li>
-	<li><a href="pmikasir2.php?module=tambah_dokter"><img src="images/tambah_dokter1.png" alt=""/></a></li>
-	
+	<li><a href="pmikasir2.php?module=tambah_dokter"><img src="images/tambah_dokter1.png" alt=""/></a></li>	
 	<li><a href="pmikasir2.php?module=tambah_rs"><img src="images/tambah_rs.png" alt=""/></a></li>
 	<li><a href="pmikasir2.php?module=tambah_kelas"><img src="images/tambah_kelas.png" alt="" /></a></li>
 	<li><a href="pmikasir2.php?module=tambah_layanan"><img src="images/tambah_layanan.png" alt="" height="117" /></a></li>

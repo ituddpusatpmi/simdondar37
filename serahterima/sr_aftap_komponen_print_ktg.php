@@ -74,13 +74,13 @@
 
 <table class="list" border="0" cellpadding="2" cellspacing="2" width="100%" style="border-collapse:collapse">
     <tr style="font-family: 'trebuchet ms', Impact, Arial, Helvetica, sans-serif;font-size: 10px;">
-        <td style="text-align: left"><? echo $utd;?><br>Formulir Serah Terima Sampel & Kantong Darah</td>
+        <td style="text-align: left"><? echo $utd;?></td>
         <td style="text-align: right"><? echo $nodokumen;?></td>
+	<td style="text-align: right"></td>
     </tr>
     <tr style="font-family: 'trebuchet ms', Impact, Arial, Helvetica, sans-serif;font-size: 11px;">
-        <!--td style="text-align: left">Formulir Serah Terima Sampel & Kantong Darah</td-->
-        <!--td style="text-align: right">Versi : 001</td-->
-        <td colspan="2" style="text-align: right"><img src="barcode.php?codetype=code128&size=25&text=<?php echo $sql_h1['hst_notrans'];?>&print=true" alt="testing" /><td>
+        <td style="text-align: left">Formulir Serah Terima Sampel & Kantong Darah</td>
+        <td style="text-align: right">Versi : 001</td>
     </tr>
 </table>
 <hr>
@@ -108,32 +108,45 @@
     </tr>
 </table>
 <?
-$sql_d="SELECT `dst_iddetail`, `dst_no_aftap`, `dst_tglaftap`, `dst_notrans`, `dst_nokantong`,
-        CASE
-        WHEN (`dst_statusktg`='1' and `dst_sahktg`='0') THEN 'Aftap'
-        WHEN (`dst_statusktg`='1' and `dst_sahktg`='1') THEN 'Karantina'
-        WHEN (`dst_statusktg`='2') THEN 'Sehat'
-        WHEN (`dst_statusktg`='3') THEN 'Keluar'
-        WHEN (`dst_statusktg`='4') THEN 'Reaktif-Rusak'
-        WHEN (`dst_statusktg`='5') THEN 'Rusak-gagal'
-        WHEN (`dst_statusktg`='6') THEN 'Rusak-Dimusnahkan'
-        ELSE 'Tidak ada' end as `dst_statusktg`,
-        `st_statusktg_new`, `dst_old_position`, `dst_new_position`,
-        `dst_sahktg_new`, `dst_merk`, `dst_golda`, `dst_rh`, `dst_kodedonor`, `dst_berat`, `dst_volumektg`,
-        CASE
-        WHEN (`dst_jenisktg`='1') THEN 'SB'
-        WHEN (`dst_jenisktg`='2') THEN 'DB'
-        WHEN (`dst_jenisktg`='3') THEN 'TR'
-        WHEN (`dst_jenisktg`='4') THEN 'QD'
-        WHEN (`dst_jenisktg`='6') THEN 'PB'
-        END AS `dst_jenisktg`,
-        `dst_sample`,
-        CASE WHEN `dst_sah`='1' THEN 'Sesuai' ELSE 'Tdk Sesuai' END AS `dst_sah`,
-        CASE WHEN `dst_lamabaru`='0' THEN 'BR' ELSE 'UL' END AS `dst_lamabaru`,
-        CASE WHEN `dst_kel`='0' THEN 'LK' ELSE 'PR' END AS `dst_kel`,
-        CASE WHEN `dst_dsdp`='0' THEN 'DS' ELSE 'DP' END AS `dst_dsdp`,
-        `dst_umur`, `dst_lama_aftap`, `dst_statuspengambilan`, `dst_ptgaftap`, `dst_volambil` FROM `serahterima_detail`
-        WHERE `dst_notrans`='$notransaksi'";
+ $sql_d = "SELECT sd.`dst_iddetail`, sd.`dst_no_aftap`, sd.`dst_tglaftap`, sd.`dst_notrans`, sd.`dst_nokantong`,
+
+    CASE
+        WHEN (sd.`dst_statusktg` = '1' AND sd.`dst_sahktg` = '0') THEN 'Aftap'
+        WHEN (sd.`dst_statusktg` = '1' AND sd.`dst_sahktg` = '1') THEN 'Karantina'
+        WHEN (sd.`dst_statusktg` = '2') THEN 'Sehat'
+        WHEN (sd.`dst_statusktg` = '3') THEN 'Keluar'
+        WHEN (sd.`dst_statusktg` = '4') THEN 'Reaktif-Rusak'
+        WHEN (sd.`dst_statusktg` = '5') THEN 'Rusak-gagal'
+        WHEN (sd.`dst_statusktg` = '6') THEN 'Rusak-Dimusnahkan'
+        ELSE 'Tidak ada'
+    END AS `dst_statusktg`,
+
+    sd.`st_statusktg_new`, sd.`dst_old_position`, sd.`dst_new_position`,
+    sd.`dst_sahktg_new`, sd.`dst_merk`, sd.`dst_golda`, sd.`dst_rh`, sd.`dst_kodedonor`, sd.`dst_berat`, sd.`dst_volumektg`,
+
+    CASE
+        WHEN sd.`dst_jenisktg` = '1' THEN 'SB'
+        WHEN sd.`dst_jenisktg` = '2' THEN 'DB'
+        WHEN sd.`dst_jenisktg` = '3' AND st.`jenis` = '3' AND (st.`metoda` IS NULL OR st.`metoda` = '') THEN 'TR'
+        WHEN sd.`dst_jenisktg` = '3' AND st.`jenis` = '3' AND st.`metoda` = 'TB' THEN 'TB'
+        WHEN sd.`dst_jenisktg` = '4' THEN 'QD'
+        WHEN sd.`dst_jenisktg` = '5' AND st.`jenis` = '5' AND st.`metoda` = 'TTF' THEN 'LR'
+        WHEN sd.`dst_jenisktg` = '5' AND st.`jenis` = '5' AND st.`metoda` = 'TT' THEN 'NLR'
+        WHEN sd.`dst_jenisktg` = '6' THEN 'PB'
+    END AS `dst_jenisktg`,
+
+    sd.`dst_sample`,
+    CASE WHEN sd.`dst_sah` = '1' THEN 'Sesuai' ELSE 'Tdk Sesuai' END AS `dst_sah`,
+    CASE WHEN sd.`dst_lamabaru` = '0' THEN 'BR' ELSE 'UL' END AS `dst_lamabaru`,
+    CASE WHEN sd.`dst_kel` = '0' THEN 'LK' ELSE 'PR' END AS `dst_kel`,
+    CASE WHEN sd.`dst_dsdp` = '0' THEN 'DS' ELSE 'DP' END AS `dst_dsdp`,
+
+    sd.`dst_umur`, sd.`dst_lama_aftap`, sd.`dst_statuspengambilan`, sd.`dst_ptgaftap`, sd.`dst_volambil`
+
+FROM `serahterima_detail` sd
+LEFT JOIN `stokkantong` st ON sd.`dst_nokantong` = st.`noKantong`
+WHERE sd.`dst_notrans` = '$notransaksi'
+ORDER BY dst_jenisktg ASC, dst_golda ASC";
 //echo "$sql_d<br>";
 $sql_d1=mysql_query($sql_d);
 ?>
@@ -183,16 +196,25 @@ $sql_d1=mysql_query($sql_d);
     </table>
 <br>
 <?
-$sq_k="SELECT  `dst_jenisktg`,
-    COUNT( CASE  WHEN (`dst_golda`='A' and `dst_rh`='+') THEN 1 ELSE NULL END) AS 'Apos',
-	COUNT( CASE  WHEN (`dst_golda`='B' and `dst_rh`='+') THEN 1 ELSE NULL END) AS 'Bpos',
-	COUNT( CASE  WHEN (`dst_golda`='O' and `dst_rh`='+') THEN 1 ELSE NULL END) AS 'Opos',
-	COUNT( CASE  WHEN (`dst_golda`='AB' and `dst_rh`='+') THEN 1 ELSE NULL END) AS 'ABpos',
-	COUNT( CASE  WHEN (`dst_golda`='A' and `dst_rh`='-') THEN 1 ELSE NULL END) AS 'Aneg',
-	COUNT( CASE  WHEN (`dst_golda`='B' and `dst_rh`='-') THEN 1 ELSE NULL END) AS 'Bneg',
-	COUNT( CASE  WHEN (`dst_golda`='O' and `dst_rh`='-') THEN 1 ELSE NULL END) AS 'Oneg',
-	COUNT( CASE  WHEN (`dst_golda`='AB' and `dst_rh`='-') THEN 1 ELSE NULL END) AS 'ABneg'
-    FROM `serahterima_detail` WHERE `dst_notrans`='$notransaksi' group by `dst_jenisktg`";
+  $sq_k = "SELECT 
+    sd.`dst_jenisktg`,
+    sk.`metoda`,
+    COUNT(CASE WHEN (sd.`dst_golda`='A' AND sd.`dst_rh`='+') THEN 1 ELSE NULL END) AS 'Apos',
+    COUNT(CASE WHEN (sd.`dst_golda`='B' AND sd.`dst_rh`='+') THEN 1 ELSE NULL END) AS 'Bpos',
+    COUNT(CASE WHEN (sd.`dst_golda`='O' AND sd.`dst_rh`='+') THEN 1 ELSE NULL END) AS 'Opos',
+    COUNT(CASE WHEN (sd.`dst_golda`='AB' AND sd.`dst_rh`='+') THEN 1 ELSE NULL END) AS 'ABpos',
+    COUNT(CASE WHEN (sd.`dst_golda`='A' AND sd.`dst_rh`='-') THEN 1 ELSE NULL END) AS 'Aneg',
+    COUNT(CASE WHEN (sd.`dst_golda`='B' AND sd.`dst_rh`='-') THEN 1 ELSE NULL END) AS 'Bneg',
+    COUNT(CASE WHEN (sd.`dst_golda`='O' AND sd.`dst_rh`='-') THEN 1 ELSE NULL END) AS 'Oneg',
+    COUNT(CASE WHEN (sd.`dst_golda`='AB' AND sd.`dst_rh`='-') THEN 1 ELSE NULL END) AS 'ABneg'
+    FROM 
+        serahterima_detail sd
+    LEFT JOIN 
+        stokkantong sk ON sk.noKantong = sd.dst_nokantong
+    WHERE 
+        sd.`dst_notrans`='$notransaksi'
+    GROUP BY 
+        sd.`dst_jenisktg`, sk.`metoda`";
 $sqk=mysql_query($sq_k);
 $no=0;
 ?>
@@ -242,8 +264,25 @@ while ($sq_k1=mysql_fetch_assoc($sqk)){
     switch ($sq_k1['dst_jenisktg']){
         case 1:$jenis='Kantong Single';break;
         case 2:$jenis='Kantong Double';break;
-        case 3:$jenis='Kantong Triple';break;
+        case 3:$metoda = isset($sq_k1['metoda']) ? trim($sq_k1['metoda']) : '';
+               if ($metoda == '' || is_null($metoda)) {
+                   $jenis = 'Kantong TRIPLE';
+               } elseif (strtoupper($metoda) == 'TB') {
+                   $jenis = 'Kantong TB';
+               } else {
+                   $jenis = '-';
+               }
+               break;
         case 4:$jenis='Kantong Quadruple';break;
+     	case 5:$metoda = isset($sq_k1['metoda']) ? trim($sq_k1['metoda']) : '';
+              if ($metoda == 'TTF' || is_null($metoda)) {
+                  $jenis = 'Kantong LR';
+              } elseif (strtoupper($metoda) == 'TT') {
+                  $jenis = 'Kantong NLR';
+              } else {
+                  $jenis = '-';
+              }
+              break;
         case 6:$jenis='Kantong Pediatrik';break;
         default:$jenis="--";
     }?>
@@ -348,7 +387,7 @@ $penerima2   = $usr3['nama_lengkap'];
     </tr>
     <tr style="font-size:14px; color:#000000; font-family:'trebuchet ms', Impact, Arial, Helvetica, sans-serif;">
         <td nowrap>Petugas Penerima Bag IMLTD</td>
-        <td nowrap><?php echo $sql_h1['hst_penerima2']; ?></td>
+        <td nowrap><?php echo $penerima2; ?></td>
 		<td></td>
         <td></td>
     </tr>

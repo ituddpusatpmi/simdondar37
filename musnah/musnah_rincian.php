@@ -323,7 +323,7 @@ if (isset($_POST[submit2])) {
             <th style="height: 40px;text-align: center;font-weight: bold">No Transaksi</th>
         </tr>
         <?php
-        $transaksipermintaan    = "select * from ar_stokkantong where CAST(tgl_buang as date)>='$today' and CAST(tgl_buang as date)<='$today2' $qshift $qalasan $qpetugas $qnk $qproduk $qgol $qjenis order by tgl_buang ASC ";
+        $transaksipermintaan    = "select * from ar_stokkantong where CAST(tgl_buang as date)>='$today' and CAST(tgl_buang as date)<='$today2' $qshift $qalasan $qpetugas $qnk $qproduk $qgol $qjenis order by gol_darah ='' DESC, tgl_buang ASC, gol_darah ASC, produk ASC";
         $no=0;
         //CAri dari table temporary
         //echo $transaksipermintaan;

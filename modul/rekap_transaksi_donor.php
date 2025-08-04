@@ -563,11 +563,7 @@ switch (isset($_POST['gol_drh']) ? $_POST['gol_drh'] : '') {
 			?>
 			<td class=input><?php echo $dokter['Nama'] ?></td>
 
-			<?php
-			$dokter = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT Nama FROM dokter_periksa WHERE kode='$datatransaksipermintaan[NamaDokter]'"));
-			?>
-			<td class=input><?php echo $dokter['Nama'] ?></td>
-			<!-- <td align="center"><?php echo $datatransaksipermintaan['petugasTensi'] ?></td> -->
+			<td align="center"><?php echo $datatransaksipermintaan['petugasTensi'] ?></td>
 			<td align="center"><?php echo $datatransaksipermintaan['petugasHB'] ?></td>
 			<!--? 	
 	$kantong1=mysqli_query($dbi, "SELECT * FROM stokkantong WHERE NoKantong='$datatransaksipermintaan[NoKantong]'");

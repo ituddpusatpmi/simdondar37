@@ -10,21 +10,12 @@ $namauser   = $_SESSION['namauser'];
 $v_tgl1    	= $_GET['t1'];
 $v_tgl2    	= $_GET['t2'];
 $v_status	= $_GET['st'];
-$v_param    = $_GET['pr'];
 switch($v_status){
     case "0" : $whasil=" ";break;
     case "1" : $whasil="  AND (`Hasil`='0') ";break;
     case "2" : $whasil="  AND (`Hasil`='2') ";break;
     case "3" : $whasil="  AND (`Hasil`='1') ";break;
     default  : $whasil=" ";break;
-}
-switch($v_param){
-    case "4" : $wparam=" ";$h0="selected";break;
-    case "0" : $wparam="  AND (`jenisPeriksa`='0') ";break;
-    case "1" : $wparam="  AND (`jenisPeriksa`='1') ";break;
-    case "2" : $wparam="  AND (`jenisPeriksa`='2') ";break;
-    case "3" : $wparam="  AND (`jenisPeriksa`='3') ";break;
-    default  : $wparam=" ";break;
 }
 $sql_s="SELECT
             h.`notrans`,
@@ -61,7 +52,7 @@ $sql_s="SELECT
                 h.`DisahkanOleh`,
                 h.`umur`, h.`jns_donor`,h.`baru_ulang`	";
 	$no=0;
-    $sql=$sql_s.$sql_w.$whasil.$wparam.$sql_gb;
+    $sql=$sql_s.$sql_w.$whasil.$sql_gb;
     $qraw=mysqli_query($dbi,$sql);
 ?>
 <font size="5" color=black><b>RINCIAN PEMERIKSAAN IMLTD</b><br>

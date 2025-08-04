@@ -47,13 +47,14 @@ $("ul.thumb li").hover(function() {
 <div class="container">
 <ul class="thumb">
 	<!--li><a href="pmiimltd.php?module=rekap_reaktif"><img src="images/laporan_reaktif.png" alt=""/></a></li>
-	<!li><a href="pmiimltd.php?module=rekap_reaktif1"><img src="images/laporan_reaktif1.png" alt=""/></a></li>
+	<li><a href="pmiimltd.php?module=rekap_reaktif1"><img src="images/laporan_reaktif1.png" alt=""/></a></li>
 	<li><a href="pmiimltd.php?module=rekap_nonreaktif"><img src="images/hasil_lab2.png" alt="" /></a></li-->
 	 
 	<li><a href="pmiimltd.php?module=rincian_imltd_elisa"><img src="images/rekap_imltd_harian.png" alt="" /></a></li>
 	<li><a href="pmiimltd.php?module=pmk_lap_imltd"><img src="laporan/images/laporan_bulanan_screening.png" alt="" /></a></li>
+	<li><a href="pmiimltd.php?module=rekap_reaktif"><img src="images/rekap_imltd_rr.png" alt=""/></a></li>
 	<!--li><a href="pmiimltd.php?module=rekap_transaksi"><img src="images/rekap_transaksi0.png" alt=""/></a></li>
-	<!--li><a href="pmiimltd.php?module=rekap_permintaan_lama"><img src="images/rekap_permintaan1.png" alt="" /></a></li>
+	<li><a href="pmiimltd.php?module=rekap_permintaan_lama"><img src="images/rekap_permintaan1.png" alt="" /></a></li>
 	<li><a href="pmiimltd.php?module=rekap_permintaan"><img src="images/rekap_permintaan0.png" alt="" /></a></li>
 	<li><a href="pmiimltd.php?module=rekap_cross"><img src="images/rekap_cross.png" alt="" /></a></li>
 	<li><a href="pmiimltd.php?module=rekap_darah_keluar_lama"><img src="images/rekap_darah_klr_lama.png" alt="" /></a></li>

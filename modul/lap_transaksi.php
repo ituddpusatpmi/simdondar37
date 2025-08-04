@@ -20,7 +20,7 @@
 <tr>
 <td>Tanggal Transaksi : </td>
 <td>
-<input class=input name="waktu" id="datepicker" type=text size=10>
+<input class=input name="waktu" id="datepicker" type=text size=10 autocomplete=off>
 </td></tr>
 <tr><td>Instansi:</td><td><input type='text' name="instansi" id='instansi'></td></tr>
 </table>

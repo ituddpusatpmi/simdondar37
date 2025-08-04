@@ -70,7 +70,7 @@ if (isset($_POST['simpan'])) {
 	$qdnr=mysqli_fetch_assoc(mysqli_query($dbi,"SELECT `NoKTP`, `Pekerjaan`,`TempatLhr`, `jumDonor`, CONCAT_WS(',', `telp2`,`telp` ) AS `tlp`,`Kode`,`Nama`,`Alamat`, case when `Jk`='0' THEN 'Laki-laki' ELSE 'Perempuan' END AS Kelamin,`GolDarah`,`Rhesus`,DATE_FORMAT(TglLhr, '%d-%m-%Y') as tgllahir  FROM `pendonor` WHERE `Kode` = '$kodependonor'"));
     ?>
 	<body onLoad=setFocus()>
-    <div style="background-color: #ffffff;font-size:24px; font-weight:bold;color:#1e90ff;text-shadow: 1px 1px 1px #000000; font-family:Helvetica, Arial, san-serif;">Pengambilan Sample TPK</div>
+    <div style="background-color: #ffffff;font-size:24px; font-weight:bold;color:#1e90ff;text-shadow: 1px 1px 1px #000000; font-family:Helvetica, Arial, san-serif;">Pengambilan Sample Donor</div>
 	<form name="kantong" onsubmit="return ok()" method="POST" action="<?=$PHPSELF?>">
 		<table style="border:0px solid brown;" cellpadding="1" cellspacing="5">
 			<tr>

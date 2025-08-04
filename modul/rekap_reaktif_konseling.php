@@ -1,305 +1,307 @@
-<!--link type="text/css" href="css/ui-lightness/jquery-ui-1.8.6.custom.css" rel="stylesheet" />
-<link type="text/css" href="css/calender.css" rel="stylesheet" />
-<link type="text/css" href="css/table1.css" rel="stylesheet" />
-<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.8.6.custom.min.js"></script>
-<script type="text/javascript" src="js/bln_reaktif.js"></script>
-<link href="css/style.css" rel="stylesheet" type="text/css" />
-<link type="text/css" href="css/blitzer/jquery-ui-1.8.9m.custom.css" rel="stylesheet" />
-<script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
-<script type="text/javascript" src="js/jquery-ui-1.8.9.custom.min.js"></script>
-<link href="modul/thickbox/thickbox.css" rel="stylesheet" type="text/css" />
- <script language="javascript" src="js/jquery.js"></script>
- <script language="javascript" src="modul/thickbox/thickbox.js"></script>
-<?
-include('config/db_connect.php');
-
-$today=date("Y-m-d");
-if (isset($_POST[minta1])) $today=$_POST[minta1];
-$perbln=substr($today,5,2);
-$perthn=substr($today,0,4);
-
-$bln2=date("n",strtotime($today));
-$bulan=array(1=>"Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember");
-$bln22=$bulan[$bln2];
-
-
-$hasil=mysql_query("select noKantong as nk from stokkantong where hasil='2' and ident='m' and substring(tglperiksa,1,10) like '$today'");
-	$TRec=mysql_num_rows($hasil);
-$perthn=substr($today,0,4);
-	?>
-<div>
-<form name=mintadarah1 method=post> Bulan :
-<input type=text name=minta1 id=datepicker size=10 onChange="this.form.submit();">
-</form>
-</div>
-	<table class="list" id="box-table-b">
-      <tr>
-        <td colspan=2>Daftar Kantong Non Reaktif :
-          <?=$bln22?>
-          -
-          <?=$perthn?></td>
-		  <!--td>Ketik No Kantong <input name="cari" type="text" /></td>
-      </tr>
-      <tr class="record">
-        <th colspan=9><b>Total =
-          <?=mysql_num_rows($hasil)?>
-          Kantong</b></th>
-      </tr>
-      <tr class="field">
-        <th rowspan=2><b>No</b></th>
-        <th rowspan=2><b>No Kantong</b></th>
-        <th colspan=4><b>Jenis Periksa</b></th>
-        <th rowspan=2><b>Tanggal Test</b></th>
-	<th rowspan=2><b>Pemeriksa</b></th>
-      </tr>
-      <tr class="field">
-        <th><b>HBsAg</b></th>
-        <th><b>HCV</b></th>
-        <th><b>HIV</b></th>
-        <th><b>Syp</b></th>
-      </tr>
-      <?
-				$no=1;
-				while($baris=mysql_fetch_assoc($hasil)){ ?>
-      <tr class="record">
-        <td><div align="center"><font size="2">
-            <?=$no?>
-          . </font></div></td>
-        <td><?=$baris[nk]?>
-          <a href="modul/detail_nonreaktif.php?nokan=<?=$baris[nk]?>&width=430&height=250" class="thickbox"><img src="images/button_search.png" border="0" /></a> </td>
-        <!--<td>
-<form name="kirim" method="post" action="modul/kirim_surat_reaktif.php" target="_blank">
-<?
-$check=mysql_fetch_assoc(mysql_query("select stokcheck from stokkantong where noKantong='$baris[nk]'"));
-if ($check[stokcheck]=='') {
-?>
-No Surat : <input name="nosurat" type="text" size="20" type="text">
-<? } else { ?>
-No Surat : <?=$check[stokcheck]?>
-<input name="nosurat" type="hidden" value="<?=$check[stokcheck]?>">
-<? }?>
-<input name="nokan" type="hidden" value="<?=$baris[nk]?>">
-<input name="submit" type="submit" value="Kirim Surat">
-</form></td>>
-        <?
-for ($jenis=0;$jenis<4;$jenis++) {
-$reak0=mysql_query("select Hasil,tgl_tes,dicatatoleh from drapidtest where nokantong='$baris[nk]' and jenisPeriksa='$jenis'");
-if (mysql_num_rows($reak0)=='1') {
-$reak=mysql_fetch_assoc($reak0);  
-$hasilr='Non Reaktif';
-if ($reak[Hasil]=='0') $hasilr='Reaktif';
-?>
-        <td><?=$hasilr?></td>
-        <?
-$tgl=$reak[tgl_tes];
-$pemeriksa=$reak[dicatatoleh];
-} else {
-$reak1=mysql_query("select Hasil,tglPeriksa,dicatatOleh,OD from hasilelisa where noKantong='$baris[nk]' and jenisPeriksa='$jenis'");
-$reak2=mysql_fetch_assoc($reak1);
-$hasilr='Non Reaktif';
-if ($reak2[Hasil]=='1') $hasilr='Reaktif';
-?>
-        <td><?=$hasilr?> , <?=$reak2[OD]?></td>
-        <?
-$tgl=$reak2[tglPeriksa];
-$pemeriksa=$reak2[dicatatOleh];
-}
-}
-?>
-        <td><?=$tgl?></td>
-	<td><?=$pemeriksa?></td>
-      </tr>
-      <?
-		$no++;
-	} ?>
-    </table>
-	</br>
-<form name=xls method=post action=modul/rekap_nonreaktif_xls.php>
-<input type=hidden name=perbln value='<?=$perbln?>'>
-<input type=hidden name=perthn value='<?=$perthn?>'>
-<input type=submit name=submit2 value='Print Rekap Non Reaktif (.XLS)'>
-</form-->
-
 <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.6.custom.css" rel="stylesheet" />
 <link type="text/css" href="css/calender.css" rel="stylesheet" />
 <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.6.custom.min.js"></script>
 <script type="text/javascript" src="js/tgl_rekap.js"></script>
-<link href="css/style.css" rel="stylesheet" type="text/css" />
+<!-- <link href="css/style.css" rel="stylesheet" type="text/css" /> -->
 <link type="text/css" href="css/blitzer/jquery-ui-1.8.9m.custom.css" rel="stylesheet" />
 <script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.9.custom.min.js"></script>
- <script language="javascript" src="modul/thickbox/thickbox.js"></script>
+<script language="javascript" src="modul/thickbox/thickbox.js"></script>
 <link href="modul/thickbox/thickbox.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+  @media print {
+    .hidden-print {
+      display: none !important;
+    }
+  }
+
+  .border-table-color {
+    border: 1px solid #000 !important;
+    border-collapse: collapse !important;
+    padding: 2px;
+  }
+
+  table.list tr.field {
+    background-color: #ffaeae;
+    color: #000;
+  }
+
+  a {
+    text-decoration: none;
+  }
+</style>
 <?
 include('clogin.php');
 include('config/db_connect.php');
 ?>
-<h3 class="list">Rekap Hasil Pemeriksaan IMLTD Reaktif </h3>
-<form name="cari" method="POST" action="<?echo $PHPSELF?>">
-<table>
-<tr>
-<td>Pilih Periode : </td>
-<td>
-<input name="waktu" id="datepicker" type=text size=10> Sampai Dengan
-<input name="waktu1" id="datepicker1" type=text size=10>
-</td><td>
-<input type=submit name=submit value="Submit"></td></tr></table>
+<h3 class="list">Rekap IMLTD NAT Reaktif </h3>
+<form name="cari" method="POST" action="<? echo $PHPSELF ?>" class="hidden-print">
+  <table>
+    <tr>
+      <td>
+        Instansi :
+      </td>
+      <td>
+        <input name="instansi" id="instansi" type=text size=35 autocomplete=off>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Pilih Periode :
+      </td>
+      <td>
+        <input name="waktu" id="datepicker" type=text size=10 autocomplete=off required>
+        Sampai Dengan
+        <input name="waktu1" id="datepicker1" type=text size=10 autocomplete=off required>
+      </td>
+      <td>
+        <input id="submit" type=submit name=submit value="Submit">
+      </td>
+    </tr>
+  </table>
 </form>
-<?
+<? if (isset($_POST[submit])) {
+  $namauser = $_SESSION[namauser];
+  $perbln = substr($_POST[waktu], 5, 2);
+  $pertgl = substr($_POST[waktu], 8, 2);
+  $perthn = substr($_POST[waktu], 0, 4);
 
-if (isset($_POST[submit])) {
-$namauser=$_SESSION[namauser];
-$perbln=substr($_POST[waktu],5,2);
-$pertgl=substr($_POST[waktu],8,2);
-$perthn=substr($_POST[waktu],0,4);
-
-$perbln1=substr($_POST[waktu1],5,2);
-$pertgl1=substr($_POST[waktu1],8,2);
-$perthn1=substr($_POST[waktu1],0,4);
+  $perbln1 = substr($_POST[waktu1], 5, 2);
+  $pertgl1 = substr($_POST[waktu1], 8, 2);
+  $perthn1 = substr($_POST[waktu1], 0, 4);
 ?>
-<h3 class="list">Rekap Hasil pemeriksaan reaktif ELISA dari Tgl : <?=$pertgl?> - <?=$perbln?> - <?=$perthn?> s/d Tgl:
-<?=$pertgl1?> - <?=$perbln1?> - <?=$perthn1?></h3>
+  <h3 class="list">Hasil Pemeriksaan dari Tgl : <?= $pertgl ?> - <?= $perbln ?> - <?= $perthn ?> s/d Tgl: <?= $pertgl1 ?> - <?= $perbln1 ?> - <?= $perthn1 ?> / <?= $_POST[instansi] ? $_POST[instansi] : 'SEMUA INSTANSI' ?> </h3>
+  <!--form rekap-->
+  <?
+  // $hasil = mysql_query("select dr.noKantong as nk,dr.tglPeriksa as tgl,dr.jenisPeriksa,sk.tgl_Aftap as ta,sk.gol_darah as gd,sk.RhesusDrh as rh,sk.statKonfirmasi as kon from hasilelisa as dr,stokkantong as sk where dr.hasil='1' and dr.tglPeriksa>='$_POST[waktu]' and dr.tglPeriksa<='$_POST[waktu1]' and sk.noKantong=dr.noKantong group by dr.nokantong order by tgl_Aftap ASC");
+  $hasil = mysql_query("SELECT
+	dr.noKantong AS nk,
+	dr.tglPeriksa AS tgl,
+	dr.jenisPeriksa,
+	sk.tgl_Aftap AS ta,
+	sk.gol_darah AS gd,
+	sk.RhesusDrh AS rh,
+	sk.statKonfirmasi AS kon
+FROM
+	hasilelisa AS dr
+	JOIN stokkantong AS sk ON sk.noKantong = dr.noKantong
+WHERE
+  dr.tglPeriksa BETWEEN '$_POST[waktu]' AND '$_POST[waktu1]'
+GROUP BY
+	dr.nokantong
+ORDER BY
+	tgl_Aftap ASC");
+  $TRec = mysql_num_rows($hasil);
+  ?>
 
-<!--form rekap-->
-<?
-$hasil=mysql_query("select dr.noKantong as nk,dr.tglPeriksa as tgl,dr.jenisPeriksa,sk.tgl_Aftap as ta,sk.gol_darah as gd,sk.RhesusDrh as rh,sk.statKonfirmasi as kon from hasilelisa as dr,stokkantong as sk where dr.hasil='1' and dr.tglPeriksa>='$_POST[waktu]' and dr.tglPeriksa<='$_POST[waktu1]' and sk.noKantong=dr.noKantong group by dr.nokantong order by tgl_Aftap ASC");
-$hbs=mysql_fetch_assoc(mysql_query("select count(jenisPeriksa) as hbs from hasilelisa where jenisPeriksa='0' and hasil='1' and tglPeriksa>='$_POST[waktu]' and tglPeriksa<='$_POST[waktu1]' "));
-$hcv=mysql_fetch_assoc(mysql_query("select count(jenisPeriksa) as hcv from hasilelisa where jenisPeriksa='1' and hasil='1' and tglPeriksa>='$_POST[waktu]' and tglPeriksa<='$_POST[waktu1]' "));
-$hiv=mysql_fetch_assoc(mysql_query("select count(jenisPeriksa) as hiv from hasilelisa where jenisPeriksa='2' and hasil='1' and tglPeriksa>='$_POST[waktu]' and tglPeriksa<='$_POST[waktu1]' "));
-$syp=mysql_fetch_assoc(mysql_query("select count(jenisPeriksa) as syp from hasilelisa where jenisPeriksa='3' and hasil='1' and tglPeriksa>='$_POST[waktu]' and tglPeriksa<='$_POST[waktu1]' "));
+  <br>
+  <table class="list border-table-color" id="box-table-b">
+    <tr class="field border-table-color">
+      <th rowspan=2 class="border-table-color"><b>No</b></th>
+      <th rowspan=2 class="border-table-color"><b>Asal Darah</b></th>
+      <th rowspan=2 class="border-table-color"><b>No Donor</b></th>
+      <th rowspan=2 class="border-table-color"><b>No Kantong</b></th>
+      <th rowspan=2 class="border-table-color"><b>Jns Kantong</b></th>
+      <th rowspan=2 class="hidden-print border-table-color"><b>Surat Panggilan</b></th>
+      <th colspan=5 class="border-table-color"><b>Hasil Periksa</b></th>
+      <th rowspan=2 class="border-table-color"><b>Tgl Aftap</b></th>
+      <th rowspan=2 class="border-table-color"><b>GD</b></th>
+      <th rowspan=2 class="border-table-color"><b>Rh</b></th>
+      <th rowspan=2 class="border-table-color"><b>KGD</b></th>
+    </tr>
+    <tr class="field border-table-color">
+      <th class="border-table-color"><b>HBsAg</b></th>
+      <th class="border-table-color"><b>HCV</b></th>
+      <th class="border-table-color"><b>HIV</b></th>
+      <th class="border-table-color"><b>Syp</b></th>
+      <th class="border-table-color"><b>NAT</b></th>
+    </tr>
+    <?
+    $no = 1;
+    while ($baris = mysql_fetch_assoc($hasil)) {
+      $kon = 'Belum';
+      if ($baris[kon] == '1') $kon = 'Sudah';
 
-	$TRec=mysql_num_rows($hasil);
-?>
+      $ckt = mysql_fetch_assoc(mysql_query("select * from stokkantong where noKantong='$baris[nk]'"));
+      $cpd = mysql_fetch_assoc(mysql_query("SELECT pd.Kode, pd.Nama, pd.GolDarah, pd.Alamat, ht.Instansi, ht.tempat FROM htransaksi AS ht JOIN pendonor AS pd ON pd.Kode = ht.KodePendonor WHERE ht.NoKantong = '$ckt[noKantong]'"));
+      $hHBsAg = "";
+      $hHCV = "";
+      $hHIV = "";
+      $hSyp = "";
+      $reaktif = false;
+      for ($jenis = 0; $jenis < 4; $jenis++) {
+        $reak0 = mysql_query("select Hasil,tglPeriksa,jenisPeriksa,OD from hasilelisa where nokantong='$baris[nk]' and jenisPeriksa='$jenis' ORDER BY id DESC limit 1");
+        if (mysql_num_rows($reak0) == '1') {
+          $reak = mysql_fetch_assoc($reak0);
+          if ($reak[jenisPeriksa] == '0') {
+            $hHBsAg = 'NonReaktif<br>' . $reak[OD];
+            if ($reak[Hasil] == '1') {
+              $reaktif = true;
+              $hHBsAg = '<b style="color: #ff0000;">Reaktif<br>' . $reak[OD] . '</b>';
+            }
+          }
+          if ($reak[jenisPeriksa] == '1') {
+            $hHCV = 'NonReaktif<br>' . $reak[OD];
+            if ($reak[Hasil] == '1') {
+              $reaktif = true;
+              $hHCV = '<b style="color: #ff0000;">Reaktif<br>' . $reak[OD] . '</b>';
+            }
+          }
+          if ($reak[jenisPeriksa] == '2') {
+            $hHIV = 'NonReaktif<br>' . $reak[OD];
+            if ($reak[Hasil] == '1') {
+              $reaktif = true;
+              $hHIV = '<b style="color: #ff0000;">Reaktif<br>' . $reak[OD] . '</b>';
+            }
+          }
+          if ($reak[jenisPeriksa] == '3') {
+            $hSyp = 'NonReaktif<br>' . $reak[OD];
+            if ($reak[Hasil] == '1') {
+              $reaktif = true;
+              $hSyp = '<b style="color: #ff0000;">Reaktif<br>' . $reak[OD] . '</b>';
+            }
+          }
+        }
+      }
 
-<br>
-<table class="list" id="box-table-b"> 
-      <tr>
+      $hNAT = "-";
+      $reak1 = mysql_query("select Hasil,tglPeriksa,OD from hasilnat where noKantong='$baris[nk]' ORDER BY id DESC limit 1");
+      if (mysql_num_rows($reak1) == '1') {
+        $reak = mysql_fetch_assoc($reak1);
+        $hNAT = 'NonReaktif<br>' . $reak[OD];
+        if ($reak[Hasil] == '1') {
+          $reaktif = true;
+          $hNAT = '<b style="color: #ff0000;">Reaktif<br>' . $reak[OD] . '</b>';
+        }
+      }
 
-        <!--td colspan=2>Daftar Kantong Non Reaktif :
-          <?=$bln22?>
-          -
+      switch ($ckt[jenis]) {
+        case '1':
+          $jenis = 'Single';
+          break;
+        case '2':
+          $jenis = 'Double';
+          break;
+        case '3':
+          $jenis = 'Triple';
+          break;
+        case '4':
+          $jenis = 'Quadruple';
+          break;
+        case '5':
+          $jenis = 'Pediatrik/Quintuple';
+          break;
+        case '6':
+          $jenis = 'Sextuple';
+          break;
+        case '7':
+          $jenis = 'Septuple';
+          break;
+        case '8':
+          $jenis = 'Octuple';
+          break;
+        case '9':
+          $jenis = 'Nonuple';
+          break;
+        case '10':
+          $jenis = 'Decuple';
+          break;
+        default:
+          $jenis = '';
+      }
 
-          <?=$perthn?></td>
-		  <!--td>Ketik No Kantong <input name="cari" type="text" /></td-->
-      </tr>
-      <tr class="record">
-        <th colspan=14><b>Total =
-          <?=mysql_num_rows($hasil)?>
-          Kantong dengan rincian : HBsAg = <?=$hbs[hbs]?> Kantong, HCV = <?=$hcv[hcv]?> Kantong, HIV = <?=$hiv[hiv]?> Kantong, Syphilis = <?=$syp[syp]?> Kantong</b></th>
-      </tr>
-      <tr class="field">
-        <th rowspan=2><b>No</b></th>
-        <th rowspan=2><b>No Kantong</b></th>
-	<th rowspan=2><b>Surat Panggilan</b></th>
-        <th colspan=4><b>Jenis Periksa</b></th>
-        <th rowspan=2><b>Tanggal Test</b></th>
-	<th rowspan=2><b>Pemeriksa</b></th>
-	<th rowspan=2><b>Metode</b></th>
-	<th rowspan=2><b>Tanggal Aftap</b></th>
-	<th rowspan=2><b>Gol Darah</b></th>
-	<th rowspan=2><b>Rh Darah</b></th>
-	<th rowspan=2><b>Konfirmasi GolDar</b></th>
-      </tr>
-      <tr class="field">
-        <th><b>HBsAg</b></th>
-        <th><b>HCV</b></th>
-        <th><b>HIV</b></th>
-        <th><b>Syp</b></th>
-      </tr>
-      <?
-				$no=1;
-				while($baris=mysql_fetch_assoc($hasil)){ 
-$kon='Belum';
-if($baris[kon]=='1') $kon='Sudah';
+      $instansi = 'DALAM GEDUNG';
+      if($cpd[Instansi] != ''){
+        $instansi = $cpd[Instansi];
+      }
 
-?>
-      <tr class="record">
-        <td><div align="center"><font size="2">
-            <?=$no?>
+      $found = true;
+      if($_POST[instansi]){
+        $found = false;
+        if ($_POST[instansi] == $instansi) {
+          $found = true;
+        }
+      }
+      if ($reaktif && $found) {
+    ?>
+        <tr class="record border-table-color">
+          <td class="border-table-color">
+            <div align="center">
+              <font size="2">
+                <?= $no ?>
+              </font>
+            </div>
+          </td>
+          <td class="border-table-color" style="text-align: left;"><?= $instansi ?></td>
+          <td class="border-table-color" style="text-align: left;"><?= $cpd[Kode] ?></td>
+          <td class="border-table-color">
+            <a href="modul/detail_nonreaktif.php?nokan=<?= $baris[nk] ?>&width=430&height=250" class="thickbox"><?= $baris[nk] ?></a>
+          </td>
+          <td class="border-table-color"><?= $jenis . ' ' . $ckt[metoda] ?></td>
+          <td class="hidden-print border-table-color">
+            <form name="kirim" method="post" action="modul/kirim_surat_reaktif.php" target="_blank">
+              <?
+              $check = mysql_fetch_assoc(mysql_query("select stokcheck from stokkantong where noKantong='$baris[nk]'"));
+              if ($check[stokcheck] == '') {
+              ?>
+                No Surat : <br><input name="nosurat" type="text" size="20" type="text">
+              <? } else { ?>
+                No Surat : <br><?= $check[stokcheck] ?>
+                <input name="nosurat" type="hidden" value="<?= $check[stokcheck] ?>">
+              <? } ?>
+              <input name="nokan" type="hidden" value="<?= $baris[nk] ?>">
+              <input name="submit" type="submit" value="Kirim Surat">
+            </form>
+          </td>
+          <td class="border-table-color"><?= $hHBsAg ?></td>
+          <td class="border-table-color"><?= $hHCV ?></td>
+          <td class="border-table-color"><?= $hHIV ?></td>
+          <td class="border-table-color"><?= $hSyp ?></td>
+          <td class="border-table-color"><?= $hNAT ?></td>
+          <td class="border-table-color"><?= $baris[ta] ?></td>
+          <td class="border-table-color"><?= $baris[gd] ?></td>
+          <td class="border-table-color"><?= $baris[rh] ?></td>
+          <td class="border-table-color"><?= $kon ?></td>
+        </tr>
+    <? $no++;
+      }
+    } ?>
+  </table>
+  </br>
+  <button onclick="window.print()" class="hidden-print">Cetak</button>
+<? } ?>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form[name="cari"]');
+    const datepicker = document.getElementById('datepicker');
+    const datepicker1 = document.getElementById('datepicker1');
+    const submitBtn = document.getElementById('submit');
 
-          </font></div></td>
-        <td><?=$baris[nk]?>
-          <a href="modul/detail_nonreaktif.php?nokan=<?=$baris[nk]?>&width=430&height=250" class="thickbox"><img src="images/button_search.png" border="0" /></a> </td>
-        <td>
-<form name="kirim" method="post" action="modul/kirim_surat_reaktif.php" target="_blank">
-<?
-$check=mysql_fetch_assoc(mysql_query("select stokcheck from stokkantong where noKantong='$baris[nk]'"));
-if ($check[stokcheck]=='') {
-?>
-No Surat : <input name="nosurat" type="text" size="20" type="text">
-<? } else { ?>
-No Surat : <?=$check[stokcheck]?>
-<input name="nosurat" type="hidden" value="<?=$check[stokcheck]?>">
-<? }?>
-<input name="nokan" type="hidden" value="<?=$baris[nk]?>">
-<input name="submit" type="submit" value="Kirim Surat">
-</form></td>
-        <?
-for ($jenis=0;$jenis<4;$jenis++) {
-$reak0=mysql_query("select Hasil,tglPeriksa,dicatatOleh,Metode,jenisperiksa,OD from hasilelisa where nokantong='$baris[nk]' and jenisPeriksa='$jenis' limit 1");
-if (mysql_num_rows($reak0)=='1') {
-$reak=mysql_fetch_assoc($reak0);  
-$hasilr='Non Reaktif';
-if ($reak[Hasil]=='1') $hasilr='Reaktif';
-?>
-        <td><?=$hasilr?>, <?=$reak[OD]?></td>
-        <?
-$tgl=$reak[tglPeriksa];
-$pemeriksa=$reak[dicatatOleh];
-$metode=$reak[Metode];
+    form.addEventListener('submit', function() {
+      // Jangan disable tombol submit sebelum kirim, bisa menyebabkan data tidak terkirim
+      // Alihkan tampilan saja
+      if (datepicker) datepicker.readOnly = true;
+      if (datepicker1) datepicker1.readOnly = true;
 
-//$kantong=mysql_fetch_assoc(mysql_query("select gol_darah as gd ,RhesusDrh as rh ,statKonfirmasi as kon,tgl_Aftap as ta from stokkantong where noKantong='$baris[nk]'"));
-} /*else
+      if (submitBtn) {
+        submitBtn.value = 'Mohon menunggu...';
+        // Delay disable supaya name/value tetap terkirim
+        setTimeout(() => {
+          submitBtn.disabled = true;
+        }, 100);
+      }
+    });
+  });
 
-
-$reak1=mysql_query("select Hasil,tglPeriksa,dicatatOleh,OD,Metode from hasilelisa where noKantong='$baris[nk]' and jenisPeriksa='$jenis' limit 1");
-if (mysql_num_rows($reak0)=='1'){
-$reak2=mysql_fetch_assoc($reak1);
-$hasilr='Non Reaktif';
-if ($reak2[Hasil]=='1') $hasilr='Reaktif';
-
-?>
-        <td><?=$hasilr?> , <?=$reak2[OD]?></td>
-        <?
-$tgl=$reak2[tglPeriksa];
-
-$pemeriksa=$reak2[dicatatOleh];
-$metode=$reak2[Metode];
-
-
-}*/
-}
-?>
-
-        <!--td><?=$tgl?></td-->
-	<td><?=$baris[tgl]?></td>
-	<td><?=$pemeriksa?></td>
-	<td><?=$metode?></td>
-	<td><?=$baris[ta]?></td>
-	<td><?=$baris[gd]?></td>
-	<td><?=$baris[rh]?></td>
-	<td><?=$kon?></td>
-      </tr>
-      <?
-
-		$no++;
-	} ?>
-    </table>
-	</br>
-
-<form name=xls method=post action=modul/rekap_reaktif_xls.php>
-<input type=hidden name=pertgl value="<?=$pertgl?>">
-<input type=hidden name=perbln value="<?=$perbln?>">
-<input type=hidden name=perthn value="<?=$perthn?>">
-<input type=hidden name=pertgl1 value="<?=$pertgl1?>">
-<input type=hidden name=perbln1 value="<?=$perbln1?>">
-<input type=hidden name=perthn1 value="<?=$perthn1?>">
-<input type=submit name=submit2 value='Print Rekap Reaktif Elisa (.XLS)'>
-</form>
-</tr>
-<?
-}
-?>
-
+  jQuery(document).ready(function() {
+    $('#instansi').autocomplete({
+      source: 'modul/suggest_instansi_transaksi.php',
+      minLength: 2,
+      select: function(event, ui) {
+        const nama = ui.item.value;
+        $("#instansi").val(nama);
+      }
+    });
+  });
+</script>

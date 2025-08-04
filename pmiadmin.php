@@ -6,7 +6,7 @@ if (empty($_SESSION['namauser']) and empty($_SESSION['passuser'])) {
 	echo "<a href=index.php target=\"_top\"><b>LOGIN</b></a></center>";
 }
 if (($_SESSION['leveluser']) == 'admin') {
-	?>
+?>
 	<!doctype html>
 	<html>
 
@@ -413,6 +413,19 @@ if (($_SESSION['leveluser']) == 'admin') {
 				include "whatsapp/wa_setting.php";
 			} elseif ($_GET['module'] == 'wa_instansi') {
 				include "whatsapp/wa_donor_ins.php";
+			}
+	}
+}
+
+if (($_SESSION['leveluser']) == 'konseling') {
+	switch (@$_GET['act']) {
+		default:
+			include "config/koneksi.php";
+			include "config/fungsi_combobox.php";
+			include "config/library.php";
+			$tgll = date("Ymd");
+			if ($_GET['module'] == 'cabut_cekal') {
+				include "modul/cabut_cekal.php";
 			}
 	}
 }
