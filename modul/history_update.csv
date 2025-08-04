@@ -1,7 +1,5 @@
-05-06-2025| SELEKSI : menghilangkan menu Pengambilan dari level Seleksi
-05-06-2025| DATABASE : Penambahan table koneksi NAT Panther
-05-06-2025| RELEASE : Update input Pelulusan, validasi pemeriksaan KGD (sudah dilakukan / belum), jika belum, Pelulusan produk tidak dapat dilanjutkan
-04-06-2025| DATABASE : Perbaikan Trigger NAT
+15-05-2025| BARCODE : penambahan digit HEXA dari 4 ke 5 digit
+10-05-2025| RELEASE : Perubahan label Release.
 19-04-2025| KOMPONEN : UPDATE Penambahan Cetak Label Komponen (pada Pengolahan dan Cetak Label Manual).
 18-04-2025| DONOR : UPDATE Penambahan Filter (Lolos MCU & Gagal MCU) pada pencarian data Antrian Donor.
 12-04-2025| PROLIS : UPDATE label Release, penambahan pilihan ukuran label yang dipakai di UDD

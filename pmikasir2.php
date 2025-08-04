@@ -385,10 +385,9 @@ if ($_SESSION['leveluser'] == 'kasir2') { ?>
             } elseif ($_GET['module'] == 'tambah_bdrs') {
                 include "modul/tambah_bdrs_kasir.php";
             }
-
-            // 04-04-2025 Input Stok Manual --> insert stokkantong
-            elseif ($_GET['module']=='inputstok')               {include  "distribusi/stok_inputmanual.php";}
-            elseif ($_GET['module']=='inputstokrekap')          {include  "distribusi/stok_inputmanual_rekap.php";}
+	//Inoput Stok Manual
+	elseif ($_GET['module']=='inputstok')               {include  "distribusi/stok_inputmanual.php";}
+        elseif ($_GET['module']=='inputstokrekap')          {include  "distribusi/stok_inputmanual_rekap.php";}
 
     }
 }

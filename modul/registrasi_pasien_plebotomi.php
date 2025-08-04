@@ -8,7 +8,7 @@
 <link type="text/css" href="css/blitzer/jquery-ui-1.8.9.custom.css" rel="stylesheet" />
 <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.9.custom.min.js"></script>
-<script type="text/javascript" src="js/tgl_lahir.js"></script>
+<script type="text/javascript" src="js/tgl_lahir.js?v=20250620"></script>
 <!-- jQuery Placehol -->
 <script src="components/placeholder/jquery.placehold-0.2.min.js"></script>
 <!-- disable enter -->

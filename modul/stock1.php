@@ -313,11 +313,7 @@ while ($donasi=mysql_fetch_assoc($donasi0)) {
     $dokter=mysql_fetch_assoc(mysql_query("select Nama from dokter_periksa where kode='$donasi[NamaDokter]'"));
     ?>
     <td class=input><?=$dokter[Nama]?></td>
-    <?
-    $petugasTensi=mysql_fetch_assoc(mysql_query("select Nama from dokter_periksa where kode='$donasi[NamaDokter]'"));
-    ?>
-    <td class=input><?=$petugasTensi[Nama]?></td>
-    <!-- <td class=input><?=$donasi[petugasTensi]?></td> -->
+    <td class=input><?=$donasi[petugasTensi]?></td>
     <td class=input><?=$donasi[petugasHB]?></td>
     <td class=input><?=$donasi[petugas]?></td>
     <td class=input><?=$donasi[user]?></td>
@@ -380,11 +376,7 @@ while ($donasi3=mysql_fetch_assoc($donasi2)) {
     $dokter=mysql_fetch_assoc(mysql_query("select Nama from dokter_periksa where kode='$donasi[NamaDokter]'"));
     ?>
     <td class=input><?=$dokter3[Nama]?></td>
-    <?
-    $petugasTensi=mysql_fetch_assoc(mysql_query("select Nama from dokter_periksa where kode='$donasi[NamaDokter]'"));
-    ?>
-    <td class=input><?=$petugasTensi3[Nama]?></td>
-    <!-- <td class=input><?=$donasi[petugasTensi]?></td> -->
+    <td class=input><?=$donasi3[petugasTensi]?></td>
     <td class=input><?=$donasi3[petugasHB]?></td>
     <td class=input><?=$donasi3[petugas]?></td>
     <td class=input><?=$donasi3[user]?></td>

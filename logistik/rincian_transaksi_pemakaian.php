@@ -116,7 +116,7 @@ $h = mysql_fetch_assoc(mysql_query("select hstok_transaksi.notrans, hstok_transa
 		<td align=left></td>
 		<td align=left></td>
 		<td align=left></td>
-		<td align=left></td>
+		<!--td align=left></td-->
 		</tr>";
 				}
 			}

@@ -1,69 +1,6 @@
 <?php
 require_once "dbi_connect.php";
 
-
-$checkColumn = $dbi->query("SHOW COLUMNS FROM `dpengolahan` LIKE 'aPutar'");
-if ($checkColumn->num_rows == 0) {
-    // Jika kolom aPutar belum ada, jalankan ALTER TABLE
-    $alterTable = "ALTER TABLE `dpengolahan` CHANGE `cara` `aPutar` VARCHAR(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL";
-    if ($dbi->query($alterTable) === TRUE) {
-        // echo "Table altered successfully.";
-    } else {
-        // echo "Error altering table: " . $dbi->error;
-    }
-}
-$checkColumn = $dbi->query("SHOW COLUMNS FROM `dpengolahan` LIKE 'aPisah'");
-if ($checkColumn->num_rows == 0) {
-    $alterTable1 = "ALTER TABLE `dpengolahan` ADD `aPisah` VARCHAR(100) NULL DEFAULT NULL AFTER `aPutar`;";
-    $dbi->query($alterTable1);
-}
-
-/** versi 5.4 ++
-$alterStatements = [
-    'mulaiPutar' => "ALTER TABLE `dpengolahan` ADD `mulaiPutar` TIME NULL DEFAULT NULL AFTER `shift`;",
-    'selesaiPutar' => "ALTER TABLE `dpengolahan` ADD `selesaiPutar` TIME NULL DEFAULT NULL AFTER `mulaiPutar`;",
-    'mulaiPisah' => "ALTER TABLE `dpengolahan` ADD `mulaiPisah` TIME NULL DEFAULT NULL AFTER `selesaiPutar`;",
-    'selesaiPisah' => "ALTER TABLE `dpengolahan` ADD `selesaiPisah` TIME NULL DEFAULT NULL AFTER `mulaiPisah`;",
-];
-*/
-
-$alterStatements = array(
-    'mulaiPutar' => "ALTER TABLE `dpengolahan` ADD `mulaiPutar` TIME NULL DEFAULT NULL AFTER `shift`;",
-    'selesaiPutar' => "ALTER TABLE `dpengolahan` ADD `selesaiPutar` TIME NULL DEFAULT NULL AFTER `mulaiPutar`;",
-    'mulaiPisah' => "ALTER TABLE `dpengolahan` ADD `mulaiPisah` TIME NULL DEFAULT NULL AFTER `selesaiPutar`;",
-    'selesaiPisah' => "ALTER TABLE `dpengolahan` ADD `selesaiPisah` TIME NULL DEFAULT NULL AFTER `mulaiPisah`;",
-);
-
-foreach ($alterStatements as $column => $statement) {
-    // Periksa apakah kolom sudah ada
-    $checkColumn = $dbi->query("SHOW COLUMNS FROM `dpengolahan` LIKE '$column'");
-    if ($checkColumn->num_rows == 0) {
-        // Jika kolom belum ada, jalankan perintah ALTER TABLE
-        if ($dbi->query($statement) !== TRUE) {
-            // echo "Error menambahkan kolom $column: " . $dbi->error;
-            // error_log("Error menambahkan kolom $column: " . $dbi->error);
-        }
-    }
-}
-
-$alterTable3 = "ALTER TABLE  `user_log` ADD  `unixID` VARCHAR( 50 ) NULL DEFAULT NULL AFTER  `aksi_user` ;
-ALTER TABLE `user_log` ADD INDEX(`unixID`);";
-$alterTable4 = "ALTER TABLE  `dpengolahan` CHANGE  `id`  `id1` INT( 11 ) NOT NULL ;";
-$alterTable5 = "ALTER TABLE  `dpengolahan` ADD  `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST ;";
-$alterTable6 = "ALTER TABLE  `dpengolahan` ADD  `tglupdate` DATETIME NULL DEFAULT NULL AFTER  `tgl` ;";
-$alterTable7 = "ALTER TABLE `dpengolahan`  ADD `noseri` VARCHAR(50) NULL DEFAULT NULL AFTER `metode`;";
-$alterTable8 = "ALTER TABLE `dpengolahan` CHANGE `selesai` `selesai` TIME NULL DEFAULT NULL;";
-$alterTable9 = "ALTER TABLE `dpengolahan`  ADD `verifikator` VARCHAR(50) NULL DEFAULT NULL,  ADD `musnah` INT(1) NOT NULL COMMENT '1=Iya, 0=Tidak';";
-
-if ($dbi->query($alterTable3) === TRUE && $dbi->query($alterTable4) === TRUE && $dbi->query($alterTable5) === TRUE && $dbi->query($alterTable6) === TRUE && $dbi->query($alterTable7) === TRUE && $dbi->query($alterTable8) === TRUE && $dbi->query($alterTable9) === TRUE) {
-    // echo "Kolom noTrans berhasil diubah dan indeks ditambahkan.";
-    // error_log("Kolom noTrans berhasil diubah dan indeks ditambahkan.");
-} else {
-    // echo "Error mengubah kolom noTrans atau menambahkan indeks: " . $dbi->error;
-    // error_log("Error mengubah kolom noTrans atau menambahkan indeks: " . $dbi->error);
-}
-
-
 // TABEL MASTER KANTONG CHECKER
 // prepare tabel sudah memiliki kolom yang diperlukan untuk produk kantong
 $alterQueries = array(
@@ -83,6 +20,7 @@ foreach ($alterQueries as $query) {
     mysqli_query($dbi, $query);
 }
 
+// Daftar kolom yang perlu dicek dan diubah
 $columnsToCheck = array(
     'dpengolahan' => array(
         'NoTrans' => "VARCHAR(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL",
@@ -93,6 +31,7 @@ $columnsToCheck = array(
     )
 );
 
+// Loop untuk setiap tabel dan kolom
 foreach ($columnsToCheck as $tableName => $columns) {
     foreach ($columns as $columnName => $expectedDefinition) {
         $columnExists = false;
@@ -104,6 +43,7 @@ foreach ($columnsToCheck as $tableName => $columns) {
             }
         }
 
+        // Jalankan ALTER TABLE jika kolom belum sesuai
         if (!$columnExists) {
             $query = "ALTER TABLE `$tableName` CHANGE `$columnName` `$columnName` $expectedDefinition;";
             mysqli_query($dbi, $query);
@@ -139,13 +79,13 @@ if (!$tableExists) {
     }
 } else {
     // Jika tabel sudah ada, cek struktur kolomnya
-    $columns = [];
+    $columns = array();
     $res = $dbi->query("SHOW COLUMNS FROM `$tableName`");
     while ($row = $res->fetch_assoc()) {
         $columns[$row['Field']] = $row;
     }
 
-    $alterQueries = [];
+    $alterQueries = array();
 
     // Cek dan buat query ALTER jika perlu
     if (!isset($columns['id']) || strpos($columns['id']['Type'], 'int') === false || $columns['id']['Extra'] != 'auto_increment') {

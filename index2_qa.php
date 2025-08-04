@@ -1,5 +1,4 @@
-			<font size="1"><a href="pmiqa.php?module=serahterima" target="isiadmin" class="fisheyeItem"><img src="images/serahterima1.png" />Serah Terima Kantong</a></font>
-			<font size="1"><a href="pmiqa.php?module=release" target="isiadmin" class="fisheyeItem"><img src="images/qa_input.png" />Input Release</a></font><p>
+<font size="1"><a href="pmiqa.php?module=release" target="isiadmin" class="fisheyeItem"><img src="images/qa_input.png" />Input Release</a></font><p>
 			<font size="1"><a href="pmiqa.php?module=input_qa" target="isiadmin" class="fisheyeItem"><img src="images/qa.png" />Input Quality Assurance</a></font><p>
 			<!--font size="1"><a href="pmiqa.php?module=serahterima" target="isiadmin" class="fisheyeItem"><img src="images/serahterima1.png" />Serah Terima Kantong</a></font-->
 			<!--font size="1"><a href="pmiqa.php?module=qa_distribusi" target="isiadmin" class="fisheyeItem"><img src="images/distribusi_darah.png" />Distribusi Darah</a></font-->

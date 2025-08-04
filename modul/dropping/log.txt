@@ -2,11 +2,11 @@ Array
 (
     [0] => Array
         (
-            [nP] => 1
+            [nP] => 2
             [nK] => 317425008AA
             [nT] => NA310325-3172-001
             [noSelang] => 
-            [tglProses] => 2025-03-31 00:52:41
+            [tglProses] => 2025-03-31 00:07:54
             [ptgs] => IRAWANDB
             [jn] => 2
             [voll] => 219
@@ -25,11 +25,11 @@ Array
 
     [1] => Array
         (
-            [nP] => 1
+            [nP] => 2
             [nK] => 3174250057A
             [nT] => NA310325-3172-001
             [noSelang] => Y12345678
-            [tglProses] => 2025-03-31 00:52:37
+            [tglProses] => 2025-03-31 00:08:32
             [ptgs] => IRAWANDB
             [jn] => 2
             [voll] => 199
@@ -48,11 +48,11 @@ Array
 
     [2] => Array
         (
-            [nP] => 1
+            [nP] => 2
             [nK] => 31742500FEA
             [nT] => NA310325-3172-001
             [noSelang] => 1265TY7
-            [tglProses] => 2025-03-31 00:52:33
+            [tglProses] => 2025-03-31 00:08:12
             [ptgs] => IRAWANDB
             [jn] => 3
             [voll] => 201
@@ -71,11 +71,11 @@ Array
 
     [3] => Array
         (
-            [nP] => 1
+            [nP] => 2
             [nK] => 317425005DA
             [nT] => NA310325-3172-001
             [noSelang] => 
-            [tglProses] => 2025-03-31 00:52:29
+            [tglProses] => 2025-03-31 00:07:30
             [ptgs] => IRAWANDB
             [jn] => 2
             [voll] => 210

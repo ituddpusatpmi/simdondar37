@@ -230,8 +230,6 @@ $array_bulan = array(1=>'Jan','Feb','Mar', 'Apr', 'Mei', 'Jun','Jul','Ags','Sep'
 						$row[]="-";
 					}else{
 						if ($_SESSION[leveluser]=='admin') { $row[]="Cekal <a href=pmiadmin.php?module=cabut_cekal&Kode=".$kode." TITLE=\"CABUT CEKAL\"><img src=\"images/hapus.png\" width=15 height=15/></a>"; } else { $row[]="Cekal"; }
-					}else{
-						if ($_SESSION[leveluser]=='konseling') { $row[]="Cekal <a href=pmikonseling.php?module=cabut_cekal&kode=".$kode." TITLE=\"CABUT CEKAL\"><img src=\"images/hapus.png\" width=15 height=15/></a>"; } else { $row[]="Cekal"; }
 					}
 				}else if($i=='12'){
 					$tgl=$aRow[ $aColumns[$i]];

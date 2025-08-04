@@ -75,7 +75,7 @@ $lvl0 = "qa";
 		}
 
 		.table-container {
-			width: 90%;
+			width: 99%;
 			margin: 0 auto;
 			overflow-x: auto;
 		}
@@ -93,7 +93,7 @@ $lvl0 = "qa";
 
 		.custom-table tbody td {
 			background-color: #f8f9fa !important;
-			font-size: 12px !important;
+			font-size: 14px !important;
 			text-align: center !important;
 			vertical-align: middle !important;
 		}
@@ -165,7 +165,6 @@ $lvl0 = "qa";
 </head>
 
 <body>
-	<div class="container-fluid">
 	<div class="table-container mt-4">
 		<h2 class="text-center">Master Berat Kantong Kosong</h2>
 		<div class="table-responsive">
@@ -1204,7 +1203,7 @@ $lvl0 = "qa";
 			});
 		});
 	</script>
-	</div>
+
 </body>
 
 </html>

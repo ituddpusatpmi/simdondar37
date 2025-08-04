@@ -58,34 +58,37 @@ ADD `ket` VARCHAR(35 ) NULL DEFAULT '-'");
 
 
 <link type="text/css" href="css/blitzer/jquery-ui-1.8.9m.custom.css" rel="stylesheet" />
-<script type="text/javascript" src="js/jquery-1.5.2.min.js"></script>
+<link rel="stylesheet" href="css/smoothness/jquery-ui-1.8.2.custom.css" />
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.9.custom.min.js"></script>
 <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript" src="js/jquery.inputmask.bundle.min.js"></script>
+<style type="text/css">
+  li.ui-menu-item {
+    font-size: 12px !important;
+  }
+</style>
 <script type="text/javascript">
   jQuery(document).ready(function() {
     $('#instansi').autocomplete({
       source: 'modul/suggest_zip.php',
       minLength: 2
     });
-  });
-</script>
-<link rel="stylesheet" href="css/smoothness/jquery-ui-1.8.2.custom.css" />
-<style type="text/css">
-  li.ui-menu-item {
-    font-size: 12px !important;
-  }
-</style>
-<script>
-  $(function() {
-    $('div.clickdate').live('click', function() {
-      $("#datepicker").datepicker({
-        yearRange: '2020:3000',
-        dateFormat: 'yy-mm-dd',
-        changeMonth: true,
-        changeYear: true,
-        showOn: 'focus'
-      }).focus();
+
+    $('#jam_mulai, #jam_selesai').inputmask("99:99:99", {
+      placeholder: "09:00:00",
+      insertMode: false
     });
+  });
+
+  $('div.clickdate').live('click', function() {
+    $("#datepicker").datepicker({
+      yearRange: '2020:3000',
+      dateFormat: 'yy-mm-dd',
+      changeMonth: true,
+      changeYear: true,
+      showOn: 'focus'
+    }).focus();
   });
 </script>
 <?
@@ -103,7 +106,30 @@ $utd = mysql_fetch_assoc(mysql_query("SELECT lat, lng FROM utd WHERE aktif='1'")
   });
 </script-->
 <script>
-  (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})({
+  (g => {
+    var h, a, k, p = "The Google Maps JavaScript API",
+      c = "google",
+      l = "importLibrary",
+      q = "__ib__",
+      m = document,
+      b = window;
+    b = b[c] || (b[c] = {});
+    var d = b.maps || (b.maps = {}),
+      r = new Set,
+      e = new URLSearchParams,
+      u = () => h || (h = new Promise(async (f, n) => {
+        await (a = m.createElement("script"));
+        e.set("libraries", [...r] + "");
+        for (k in g) e.set(k.replace(/[A-Z]/g, t => "_" + t[0].toLowerCase()), g[k]);
+        e.set("callback", c + ".maps." + q);
+        a.src = `https://maps.${c}apis.com/maps/api/js?` + e;
+        d[q] = f;
+        a.onerror = () => h = n(Error(p + " could not load."));
+        a.nonce = m.querySelector("script[nonce]")?.nonce || "";
+        m.head.append(a)
+      }));
+    d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n))
+  })({
     key: "AIzaSyBAFrTJz9AK9JYHD_58kwJNOWaR8VoBcSo",
     v: "weekly",
     // Use the 'v' parameter to indicate the version to use (weekly, beta, alpha, etc.).
@@ -113,7 +139,7 @@ $utd = mysql_fetch_assoc(mysql_query("SELECT lat, lng FROM utd WHERE aktif='1'")
 
 <script type="text/javascript">
   var directionDisplay;
-  var directionsService = new google.maps.DirectionsService();
+  // var directionsService = new google.maps.DirectionsService();
   var map;
   var mylat = "<?= $utd[lat] ?>";
   var mylon = "<?= $utd[lng] ?>";
@@ -121,19 +147,19 @@ $utd = mysql_fetch_assoc(mysql_query("SELECT lat, lng FROM utd WHERE aktif='1'")
   var end;
   var pos;
 
-  var geocoder = new google.maps.Geocoder();
+  // var geocoder = new google.maps.Geocoder();
 
-  function geocodePosition(pos) {
-    geocoder.geocode({
-      latLng: pos
-    }, function(responses) {
-      if (responses && responses.length > 0) {
-        updateMarkerAddress(responses[0].formatted_address);
-      } else {
-        updateMarkerAddress('Cannot determine address at this location.');
-      }
-    });
-  }
+  // function geocodePosition(pos) {
+  //   geocoder.geocode({
+  //     latLng: pos
+  //   }, function(responses) {
+  //     if (responses && responses.length > 0) {
+  //       updateMarkerAddress(responses[0].formatted_address);
+  //     } else {
+  //       updateMarkerAddress('Cannot determine address at this location.');
+  //     }
+  //   });
+  // }
 
   function updateMarkerStatus(str) {
     document.getElementById('markerStatus').innerHTML = str;
@@ -184,7 +210,7 @@ $utd = mysql_fetch_assoc(mysql_query("SELECT lat, lng FROM utd WHERE aktif='1'")
     }
     map.setCenter(pos);
     var icon0 = 'images/distance.png';
-    map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push((window.gbar = new window.jeremy.jGoogleBar(map, gbarOptions)).container);
+    // map.controls[google.maps.ControlPosition.BOTTOM_LEFT].push((window.gbar = new window.jeremy.jGoogleBar(map, gbarOptions)).container);
     var marker = new google.maps.Marker({
       position: pos,
       map: map,
@@ -339,26 +365,26 @@ $utd = mysql_fetch_assoc(mysql_query("SELECT lat, lng FROM utd WHERE aktif='1'")
       document.dinstansi.infolng.value = latLng.lng();
     });
 
-    google.maps.event.addListener(marker, 'dragend', function() {
-      updateMarkerStatus('Drag ended');
-      geocodePosition(marker.getPosition());
-      document.dinstansi.id_mu.value = id_mu;
-      updateMarkerLatLng(marker.getPosition(), marker.title);
-    });
+    // google.maps.event.addListener(marker, 'dragend', function() {
+    //   updateMarkerStatus('Drag ended');
+    //   geocodePosition(marker.getPosition());
+    //   document.dinstansi.id_mu.value = id_mu;
+    //   updateMarkerLatLng(marker.getPosition(), marker.title);
+    // });
   }
 
-  function calcRoute() {
-    var request = {
-      origin: start,
-      destination: end,
-      travelMode: google.maps.DirectionsTravelMode.DRIVING
-    };
-    directionsService.route(request, function(response, status) {
-      if (status == google.maps.DirectionsStatus.OK) {
-        directionsDisplay.setDirections(response);
-      }
-    });
-  }
+  // function calcRoute() {
+  //   var request = {
+  //     origin: start,
+  //     destination: end,
+  //     travelMode: google.maps.DirectionsTravelMode.DRIVING
+  //   };
+  //   directionsService.route(request, function(response, status) {
+  //     if (status == google.maps.DirectionsStatus.OK) {
+  //       directionsDisplay.setDirections(response);
+  //     }
+  //   });
+  // }
 
   function downloadUrl(url, callback) {
     var request = window.ActiveXObject ?
@@ -486,6 +512,7 @@ $utd = mysql_fetch_assoc(mysql_query("SELECT lat, lng FROM utd WHERE aktif='1'")
   // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
   function initAutocomplete() {
+    var currentMarker = null;
     var map = new google.maps.Map(document.getElementById('map'), {
       center: {
         lat: <?= $utd[lat] ?>,
@@ -500,7 +527,20 @@ $utd = mysql_fetch_assoc(mysql_query("SELECT lat, lng FROM utd WHERE aktif='1'")
       var lng = event.latLng.lng();
       // populate yor box/field with lat, lng
       //alert("Mas Eko Jelek weeek, Lat=" + lat + "| Lng=" + lng);
-      alert("Lokasi Berhasil Ditentukan");
+
+      // Hapus marker sebelumnya (jika ada)
+      if (currentMarker) {
+        currentMarker.setMap(null);
+      }
+
+      // Tambahkan marker baru di lokasi klik kanan
+      currentMarker = new google.maps.Marker({
+        position: event.latLng,
+        map: map,
+        title: "Lokasi yang dipilih"
+      });
+
+      // alert("Lokasi Berhasil Ditentukan");
       document.dinstansi.infolat.value = event.latLng.lat();
       document.dinstansi.infolng.value = event.latLng.lng();
     });
@@ -568,7 +608,7 @@ $utd = mysql_fetch_assoc(mysql_query("SELECT lat, lng FROM utd WHERE aktif='1'")
 </script>
 <!--script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAxfJQlGpCqxwpHPZCQKc9NFkJb32zPJs&libraries=places&callback=initAutocomplete" async defer></script-->
 <!--script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5lcB7A8Y0NEPrrhs9WOGQeWGfo_P9ou0&callback=initAutocomplete&libraries=places&v=weekly"            defer></script-->
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBAFrTJz9AK9JYHD_58kwJNOWaR8VoBcSo&callback=initAutocomplete&libraries=places&v=weekly"            defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBAFrTJz9AK9JYHD_58kwJNOWaR8VoBcSo&callback=initAutocomplete&libraries=places&v=weekly" defer></script>
 
 <div id="map_canvas"></div>
 <div id="form_instansi1">
@@ -590,7 +630,7 @@ $utd = mysql_fetch_assoc(mysql_query("SELECT lat, lng FROM utd WHERE aktif='1'")
         <tr>
           <td>Tanggal</td>
           <td>
-            <div class='clickdate'><input type='text' id='datepicker' /> </div>
+            <div class='clickdate'><input type='text' id='datepicker' autocomplete="off" /> </div>
           </td>
           <td>Jam Mulai</td>
           <td><input type='text' id='jam_mulai' placeholder='09:00:00' /></td>
@@ -642,6 +682,6 @@ $utd = mysql_fetch_assoc(mysql_query("SELECT lat, lng FROM utd WHERE aktif='1'")
 <div id="info"></div>
 <b>Closest matching address:</b-->
   <div id="address0"></div>
-  <script type="text/javascript" src="js/jGoogleBarV3.min.js"></script>
+  <!-- <script type="text/javascript" src="js/jGoogleBarV3.min.js"></script> -->
   <!--div id="result_search"></div-->
 </div>

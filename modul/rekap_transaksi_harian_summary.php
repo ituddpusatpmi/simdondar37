@@ -22,8 +22,8 @@ include('config/db_connect.php');
 $level_user=$_SESSION['leveluser'];
 $today=date('Y-m-d');
 $today1=$today;
-if (isset($_POST['terima1'])) {$today=$_POST['terima1'];$today1=$today;}
-if ($_POST['terima2']!='') $today1=$_POST['terima2'];
+if (isset($_POST[terima1])) {$today=$_POST[terima1];$today1=$today;}
+if ($_POST[terima2]!='') $today1=$_POST[terima2];
 $perbln=substr($today,5,2);
 $pertgl=substr($today,8,2);
 $perthn=substr($today,0,4);
@@ -105,47 +105,47 @@ $sql_trans="select instansi, COUNT(case when JenisDonor='0' THEN 1 END) As Sukar
 	<?
 	$no=0;$tempatdonor="";$sq_sum=mysql_query($sql_trans);$rec=mysql_num_rows($sq_sum);
 	while($data=mysql_fetch_assoc($sq_sum)){
-		$no++;if ($data['instansi']==""){$tempatdonor='DALAM GEDUNG';}else{$tempatdonor=$data['instansi'];}
-		$tot_ds=$tot_ds + $data['Sukarela'];
-		$tot_dp=$tot_dp + $data['Pengganti'];
-		$tot_baru=$tot_baru + $data['baru'];
-		$tot_ulang=$tot_ulang + $data['ulang'];
-		$tot_lk=$tot_lk + $data['Laki'];
-		$tot_pr=$tot_pr + $data['Perempuan'];
-		$tot_antri=$tot_antri + $data['Antri'];
-		$tot_berhasil=$tot_berhasil + $data['Berhasil'];
-		$tot_gagal=$tot_gagal + $data['Gagal'];
-		$tot_biasa=$tot_biasa + $data['Biasa'];
-		$tot_batal=$tot_batal + $data['Batal'];
-		$tot_aph=$tot_aph + $data['Apheresis'];
-		$tot_a=$tot_a + $data['A'];
-		$tot_b=$tot_b + $data['B'];
-		$tot_ab=$tot_ab + $data['AB'];
-		$tot_o=$tot_o + $data['O'];
-		$tot_x=$tot_x + $data['X'];
-		$tot_ttl=$tot_ttl + $data['Jumlah'];
+		$no++;if ($data[instansi]==""){$tempatdonor='DALAM GEDUNG';}else{$tempatdonor=$data[instansi];}
+		$tot_ds=$tot_ds + $data[Sukarela];
+		$tot_dp=$tot_dp + $data[Pengganti];
+		$tot_baru=$tot_baru + $data[baru];
+		$tot_ulang=$tot_ulang + $data[ulang];
+		$tot_lk=$tot_lk + $data[Laki];
+		$tot_pr=$tot_pr + $data[Perempuan];
+		$tot_antri=$tot_antri + $data[Antri];
+		$tot_berhasil=$tot_berhasil + $data[Berhasil];
+		$tot_gagal=$tot_gagal + $data[Gagal];
+		$tot_biasa=$tot_biasa + $data[Biasa];
+		$tot_batal=$tot_batal + $data[Batal];
+		$tot_aph=$tot_aph + $data[Apheresis];
+		$tot_a=$tot_a + $data[A];
+		$tot_b=$tot_b + $data[B];
+		$tot_ab=$tot_ab + $data[AB];
+		$tot_o=$tot_o + $data[O];
+		$tot_x=$tot_x + $data[X];
+		$tot_ttl=$tot_ttl + $data[Jumlah];
 		?>
 		<tr style="font-size:11px; color:#000000; font-family:Verdana;" onMouseOver="this.className='highlight'" onMouseOut="this.className='normal'">
 			<td align="right"><?=$no?>.</td>
 			<td align="left"><?=$tempatdonor?></td>
-			<td align="right" class=input><?=$data['Sukarela']?></td>
-			<td align="right" class=input><?=$data['Pengganti']?></td>
-			<td align="right" class=input><?=$data['baru']?></td>
-			<td align="right" class=input><?=$data['ulang']?></td>
-			<td align="right" class=input><?=$data['Laki']?></td>
-			<td align="right" class=input><?=$data['Perempuan']?></td>
-			<td align="right" class=input><?=$data['Antri']?></td>
-			<td align="right" class=input><?=$data['Berhasil']?></td>
-			<td align="right" class=input><?=$data['Gagal']?></td>
-			<td align="right" class=input><?=$data['Batal']?></td>
-			<td align="right" class=input><?=$data['Biasa']?></td>
-			<td align="right" class=input><?=$data['Apheresis']?></td>
-			<td align="right" class=input><?=$data['A']?></td>
-			<td align="right" class=input><?=$data['B']?></td>
-			<td align="right" class=input><?=$data['AB']?></td>
-			<td align="right" class=input><?=$data['O']?></td>
-			<td align="right" class=input><?=$data['X']?></td>
-			<td align="right" class=input><?=$data['Jumlah']?></td>
+			<td align="right" class=input><?=$data[Sukarela]?></td>
+			<td align="right" class=input><?=$data[Pengganti]?></td>
+			<td align="right" class=input><?=$data[baru]?></td>
+			<td align="right" class=input><?=$data[ulang]?></td>
+			<td align="right" class=input><?=$data[Laki]?></td>
+			<td align="right" class=input><?=$data[Perempuan]?></td>
+			<td align="right" class=input><?=$data[Antri]?></td>
+			<td align="right" class=input><?=$data[Berhasil]?></td>
+			<td align="right" class=input><?=$data[Gagal]?></td>
+			<td align="right" class=input><?=$data[Batal]?></td>
+			<td align="right" class=input><?=$data[Biasa]?></td>
+			<td align="right" class=input><?=$data[Apheresis]?></td>
+			<td align="right" class=input><?=$data[A]?></td>
+			<td align="right" class=input><?=$data[B]?></td>
+			<td align="right" class=input><?=$data[AB]?></td>
+			<td align="right" class=input><?=$data[O]?></td>
+			<td align="right" class=input><?=$data[X]?></td>
+			<td align="right" class=input><?=$data[Jumlah]?></td>
 		</tr>
 	<?
 	}?>
