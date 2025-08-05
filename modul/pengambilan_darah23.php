@@ -73,16 +73,41 @@
 
 
   //Shift Petugas
-  $shift  = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT nama,jam,sampai_jam FROM `shift` WHERE time(now()) between time(jam) AND time(sampai_jam)"));
-  //$shif   = $shift['nama'];
-  if ($shift['nama'] == "I") {
-    $shif   = "1";
-  } else if ($shift['nama'] == "II") {
-    $shif   = "2";
-  } else if ($shift['nama'] == "III") {
-    $shif   = "3";
-  } else {
-    $shif   = "4";
+  $shifts = mysqli_query($dbi, "SELECT nama, jam, sampai_jam FROM `shift` ORDER BY nama");
+  $current_time = date("H:i:s");
+  $shif = "4"; // Default ke Shift IV jika tidak ada kecocokan
+
+  while ($shift = mysqli_fetch_assoc($shifts)) {
+    $jam = $shift['jam'];
+    $sampai_jam = $shift['sampai_jam'];
+
+    // Validasi format waktu
+    if (
+      !preg_match("/^[0-2][0-9]:[0-5][0-9]:[0-5][0-9]$/", $jam) ||
+      !preg_match("/^[0-2][0-9]:[0-5][0-9]:[0-5][0-9]$/", $sampai_jam)
+    ) {
+      continue; // Lewati jika format waktu tidak valid
+    }
+
+    // Periksa shift normal
+    if ($current_time >= $jam && $current_time <= $sampai_jam) {
+      if ($shift['nama'] == "I") {
+        $shif = "1";
+      } elseif ($shift['nama'] == "II") {
+        $shif = "2";
+      } elseif ($shift['nama'] == "III") {
+        $shif = "3";
+      }
+      break;
+    }
+
+    // Penanganan shift yang melintasi tengah malam
+    if ($shift['nama'] == "III" && $sampai_jam < $jam) {
+      if ($current_time >= $jam || $current_time <= $sampai_jam) {
+        $shif = "3";
+        break;
+      }
+    }
   }
   $today1 = date("Y-m-d H:i:s");
   $today2 = date("Y-m-d");

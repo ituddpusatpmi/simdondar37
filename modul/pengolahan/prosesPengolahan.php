@@ -201,11 +201,12 @@ try {
             $logUnix = $noKantong;
             $tempat = "DG";
             $log_aksi = 'Pengolahan (Konvensional), dengan No.Transaksi ' . $noTrans . ', Nomor Kantong: ' . $noKantong . ', menjadi Produk: ' . $produk;
-            if (!file_exists("/var/www/simudda/modul/user_log.php")) {
-                error_log("File user_log.php tidak ditemukan!");
-            } else {
-                include_once "/var/www/simudda/modul/user_log.php";
-            }
+            include "user_log.php";
+            // if (!file_exists("/var/www/simudda/modul/user_log.php")) {
+            //     error_log("File user_log.php tidak ditemukan!");
+            // } else {
+            //     include_once "/var/www/simudda/modul/user_log.php";
+            // }
             //=====================================================================================================
 
         } else {
