@@ -539,35 +539,6 @@ if (($_SESSION['leveluser']) == 'komponen') {
                 include "serahterima/sr_list.php";
             }
 
-	    //========= SERAH TERIMA =======
-	    //========= 10 Mei 2025 =======
-            elseif ($_GET['module'] == 'sr_komponen_rilis') {
-                include "modul/st_komponen_rilis/index.php";
-            } elseif ($_GET['module'] == 'sr_aftap') {
-                include "serahterima/sr_aftap_komponen.php";
-            } elseif ($_GET['module'] == 'delrow') {
-                include "serahterima/sr_proces.php";
-            } elseif ($_GET['module'] == 'batal') {
-                include "serahterima/sr_proces.php";
-            } elseif ($_GET['module'] == 'sr_aftap_list') {
-                include "serahterima/sr_aftap_komponen_list.php";
-            } elseif ($_GET['module'] == 'sr_rpt_ktg') {
-                include "serahterima/sr_aftap_komponen_print_ktg.php";
-            } elseif ($_GET['module'] == 'sr_rpt_imltd') {
-                include "serahterima/sr_aftap_komponen_print_imltd.php";
-            } elseif ($_GET['module'] == 'sr_rpt_kgd') {
-                include "serahterima/sr_aftap_komponen_print_kgd.php";
-            } elseif ($_GET['module'] == 'sr_rpt_nat') {
-                include "serahterima/sr_aftap_komponen_print_nat.php";
-            } elseif ($_GET['module'] == 'sr_rpt_view') {
-                include "serahterima/sr_aftap_komponen_view.php";
-            } elseif ($_GET['module'] == 'sr_komponen') {
-                include "serahterima/sr_komponen.php";
-            } elseif ($_GET['module'] == 'sr_list') {
-                include "serahterima/sr_list.php";
-            }
-
-
             //pengesahan darah Aftap ke imltd
             elseif ($_GET['module'] == 'pengolahan') {
                 include "modul/pengolahan/pengolahan.php";

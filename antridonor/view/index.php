@@ -132,7 +132,7 @@
 
       <form action="" method="post">
       <div class="input-group mb-3">
-          <input type="text" name="server" class="form-control" value="192.168.10.200" required>
+          <input type="text" name="server" class="form-control" value="localhost" required>
         </div>
         <div class="input-group mb-3">
           <input type="text" name="user" class="form-control" placeholder="Nama User" autocomplete="off" required>

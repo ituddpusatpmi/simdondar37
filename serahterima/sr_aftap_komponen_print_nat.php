@@ -321,7 +321,7 @@ $penerima   = $usr['nama_lengkap'];
     </tr>
     <tr style="font-size:14px; color:#000000; font-family:'trebuchet ms', Impact, Arial, Helvetica, sans-serif;">
         <td nowrap>Petugas Penerima</td>
-        <td nowrap><?php echo $sql_h1['hst_penerima2']; ?></td>
+        <td nowrap><?php echo $penerima; ?></td>
         <td></td>
         <td></td>
 

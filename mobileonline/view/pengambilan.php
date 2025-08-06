@@ -101,26 +101,26 @@ if ($unit == "" || $id === "") {
     $lama_pengambilan = $menit;
     $tglp1 = $today1 . ' ' . $ambil;
 
-    $lastDigit=substr($id_kantong, -1);
-    if($lastDigit=='A'){
+    $lastDigit = substr($id_kantong, -1);
+    if ($lastDigit == 'A' or $lastDigit == 'a') {
 
-    //echo $jam.'-'.$menit;
-    //jika batal/gagal
-    if ($keberhasilan != "0") { //simpan gagal
+      //echo $jam.'-'.$menit;
+      //jika batal/gagal
+      if ($keberhasilan != "0") { //simpan gagal
         $noKantong  = trim(mysqli_real_escape_string($con, $_POST['id_kantong11']));
         $kantong    = mysqli_query($con, "SELECT * from stokkantong where noKantong ='$noKantong' AND `Status`='0' and StatTempat='1' and kadaluwarsa_ktg >'$today1'");
         $stok1      = mysqli_fetch_array($kantong);
         $numkantong = mysqli_num_rows($kantong);
-        
+
         //jika kantong ada
         if ($numkantong > 0) { //simpan Gagal
           $pendonor   = mysqli_query($con, "select * from pendonor where Kode='$kodependonor' ");
           $pendonor1  = mysqli_fetch_assoc($pendonor);
           //Update Htransaksi
-          $jumdonor = $pendonor1['jumDonor']+1;
+          $jumdonor = $pendonor1['jumDonor'] + 1;
 
 
-            
+
           $tambah = "UPDATE htransaksi
                                   SET diambil='$volume_darah',reaksi='$reaksi',
                                       pengambilan='$keberhasilan',catatan='$catatan',ketBatal='12',jeniskantong='$stok1[jenis]',volumekantong='$stok1[volumeasal]',
@@ -144,7 +144,7 @@ if ($unit == "" || $id === "") {
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => array('Kode' => $kodependonor,'tglkembali' => $kembali, 'metode' => 'update', 'pjmldonor' => $jumdonor ),
+            CURLOPT_POSTFIELDS => array('Kode' => $kodependonor, 'tglkembali' => $kembali, 'metode' => 'update', 'pjmldonor' => $jumdonor),
           ));
           $response = curl_exec($curlinsdn);
           $datains  = json_decode($response, true);
@@ -161,30 +161,125 @@ if ($unit == "" || $id === "") {
           //echo $tambah4."<br>";
           $tambah5    = "UPDATE stokkantong set lama_pengambilan='$lama_pengambilan' WHERE noKantong like '$ono_kantong0%'";
           $sk2query    = mysqli_query($con, $tambah5);
-            
-            
-            //=======Audit Trial====================================================================================
-           $log_mdl ='PENGAMBILAN';
-           $log_aksi='Pengambilan darah: '.$notrans.' Pendonor: '.$kodependonor.' Kantong: '.$id_kantong.' status: '.$keberhasilan;
-           $log = mysqli_query($con, "INSERT INTO `user_log` (`komputer`, `user`, `modul`, `aksi_user`,`tempat`, `keterangan`) VALUES
+
+
+          //=======Audit Trial====================================================================================
+          $log_mdl = 'PENGAMBILAN';
+          $log_aksi = 'Pengambilan darah: ' . $notrans . ' Pendonor: ' . $kodependonor . ' Kantong: ' . $id_kantong . ' status: ' . $keberhasilan;
+          $log = mysqli_query($con, "INSERT INTO `user_log` (`komputer`, `user`, `modul`, `aksi_user`,`tempat`, `keterangan`) VALUES
               ('$client_ip', '$user', '$log_mdl', '$log_aksi','$unit', '')");
-           //=====================================================================================================
-            
+          //=====================================================================================================
+
           //echo $tambah5."<br>";
-            if ($sk2query) { ?>
+          if ($sk2query) { ?>
+            <div class="row">
+              <div class="col-lg-12 col-lg-offset-3">
+                <div class="alert alert-success alert-dismissable" role="alert">
+                  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                  <strong>Data Gagal Aftap</strong> Berhasil Entry
+                </div>
+              </div>
+            </div>
+            <META http-equiv="refresh" content="2; url=?page=searchaftap"><?php
+
+                                                                        }
+                                                                      } else { //Nomor Kantong Tidak Ada
+                                                                          ?>
+          <div class="row">
+            <div class="col-lg-12 col-lg-offset-3">
+              <div class="alert alert-danger alert-dismissable" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <strong>Entry Gagal</strong> Nomor Kantong Tidak Ada!!!
+              </div>
+            </div>
+          </div>
+
+          <?php
+                                                                      }
+                                                                    } else { //jika berhasil
+                                                                      $noKantong  = trim(mysqli_real_escape_string($con, $_POST['id_kantong11']));
+                                                                      $kantong    = mysqli_query($con, "SELECT * from stokkantong where noKantong ='$noKantong' AND `Status`='0' and StatTempat='1' and kadaluwarsa_ktg >'$today1'");
+                                                                      $stok1      = mysqli_fetch_array($kantong);
+                                                                      $numkantong = mysqli_num_rows($kantong);
+
+                                                                      if ($lama_pengambilan >= 1) {
+
+                                                                        //jika kantong ada
+                                                                        if ($numkantong > 0) { //simpan berhasil
+                                                                          $pendonor   = mysqli_query($con, "select * from pendonor where Kode='$kodependonor' ");
+                                                                          $pendonor1  = mysqli_fetch_assoc($pendonor);
+                                                                          //Update Htransaksi
+                                                                          $jumdonor = $pendonor1['jumDonor'] + 1;
+
+                                                                          $tambah = "UPDATE htransaksi
+                                SET diambil='$volume_darah',reaksi='$reaksi',
+                                    pengambilan='$keberhasilan',catatan='$catatan',ketBatal='-',jeniskantong='$stok1[jenis]',volumekantong='$stok1[volumeasal]',
+                                    nokantong='$id_kantong',petugas='$petugas',
+                                    caraambil='$caraambil',status_test='2',Status='2',mu='$mu',gol_darah='$pendonor1[GolDarah]',jam_ambil='$ambil', jam_selesai='$selesai',rhesus='$pendonor1[Rhesus]',jk='$pendonor1[Jk]',pekerjaan='$pendonor1[Pekerjaan]',umur='$pendonor1[umur]',donorke='$jumdonor', `tempat`='M'
+                                WHERE (Status='1' and NoTrans='$notrans')";
+
+                                                                          //CURL DB NASIONAL
+                                                                          $curlinsdn = curl_init();
+                                                                          curl_setopt_array($curlinsdn, array(
+                                                                            CURLOPT_URL => "https://dbdonor.pmi.or.id/pmi/api/simdondar/updatedonorkembali.php",
+                                                                            CURLOPT_RETURNTRANSFER => true,
+                                                                            CURLOPT_ENCODING => "",
+                                                                            CURLOPT_MAXREDIRS => 10,
+                                                                            CURLOPT_TIMEOUT => 5,
+                                                                            CURLOPT_FOLLOWLOCATION => true,
+                                                                            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                                                            CURLOPT_CUSTOMREQUEST => "POST",
+                                                                            CURLOPT_POSTFIELDS => array('Kode' => $kodependonor, 'tglkembali' => $kembali, 'metode' => 'update', 'pjmldonor' => $jumdonor),
+                                                                          ));
+                                                                          $response = curl_exec($curlinsdn);
+                                                                          $datains  = json_decode($response, true);
+                                                                          //echo "<pre>"; print_r($response); echo "</pre>";
+                                                                          curl_close($curlinsdn);
+
+                                                                          //echo $tambah."<br>";
+                                                                          $htquery    = mysqli_query($con, $tambah);
+                                                                          //Update Htransaksi
+                                                                          $kembali1   = "UPDATE pendonor SET tglkembali='$kembali',jumDonor='$jumdonor',mu='$mu',up=b'1',up_data='2',tglkembali_apheresis='$kembali' WHERE Kode='$kodependonor'";
+                                                                          //echo $kembali1."<br>";
+                                                                          $pdquery    = mysqli_query($con, $kembali1);
+                                                                          $ono_kantong0 = substr($id_kantong, 0, -1);
+                                                                          $tambah2    = "UPDATE stokkantong SET Status='1',tgl_Aftap='$tglp1',gol_darah='$GolDarah',RhesusDrh='$Rhesus',produk='WB',sah='0',kodePendonor='$kodependonor',statKonfirmasi='0',kadaluwarsa=(tgl_aftap + interval 35 day),mu='$mu',lama_pengambilan='$lama_pengambilan' WHERE noKantong='$id_kantong'";
+                                                                          //echo $tambah2."<br>";
+                                                                          $skquery    = mysqli_query($con, $tambah2);
+
+                                                                          $tambah4    = "UPDATE htransaksi set donorbaru='1' where NoTrans='$notrans' and donorke > 1 ";
+                                                                          //echo $tambah4."<br>";
+
+
+                                                                          $tambah5    = "UPDATE stokkantong set lama_pengambilan='$lama_pengambilan' WHERE noKantong like '$ono_kantong0%'";
+                                                                          $sk2query    = mysqli_query($con, $tambah5);
+
+
+                                                                          //=======Audit Trial====================================================================================
+                                                                          $log_mdl = 'PENGAMBILAN';
+                                                                          $log_aksi = 'Pengambilan darah: ' . $notrans . ' Pendonor: ' . $kodependonor . ' Kantong: ' . $id_kantong . ' status: ' . $keberhasilan;
+                                                                          $log = mysqli_query($con, "INSERT INTO `user_log` (`komputer`, `user`, `modul`, `aksi_user`,`tempat`, `keterangan`) VALUES
+            ('$client_ip', '$user', '$log_mdl', '$log_aksi','$unit', '')");
+                                                                          //=====================================================================================================
+
+
+                                                                          //echo $tambah5."<br>";
+                                                                          if ($sk2query) { ?>
               <div class="row">
                 <div class="col-lg-12 col-lg-offset-3">
                   <div class="alert alert-success alert-dismissable" role="alert">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <strong>Data Gagal Aftap</strong> Berhasil Entry
+                    <strong>Data Aftap</strong> Berhasil Entry
                   </div>
                 </div>
               </div>
               <META http-equiv="refresh" content="2; url=?page=searchaftap"><?php
 
                                                                           }
-                                                                        } else { //Nomor Kantong Tidak Ada
+                                                                        } else { //Selesai Entry Aftap
                                                                             ?>
             <div class="row">
               <div class="col-lg-12 col-lg-offset-3">
@@ -196,129 +291,28 @@ if ($unit == "" || $id === "") {
               </div>
             </div>
 
-      <?php
+          <?php
                                                                         }
-            
-        
-        
-        
-        
-
-    } else { //jika berhasil
-      $noKantong  = trim(mysqli_real_escape_string($con, $_POST['id_kantong11']));
-      $kantong    = mysqli_query($con, "SELECT * from stokkantong where noKantong ='$noKantong' AND `Status`='0' and StatTempat='1' and kadaluwarsa_ktg >'$today1'");
-      $stok1      = mysqli_fetch_array($kantong);
-      $numkantong = mysqli_num_rows($kantong);
-
-      if ($lama_pengambilan >= 1){
-
-      //jika kantong ada
-      if ($numkantong > 0) { //simpan berhasil
-        $pendonor   = mysqli_query($con, "select * from pendonor where Kode='$kodependonor' ");
-        $pendonor1  = mysqli_fetch_assoc($pendonor);
-        //Update Htransaksi
-        $jumdonor = $pendonor1['jumDonor']+1;
-          
-        $tambah = "UPDATE htransaksi
-                                SET diambil='$volume_darah',reaksi='$reaksi',
-                                    pengambilan='$keberhasilan',catatan='$catatan',ketBatal='-',jeniskantong='$stok1[jenis]',volumekantong='$stok1[volumeasal]',
-                                    nokantong='$id_kantong',petugas='$petugas',
-                                    caraambil='$caraambil',status_test='2',Status='2',mu='$mu',gol_darah='$pendonor1[GolDarah]',jam_ambil='$ambil', jam_selesai='$selesai',rhesus='$pendonor1[Rhesus]',jk='$pendonor1[Jk]',pekerjaan='$pendonor1[Pekerjaan]',umur='$pendonor1[umur]',donorke='$jumdonor', `tempat`='M'
-                                WHERE (Status='1' and NoTrans='$notrans')";
-
-        //CURL DB NASIONAL
-        $curlinsdn = curl_init();
-        curl_setopt_array($curlinsdn, array(
-          CURLOPT_URL => "https://dbdonor.pmi.or.id/pmi/api/simdondar/updatedonorkembali.php",
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => "",
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 5,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => "POST",
-          CURLOPT_POSTFIELDS => array('Kode' => $kodependonor,'tglkembali' => $kembali, 'metode' => 'update', 'pjmldonor' => $jumdonor ),
-        ));
-        $response = curl_exec($curlinsdn);
-        $datains  = json_decode($response, true);
-        //echo "<pre>"; print_r($response); echo "</pre>";
-        curl_close($curlinsdn);        
-
-        //echo $tambah."<br>";
-        $htquery    = mysqli_query($con, $tambah);
-        //Update Htransaksi
-        $kembali1   = "UPDATE pendonor SET tglkembali='$kembali',jumDonor='$jumdonor',mu='$mu',up=b'1',up_data='2',tglkembali_apheresis='$kembali' WHERE Kode='$kodependonor'";
-        //echo $kembali1."<br>";
-        $pdquery    = mysqli_query($con, $kembali1);
-        $ono_kantong0 = substr($id_kantong, 0, -1);
-        $tambah2    = "UPDATE stokkantong SET Status='1',tgl_Aftap='$tglp1',gol_darah='$GolDarah',RhesusDrh='$Rhesus',produk='WB',sah='0',kodePendonor='$kodependonor',statKonfirmasi='0',kadaluwarsa=(tgl_aftap + interval 35 day),mu='$mu',lama_pengambilan='$lama_pengambilan' WHERE noKantong='$id_kantong'";
-        //echo $tambah2."<br>";
-        $skquery    = mysqli_query($con, $tambah2);
-
-        $tambah4    = "UPDATE htransaksi set donorbaru='1' where NoTrans='$notrans' and donorke > 1 ";
-        //echo $tambah4."<br>";
-
-
-        $tambah5    = "UPDATE stokkantong set lama_pengambilan='$lama_pengambilan' WHERE noKantong like '$ono_kantong0%'";
-        $sk2query    = mysqli_query($con, $tambah5);
-         
-          
-          //=======Audit Trial====================================================================================
-         $log_mdl ='PENGAMBILAN';
-         $log_aksi='Pengambilan darah: '.$notrans.' Pendonor: '.$kodependonor.' Kantong: '.$id_kantong.' status: '.$keberhasilan;
-         $log = mysqli_query($con, "INSERT INTO `user_log` (`komputer`, `user`, `modul`, `aksi_user`,`tempat`, `keterangan`) VALUES
-            ('$client_ip', '$user', '$log_mdl', '$log_aksi','$unit', '')");
-         //=====================================================================================================
-          
-        
-        //echo $tambah5."<br>";
-        if ($sk2query) { ?>
-          <div class="row">
-            <div class="col-lg-12 col-lg-offset-3">
-              <div class="alert alert-success alert-dismissable" role="alert">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                <strong>Data Aftap</strong> Berhasil Entry
-              </div>
-            </div>
-          </div>
-          <META http-equiv="refresh" content="2; url=?page=searchaftap"><?php
+                                                                      } else { ?>
+          <script>
+            alert("Durasi pengambilan Salah...!\nPeriksa Jam Ambil dan Jam Selesai");
+          </script>
+      <?php
 
                                                                       }
-                                                                    } else { //Selesai Entry Aftap
-                                                                        ?>
-        <div class="row">
-          <div class="col-lg-12 col-lg-offset-3">
-            <div class="alert alert-danger alert-dismissable" role="alert">
-              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-              <strong>Entry Gagal</strong> Nomor Kantong Tidak Ada!!!
-            </div>
+                                                                    }
+                                                                  } else { ?>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="alert alert-danger alert-dismissable" role="alert">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <strong>Entry Gagal</strong> Silahkan Masukan Nomor Kantong Utama (A)!!!
           </div>
         </div>
-
+      </div>
   <?php
-                                                                    }
-                                                                  } else {?>
-                                                                    <script> alert("Durasi pengambilan Salah...!\nPeriksa Jam Ambil dan Jam Selesai"); </script> 
-                                                              <?php
-                                                                    
                                                                   }
-                                                                  }
-
-                                                                }else{?>
-                                                                  <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                      <div class="alert alert-danger alert-dismissable" role="alert">
-                                                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                                                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                                                                        <strong>Entry Gagal</strong> Silahkan Masukan Nomor Kantong Utama (A)!!!
-                                                                      </div>
-                                                                    </div>
-                                                                  </div>
-                                                              <?php
-                                                                }
-
                                                                 }
 
 
@@ -532,12 +526,12 @@ if ($unit == "" || $id === "") {
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Jam Ambil</span>
+                    <span class="input-group-text">Menit Mulai</span>
                   </div>
                   <input size="6" name="ambil" value="" class="form-control" id="jam_ambil" placeholder="13:00" autocomplete="off" required>
                   </input>
                   <div class="input-group-prepend">
-                    <span class="input-group-text">Jam Selesai</span>
+                    <span class="input-group-text">Menit Selesai</span>
                   </div>
                   <input size="6" name="selesai" class="form-control" value="" id="jam_selesai" autocomplete="off" placeholder="13:20" required>
                   </input>
@@ -548,8 +542,7 @@ if ($unit == "" || $id === "") {
                   <div class="input-group-prepend">
                     <span class="input-group-text">Nomor Kantong</span>
                   </div>
-                  <input name="id_kantong11" id="id_kantong11" onkeypress="search(event)" class="form-control" autocomplete="off" placeholder="Nomor Kantong" required>
-
+                  <input name="id_kantong11" id="id_kantong11" onkeypress="search(event)" class="form-control" autocomplete="off" placeholder="Nomor Kantong" oninput="this.value = this.value.toUpperCase();" required>
                 </div>
               </div>
 
@@ -558,7 +551,7 @@ if ($unit == "" || $id === "") {
                   <div class="input-group-prepend">
                     <span class="input-group-text">Nomor Selang</span>
                   </div>
-                  <input name="no_selang" id="no_selang" onkeypress="search(event)" class="form-control" autocomplete="off" placeholder="Nomor Selang" required>
+                  <input name="no_selang" id="no_selang" onkeypress="search(event)" class="form-control" autocomplete="off" placeholder="Nomor Selang" oninput="this.value = this.value.toUpperCase();" required>
 
                 </div>
               </div>
@@ -724,33 +717,39 @@ if ($unit == "" || $id === "") {
     <script src="plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 
     <script>
-function search(event) {
-  let value= event.which;
-  if(value === 13){
-      //onkeydown="return event.key != 'Enter';"
-      //call your function or anything else
-      
-      getkantong = document.getElementById("id_kantong11").value;
-      
-      
-      $.ajax({
-          method:"POST",
-          url:"carinoselang.php",
-          data: {ktg : getkantong},
-          success:function(server_response){
-             document.ambildarah.no_selang.value = server_response;
-                          
-       }
-      });
-      //alert('Nomor Kantong : ' + getkantong);
-      document.getElementById("no_selang").focus();
-  }
-}
-    
-</script>
+      function search(event) {
+        let value = event.which;
+        if (value === 13) {
+          //onkeydown="return event.key != 'Enter';"
+          //call your function or anything else
 
-    <!-- Page specific script -->
-    <script>
+          getkantong = document.getElementById("id_kantong11").value;
+
+
+          $.ajax({
+            method: "POST",
+            url: "carinoselang.php",
+            data: {
+              ktg: getkantong
+            },
+            success: function(server_response) {
+              document.ambildarah.no_selang.value = server_response;
+
+            }
+          });
+          //alert('Nomor Kantong : ' + getkantong);
+          document.getElementById("no_selang").focus();
+        }
+      }
+
+      $(document).ready(function() {
+        $("#jam_ambil").focus();
+        $('#jam_ambil, #jam_selesai').inputmask("99:99", {
+          placeholder: "mm:dd",
+          insertMode: false
+        });
+      });
+
       $(function() {
         //Initialize Select2 Elements
         $('.select2').select2()
@@ -899,10 +898,7 @@ function search(event) {
         myDropzone.removeAllFiles(true)
       }
       // DropzoneJS Demo Code End
-    </script>
-    <!-- Page specific script -->
-
-    <script>
+      
       $(function() {
         $("#example1").DataTable({
           "responsive": true,
@@ -921,8 +917,7 @@ function search(event) {
           "responsive": true,
         });
       });
-    </script>
-    <script type="text/javascript">
+      
       $(document).on("click", "#batal", function() {
         var id = $(this).data('id');
 

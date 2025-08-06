@@ -27,33 +27,33 @@
 <form name="transaksi"  method="post" action="<?=$PHPSELF?>">
   <table class="form" border="0" cellspacing="1" cellpadding="2" width="100%">
     <tr>
-	<td width=120>Pengirim/Supplier</td><td class="input" >: <?=$h[supplier]?></td>
-	<td width=130>Nomor Transaksi</td><td width=150 class="input">: <?=$h[notrans]?></td>
+	<td width=120 style="color: black;">Kode Supplier</td><td class="input" >: <?=$h[supplier]?></td>
+	<td width=130 style="color: black;">Nomor Transaksi</td><td width=150 class="input">: <?=$h[notrans]?></td>
     </tr>
     <tr>
-	<td></td><td class="input">: <?=$h[Nama]?></td>
-	<td>Tanggal</td><td class="input">: <?=$h[tanggal]?></td>
+	<td width=120 style="color: black;">Nama Supplier</td><td class="input">: <?=$h[Nama]?></td>
+	<td style="color: black;">Tanggal</td><td class="input">: <?=$h[tanggal]?></td>
     </tr>
     <tr>
-	<td>Alamat</td><td class="input" >: <?=$h[Alamat]?></td>
-	<td>Tanggal Jatuh Tempo</td><td class="input">: <?=$h[jatuhtempo]?></td>
+	<td style="color: black;">Alamat</td><td class="input" >: <?=$h[Alamat]?></td>
+	<td style="color: black;">Tanggal Jatuh Tempo</td><td class="input">: <?=$h[jatuhtempo]?></td>
     </tr>
     <tr>
-	<td>Referensi</td><td class="input">: <?=$h[noreferensi]?></td>
-	<td>Nomor PO</td><td class="input">: <?=$h[po]?></td>
+	<td style="color: black;">Referensi</td><td class="input">: <?=$h[noreferensi]?></td>
+	<td style="color: black;">Nomor PO</td><td class="input">: <?=$h[po]?></td>
     </tr>
     <table class="list" border="1" cellspacing="0" cellpadding="4" width="100%">
       <tr class="field">
-	<td align="center">No</td>
-	<td align="center">Kode</td>
-	<td align="center">Nama Barang</td>
-	<td align="center">No.Lot</td>
-	<td align="center">ED</td>
-	<td align="center">Jml</td>
-	<td align="center">Satuan</td>
-	<td align="center">Harga<br>Satuan</td>
-	<td align="center">Disc<br>(%)</td>
-	<td align="center">Total</td>
+	<td align="center" style="color: black;">No</td>
+	<td align="center" style="color: black;">Kode</td>
+	<td align="center" style="color: black;">Nama Barang</td>
+	<td align="center" style="color: black;">No.Lot</td>
+	<td align="center" style="color: black;">ED</td>
+	<td align="center" style="color: black;">Jml</td>
+	<td align="center" style="color: black;">Satuan</td>
+	<td align="center" style="color: black;">Harga<br>Satuan</td>
+	<td align="center" style="color: black;">Disc<br>(%)</td>
+	<td align="center" style="color: black;">Total</td>
       </tr>
       <?
       $no=0;
@@ -100,7 +100,7 @@
   $total2=number_format($total2,2,',','.');
   ?>
   <tr class="field">
-    <td colspan=9 align="right" >Sub Total</td><td class="input" align="right"><?=$subtotal2?></td>
+    <td colspan=9 align="right" style="color: black;">Sub Total</td><td class="input" align="right" style="color: black;"><?=$subtotal2?></td>
   </tr> 
   <tr class="record">
     <td colspan=9 align="right">Potongan</td><td class="input" align="right"><?=$potongan?></td>
@@ -112,20 +112,22 @@
     <td colspan=9 align="right">Biaya</td><td class="input" align="right"><?=$biaya?></td>
   </tr>
   <tr class="field">
-    <td colspan=9 align="right">TOTAL</td><td class="input" align="right"><?=$total2?></td>
+    <td colspan=9 align="right" style="color: black;">TOTAL</td><td class="input" align="right" style="color: black;"><?=$total2?></td>
   </tr>
 </table>
 </table><br>
 <table class="list" border="0" cellspacing="1" cellpadding="2" width="100%">
     <tr>
         <td align="center" valign="top">Disahkan Oleh,<br><br><br></td>
-        <td align="center" valign="top">Penerima,</td>
+        <td align="center" valign="top">Penyedia,</td>
         <td align="center" valign="top">Petugas Logistik UDD,</td>
     </tr>
   <tr>
-    <td align="center" class="input" >(......................)</td>
-    <td align="center" class="input" >(<?=$h[namaCp]?>)</td>
-    <td align="center" class="input" >(<?=$h[petugas]?>)</td>
+      <td align="center" class="input">(......................)</td>
+      <!-- <td align="center" class="input">(<?= $h[namaCp] ?>)</td> -->
+      <td align="center" class="input">(......................)</td>
+      <!-- <td align="center" class="input">(<?= $h[petugas] ?>)</td> -->
+      <td align="center" class="input">(......................)</td>
   </tr>
 </table>
 </form>

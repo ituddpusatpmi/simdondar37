@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hapus_id'])) {
 		ATAU 
 		KELIMA: #fce9e9
 		*/
+
     h2 {
         color: rgb(169, 8, 8);
     }
@@ -572,6 +573,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['hapus_id'])) {
 							<label for="editVolume" class="form-label">Volume Kantong</label>
 							<input type="text" class="form-control" id="editVolume" name="volume" required>
 						</div> -->
+
                             <h6>Master Data*</h6>
                             <div class="row mb-3">
                                 <div class="col-md">

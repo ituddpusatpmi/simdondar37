@@ -22,8 +22,10 @@ $bdrs=mysql_fetch_assoc(mysql_query("select nama from bdrs where kode = '$src_bd
 <h3>Dari Tanggal : <?=$today?>  s/d <?=$today1?></h1>
 
 
-<?
-$transaksipermintaan=mysql_query("select k.nokantong,k.tgl,s.jenis,s.gol_darah,s.produk,s.volume,s.RhesusDrh,s.tgl_Aftap,s.kadaluwarsa,s.tglperiksa,k.bdrs,s.tgl_keluar,k.petugas,k.status,k.tglkembali from stokkantong as s, kirimbdrs as k where CAST(k.tgl as date) >='$today' and CAST(k.tgl as date) <='$today1' and s.noKantong=k.nokantong and k.bdrs like '%$src_bdrs%' and s.produk like '%$src_produk%' and s.gol_darah like '$src_golongan%' and RhesusDrh like '%$src_rhesus%' and k.status like '%$src_status%' order by k.tgl ASC  ");
+<?php
+//$transaksipermintaan=mysql_query("select k.nokantong,k.tgl,s.jenis,s.gol_darah,s.produk,s.volume,s.RhesusDrh,s.tgl_Aftap,s.kadaluwarsa,s.tglperiksa,k.bdrs,s.tgl_keluar,k.petugas,k.status,k.tglkembali from stokkantong as s, kirimbdrs as k where CAST(k.tgl as date) >='$today' and CAST(k.tgl as date) <='$today1' and s.noKantong=k.nokantong and k.bdrs like '%$src_bdrs%' and s.produk like '%$src_produk%' and s.gol_darah like '$src_golongan%' and RhesusDrh like '%$src_rhesus%' and k.status like '%$src_status%' order by k.tgl ASC  ");
+$transaksipermintaan=mysql_query("select k.nokantong,k.tgl,s.noSelang,s.jenis,s.gol_darah,s.produk,s.RhesusDrh,s.volume,s.tgl_Aftap,s.kadaluwarsa,s.tglperiksa,k.bdrs,s.tgl_keluar,k.petugas,k.status,k.tglkembali from stokkantong as s, kirimbdrs as k where CAST(k.tgl as date) >='$today' and CAST(k.tgl as date) <='$today1' and s.noKantong=k.nokantong and (k.bdrs like '%$src_bdrs%' OR k.bdrs IS NULL) and (s.produk like '%$src_produk%' OR s.produk IS NULL) and (s.gol_darah like '$src_golongan%' OR s.gol_darah IS NULL) and (s.RhesusDrh like '%$src_rhesus%' OR s.RhesusDrh IS NULL) and (k.status like '%$src_status%' OR k.status IS NULL) order by k.tgl ASC  ");
+
 
 //gol darah
 $gola=mysql_query("select k.nokantong,k.tgl,s.jenis,s.gol_darah,s.produk,s.RhesusDrh,s.tgl_Aftap,s.kadaluwarsa,s.tglperiksa,k.bdrs,s.tgl_keluar,k.petugas,k.status,k.tglkembali from stokkantong as s, kirimbdrs as k where CAST(k.tgl as date) >='$today' and CAST(k.tgl as date) <='$today1' and s.noKantong=k.nokantong and k.bdrs like '%$src_bdrs%' and s.produk like '%$src_produk%' and s.gol_darah='A' and RhesusDrh like '%$src_rhesus%' and k.status like '%$src_status%' order by k.tgl ASC  ");

@@ -220,59 +220,45 @@
                                 </div>
                             </div>
                             <hr>
-                            <!-- Multilevel -->
-<div class="form-group">
-    <label class="control-label col-sm-2" for="leveluser">Multilevel:</label>
-    <div class="col-sm-10">
-        <div class="row">
-            <?php
-            $tampil = mysqli_query($dbi, "SELECT * FROM `level` ORDER BY `urutan` ASC");
-            $count = 0;
-            while ($r = mysqli_fetch_array($tampil)) {
-                $checked = in_array($r['level'], $multi_level) ? 'checked' : '';
-                echo '<div class="col-sm-4">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="multilevel[]" value="' . $r['level'] . '" ' . $checked . '> ' . $r['level'] . '
-                            </label>
-                          </div>
-                      </div>';
-                $count++;
-            }
-            ?>
-        </div>
-    </div>
-</div>
-<hr/>
-
-<!-- Multi Bagian -->
-<div class="form-group">
-    <label class="control-label col-sm-2" for="multibagian">Multi Bagian:</label>
-    <div class="col-sm-10">
-
-        <div class="row" id="multiBagianContainer" style="max-height: 300px; overflow: hidden;">
-            <?php
-            $tampil = mysqli_query($dbi, "SELECT kode, nama FROM supplier WHERE jenis='2' ORDER BY nama");
-            while ($r = mysqli_fetch_array($tampil)) {
-                $checked = in_array($r['kode'], $multi_bagian) ? 'checked' : '';
-                echo '<div class="col-sm-4">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="multibagian[]" value="' . $r['kode'] . '" ' . $checked . '> ' . $r['nama'] . '
-                            </label>
-                          </div>
-                      </div>';
-            }
-            ?>
-        </div>
-
-        <!-- Tombol lihat lebih banyak -->
-        <div class="text-right" style="margin-top: 10px;">
-            <a href="javascript:void(0);" id="toggleMultiBagian">Lihat lebih banyak</a>
-        </div>
-
-    </div>
-</div>                        <div class="panel-footer text-center">
+                            <div class="row" style="margin-top: 20px;">
+                                <div class="col-xs-12">
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="leveluser">Multilevel:</label>
+                                        <div class="col-sm-10">
+                                            <select data-placeholder="Piih salah satu bagian" class="chosen-select form-control" multiple tabindex="9" name="multilevel[]">
+                                            <?php     
+                                            $tampil=mysqli_query($dbi,"SELECT * FROM `level` order by `urutan` asc");
+                                            while($r=mysqli_fetch_array($tampil)){
+                                                if (in_array($r['level'], $multi_level)){
+                                                    echo '<option value="'.$r['level'].'" SELECTED>'.$r['level'].'</option>';
+                                                }else{
+                                                    echo '<option value="'.$r['level'].'">'.$r['level'].'</option>';
+                                                }
+                                            }?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-2" for="multibagian">Multi Bagian</label>
+                                        <div class="col-sm-10">
+                                            <select data-placeholder="Pilih bagian2 yang dikerjakan" class="chosen-select form-control" tabindex="10" multiple name="multibagian[]">
+                                            <?php     
+                                            $tampil=mysqli_query($dbi,"select kode,nama from supplier where jenis='2' order by nama");
+                                            while($r=mysqli_fetch_array($tampil)){
+                                                if (in_array($r['kode'], $multi_bagian)){
+                                                    echo '<option value="'.$r['kode'].'" SELECTED>'.$r['nama'].'</option>';
+                                                }else{
+                                                    echo '<option value="'.$r['kode'].'">'.$r['nama'].'</option>';
+                                                }
+                                            }?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer text-center">
                             <input type="submit" value="Simpan"    class="btn btn-success shadow" name="submit">
                             <a href="pmiadmin.php?module=aturuser" class="btn btn-warning shadow">Kembali</a>
                         </div>
@@ -287,22 +273,3 @@
   <script src="bootsrap337/chosen/chosen.jquery.js" type="text/javascript"></script>
   <script src="bootsrap337/chosen/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
   <script src="bootsrap337/chosen/docsupport/init.js" type="text/javascript" charset="utf-8"></script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const container = document.getElementById("multiBagianContainer");
-        const toggleLink = document.getElementById("toggleMultiBagian");
-        let expanded = false;
-
-        toggleLink.addEventListener("click", function () {
-            if (!expanded) {
-                container.style.maxHeight = "1000px"; // atau 'none' jika ingin benar-benar bebas
-                toggleLink.textContent = "Sembunyikan";
-            } else {
-                container.style.maxHeight = "300px";
-                toggleLink.textContent = "Lihat lebih banyak";
-            }
-            expanded = !expanded;
-        });
-    });
-</script>

@@ -16,13 +16,17 @@ if ($_GET[aksi]=='hapus'){
 
 if (isset($_POST[submit1])) {
     $_POST[submit1]="";
-    $tambah=mysql_query("INSERT INTO `rmhsakit` (`Kode`,`NamaRs`,`AlamatRS`,`telp`,`wilayah`)
+    $tambah = mysql_query("INSERT INTO `rmhsakit` (`Kode`,`NamaRs`,`AlamatRS`,`telp`,`wilayah`)
                 values ('$_POST[Kode]','$_POST[NamaRs]','$_POST[AlamatRS]',
                         '$_POST[telp]','$_POST[wilayah]')
                 on duplicate key
                 update `Kode`='$_POST[Kode]',`NamaRs`='$_POST[NamaRs]',`AlamatRS`='$_POST[AlamatRS]',
                         `telp`='$_POST[telp]',`wilayah`='$_POST[wilayah]'
                         ");
+    $tambahbdrs = mysql_query("INSERT INTO `bdrs` (`kode`,`nama`)
+    values ('$_POST[Kode]','$_POST[NamaRs]')
+    on duplicate key
+    update `kode`='$_POST[Kode]',`nama`='$_POST[NamaRs]'");
 }
 if ($tambah) 
     echo ("Rumah sakit telah ditambahkan !!

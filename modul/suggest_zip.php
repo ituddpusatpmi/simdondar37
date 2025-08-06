@@ -15,7 +15,7 @@ if ( $rs && mysql_num_rows($rs) )
     while( $row = mysql_fetch_array($rs, MYSQL_ASSOC) )
     {
         $data[] = array(
-            'label' => $row['nama'] .', '. $row['KodeDetail'] ,
+            'label' => $row['nama'] . ', ' . $row['alamat'] . ' - ' . $row['KodeDetail'],
             'value' => $row['KodeDetail']
         );
     }

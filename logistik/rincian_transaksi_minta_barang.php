@@ -15,8 +15,11 @@ $h = mysql_fetch_assoc(mysql_query("select hstok_order.notrans, hstok_order.tang
 					    hstok_order.catatanlain, hstok_order.subtotal, hstok_order.potongan,
 					    hstok_order.ppn, hstok_order.biayalain, hstok_order.total,
 					    hstok_order.petugas, hstok_order.supplier,
-					    supplier.Kode, supplier.Nama, supplier.Alamat, supplier.Telp1, supplier.namaCp
-				    from hstok_order left join supplier on supplier.Kode=hstok_order.supplier
+					    supplier.Kode, supplier.Nama, supplier.Alamat, supplier.Telp1, supplier.namaCp,
+                        user.id_user, user.nama_lengkap As userNamaLengkap
+				    from hstok_order 
+                    	left join supplier on supplier.Kode=hstok_order.supplier
+                        left join user on user.id_user=hstok_order.petugas
 				    where hstok_order.notrans='$_GET[notrans]'"));
 $utd = mysql_fetch_assoc(mysql_query("select nama from utd where aktif=1"));
 
@@ -104,7 +107,7 @@ $utd = mysql_fetch_assoc(mysql_query("select nama from utd where aktif=1"));
       <tr>
         <td align="center" class="input">(______________________)</td>
         <td align="center" class="input">(______________________)</td>
-        <td align="center" class="input">(<?= $h[petugas] ?>)</td>
+        <td align="center" class="input">( <?= $h[userNamaLengkap] ?> )</td>
       </tr>
     </table>
   </form>

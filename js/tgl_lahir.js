@@ -1,7 +1,7 @@
 // Datepicker
 $(function(){
     $( "#datepicker" ).datepicker({
-    yearRange: '1950:2030',
+    yearRange: '1940:2030',
     dateFormat: 'yy-mm-dd', 
     changeMonth: true,
     changeYear: true

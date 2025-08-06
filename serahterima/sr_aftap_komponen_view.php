@@ -88,37 +88,41 @@
     </tr>
 </table>
 <?
-$sql_d="SELECT `dst_iddetail`, `dst_no_aftap`, `dst_tglaftap`, `dst_notrans`, `dst_nokantong`,
+ $sql_d = "SELECT sd.`dst_iddetail`, sd.`dst_no_aftap`, sd.`dst_tglaftap`, sd.`dst_notrans`, sd.`dst_nokantong`,
         CASE
-        WHEN (`dst_statusktg`='1' and `dst_sahktg`='0') THEN 'Aftap'
-        WHEN (`dst_statusktg`='1' and `dst_sahktg`='1') THEN 'Karantina'
-        WHEN (`dst_statusktg`='2') THEN 'Sehat'
-        WHEN (`dst_statusktg`='3') THEN 'Keluar'
-        WHEN (`dst_statusktg`='4') THEN 'Reaktif-Rusak'
-        WHEN (`dst_statusktg`='5') THEN 'Rusak-gagal'
-        WHEN (`dst_statusktg`='6') THEN 'Rusak-Dimusnahkan'
+        WHEN (sd.`dst_statusktg`='1' and sd.`dst_sahktg`='0') THEN 'Aftap'
+        WHEN (sd.`dst_statusktg`='1' and sd.`dst_sahktg`='1') THEN 'Karantina'
+        WHEN (sd.`dst_statusktg`='2') THEN 'Sehat'
+        WHEN (sd.`dst_statusktg`='3') THEN 'Keluar'
+        WHEN (sd.`dst_statusktg`='4') THEN 'Reaktif-Rusak'
+        WHEN (sd.`dst_statusktg`='5') THEN 'Rusak-gagal'
+        WHEN (sd.`dst_statusktg`='6') THEN 'Rusak-Dimusnahkan'
         ELSE 'Tidak ada' end as `dst_statusktg`,
-        `st_statusktg_new`, `dst_old_position`, `dst_new_position`,
-        `dst_sahktg_new`, `dst_merk`, `dst_golda`, `dst_rh`, `dst_kodedonor`, `dst_berat`, `dst_volumektg`,
-        CASE
-        WHEN (`dst_jenisktg`='1') THEN 'Single'
-        WHEN (`dst_jenisktg`='2') THEN 'Double'
-        WHEN (`dst_jenisktg`='3') THEN 'Tiple'
-        WHEN (`dst_jenisktg`='4') THEN 'Quadruple'
-        WHEN (`dst_jenisktg`='6') THEN 'Pediatrik'
-        END AS `dst_jenisktg`,
-        CASE WHEN `dst_sample`='1' THEN 'Sesuai' ELSE 'Tdk Sesuai' END AS `dst_sample`,
-        CASE WHEN `dst_sah`='1' THEN 'Sesuai' ELSE 'Tdk Sesuai' END AS `dst_sah`,
-        CASE WHEN `dst_lamabaru`='0' THEN 'Baru' ELSE 'Lama' END AS `dst_lamabaru`,
-        CASE WHEN `dst_kel`='0' THEN 'LK' ELSE 'PR' END AS `dst_kel`,
-        CASE WHEN `dst_dsdp`='0' THEN 'DS' ELSE 'DP' END AS `dst_dsdp`,
+        sd.`st_statusktg_new`, sd.`dst_old_position`, sd.`dst_new_position`,
+        sd.`dst_sahktg_new`, sd.`dst_merk`, sd.`dst_golda`, sd.`dst_rh`, sd.`dst_kodedonor`, sd.`dst_berat`, sd.`dst_volumektg`,
+           CASE
+        WHEN sd.`dst_jenisktg` = '1' THEN 'SB'
+        WHEN sd.`dst_jenisktg` = '2' THEN 'DB'
+        WHEN sd.`dst_jenisktg` = '3' AND st.`jenis` = '3' AND (st.`metoda` IS NULL OR st.`metoda` = '') THEN 'TR'
+        WHEN sd.`dst_jenisktg` = '3' AND st.`jenis` = '3' AND st.`metoda` = 'TB' THEN 'TB'
+        WHEN sd.`dst_jenisktg` = '4' THEN 'QD'
+        WHEN sd.`dst_jenisktg` = '5' AND st.`jenis` = '5' AND st.`metoda` = 'TTF' THEN 'LR'
+        WHEN sd.`dst_jenisktg` = '5' AND st.`jenis` = '5' AND st.`metoda` = 'TT' THEN 'NLR'
+        WHEN sd.`dst_jenisktg` = '6' THEN 'PB' END AS `dst_jenisktg`,
+        CASE WHEN sd.`dst_sample`='1' THEN 'Sesuai' ELSE 'Tdk Sesuai' END AS `dst_sample`,
+        CASE WHEN sd.`dst_sah`='1' THEN 'Sesuai' ELSE 'Tdk Sesuai' END AS `dst_sah`,
+        CASE WHEN sd.`dst_lamabaru`='0' THEN 'Baru' ELSE 'Lama' END AS `dst_lamabaru`,
+        CASE WHEN sd.`dst_kel`='0' THEN 'LK' ELSE 'PR' END AS `dst_kel`,
+        CASE WHEN sd.`dst_dsdp`='0' THEN 'DS' ELSE 'DP' END AS `dst_dsdp`,
 	CASE
-        WHEN (`dst_statuspengambilan`='0') THEN 'Berhasil'
-        WHEN (`dst_statuspengambilan`='1') THEN 'Batal'
-        WHEN (`dst_statuspengambilan`='2') THEN 'Gagal'
+        WHEN (sd.`dst_statuspengambilan`='0') THEN 'Berhasil'
+        WHEN (sd.`dst_statuspengambilan`='1') THEN 'Batal'
+        WHEN (sd.`dst_statuspengambilan`='2') THEN 'Gagal'
         END AS `dst_statuspengambilan`,
-        `dst_umur`, `dst_lama_aftap`, `dst_ptgaftap`, `dst_volambil` FROM `serahterima_detail`
-        WHERE `dst_notrans`='$notransaksi'";
+        sd.`dst_umur`, sd.`dst_lama_aftap`, sd.`dst_ptgaftap`, sd.`dst_volambil` 
+        FROM `serahterima_detail` sd
+        LEFT JOIN `stokkantong` st ON sd.`dst_nokantong` = st.`noKantong`
+        WHERE sd.`dst_notrans`='$notransaksi'";
 //echo "$sql_d<br>";
 $sql_d1=mysql_query($sql_d);
 ?>
@@ -210,7 +214,7 @@ $penerima2   = $usr3['nama_lengkap'];
     </tr>
     <tr style="font-size:14px; color:#000000; font-family:'trebuchet ms', Impact, Arial, Helvetica, sans-serif;">
         <td nowrap>Petugas Penerima Bag IMLTD</td>
-        <td nowrap><?php echo $sql_h1['hst_penerima2']; ?></td>
+        <td nowrap><?php echo $penerima2; ?></td>
     </tr>
 </table>
 <br>

@@ -257,11 +257,7 @@ $dokter=mysql_fetch_assoc(mysql_query("select Nama from dokter_periksa where kod
 ?>
 	<td class=input><?=$dokter[Nama]?></td>
 
-<?
-$dokter=mysql_fetch_assoc(mysql_query("select Nama from dokter_periksa where kode='$datatransaksipermintaan[NamaDokter]'"));
-?>
-	<td class=input><?=$dokter[Nama]?></td>
-        <!-- <td align="center"><?=$datatransaksipermintaan['petugasTensi']?></td> -->
+        <td align="center"><?=$datatransaksipermintaan['petugasTensi']?></td>
 	<td align="center"><?=$datatransaksipermintaan['petugasHB']?></td>
 	<!--? 	
 	$kantong1=mysql_query("select * from stokkantong where NoKantong='$datatransaksipermintaan[NoKantong]'");
