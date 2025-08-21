@@ -46,7 +46,7 @@ $infoklinis     = (isset($_POST['infoklinis'])) ? 1 : 0;
 
 $utd            =mysql_fetch_assoc(mysql_query("select upper(`nama`) as `nama` from `utd` where `aktif`='1'"));
 $utd            =$utd['nama'];
-$ck             =mysql_fetch_assoc(mysql_query("SELECT h.`shift` FROM `stokkantong` s LEFT JOIN `htransaksi` h on s.`noKantong`=h.`NoKantong` WHERE s.`noKantong`='$_POST[nomorkantong]'"));
+$ck=mysql_fetch_assoc(mysql_query("SELECT h.`shift` FROM `stokkantong` s LEFT JOIN `htransaksi` h on s.`noKantong`=h.`NoKantong` WHERE s.`noKantong`='$_POST[nomorkantong]'"));
 //echo "$notransaksi";
 
 if(isset($_POST['nomorkantong'])){
@@ -106,18 +106,18 @@ if(isset($_POST['nomorkantong'])){
         dst_stat_receive2='$srstat',
         dst_date_receive2='$today',
         dst_shift_receive2='$ck[shift]',
-        simltd	= '$simltd',
-        skgd	= '$skgd',
-        snat	= '$snat',
-        packing	= '$pack',
-        label	= '$label',
-        splasma	= '$splasma',
-        sserum	= '$sserum',
-        swb	= '$swb',
-        volket	= '$volckp',
-        lisis	= '$lisis',
-        dokumen	= '$dokumen',
-        infoklinis= '$infoklinis'
+	simltd	= '$simltd',
+	skgd	= '$skgd',
+	snat	= '$snat',
+	packing	= '$pack',
+	label	= '$label',
+	splasma	= '$splasma',
+	sserum	= '$sserum',
+	swb	= '$swb',
+	volket	= '$volckp',
+	lisis	= '$lisis',
+	dokumen	= '$dokumen',
+	infoklinis= '$infoklinis'
         WHERE
         dst_notrans='$notransaksi' AND
         dst_nokantong='$_POST[nomorkantong]'");
@@ -290,7 +290,7 @@ $sql_h1=mysql_fetch_assoc(mysql_query($sql_h));
 			<input type="checkbox" checked="checked" name="skgd"/>
                         <label class="control control-checkbox">Sampel KGD/ABS
                             <div class="control_indicator"></div></label>
-			<input type="checkbox" checked="checked" name="snat"/>
+			<input type="checkbox" name="snat"/>
 			<label class="control control-checkbox">Sample NAT
                             <div class="control_indicator"></div></label>
 </td>

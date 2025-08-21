@@ -234,6 +234,7 @@ $bidangList = array(
     <tr>
         <th>No</th>
         <th>Nama Dokumen</th>
+	<th>Format</th>
         <th>Bidang</th>
         <th>File</th>
         <th>Aksi</th>
@@ -244,11 +245,14 @@ $bidangList = array(
     while ($row = mysql_fetch_assoc($res)) {
         $preview = preg_match('/\\.pdf$/i', $row['nama_file'])
                    ? "<a href='{$row['lokasi_file']}' target='_blank'>Preview</a>"
-                   : "<span style='color:gray'>Tidak tersedia</span>";
+                   : "<span style='color:gray'>Preview Tidak tersedia</span>";
+
+	$format = strtoupper(pathinfo($row['nama_file'], PATHINFO_EXTENSION));
 
         echo "<tr>
                 <td>$no</td>
                 <td>{$row['nama_dokumen']}</td>
+		<td>$format</td>
                 <td>{$row['bidang']}</td>
                 <td><a href='{$row['lokasi_file']}' target='_blank'>Download</a></td>
                 <td class='actions'>

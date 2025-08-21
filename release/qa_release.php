@@ -288,7 +288,12 @@ if(isset($_POST['Button']))  {
     if ($mode_kembali==1){
         echo "<meta http-equiv='refresh' content='2;url=pmiqa.php?module=timbang'>";
     } else{
-        echo "<meta http-equiv='refresh' content='2;url=qa_label_cetak.php?noKantong=$nkt'>";
+	//sebelumnya
+        // echo "<meta http-equiv='refresh' content='2;url=qa_label_cetak.php?noKantong=$nkt'>";
+	//diganti
+        $tipe_barcode='C128';
+        //?kantong='.$v_kantong.'&tipe='.$v_barcodetipe
+        echo "<meta http-equiv='refresh' content='2;url=release/qa_release_label_90cm.php?kantong=$nkt&tipe=C128'>";
     }
 } //post
     ?>
@@ -316,10 +321,10 @@ if(isset($_POST['Button']))  {
         <? include "release/qa_release_komponen.php";?>
     </div>
 
-    <div id="trace" class="tabcontent">
+    <!--div id="trace" class="tabcontent">
         <font size="4" color=00008B><br>REKAM JEJAK KANTONG</font><br>
-        <? include "release/qa_release_trace.php";?>
-    </div>
+        <? //include "release/qa_release_trace.php";?>
+    </div-->
 
     <div id="history" class="tabcontent">
         <? include "release/qa_release_periksa_last.php";?>
@@ -333,7 +338,7 @@ if(isset($_POST['Button']))  {
         <table width="100%" cellpadding="1" cellspacing="1">
                 <tr><td valign="top">Identitas dan pemakaian kantong darah sesuai spesifikasi
         <td>
-                       <input type="radio" required=""  id="spek_kantong1" name="spek_kantong" value="1"   checked>
+                       <input type="radio" required=""  id="spek_kantong1" name="spek_kantong" value="1" checked>
                               <label for="spek_kantong1">Ya</label>
                <input type="radio" required="" id="spek_kantong2" name="spek_kantong" value="0"  >
                               <label for="spek_kantong2">Tidak</label>
@@ -343,7 +348,7 @@ if(isset($_POST['Button']))  {
 
         <tr><td valign="top">Seleksi donor memenuhi kriteria</td>
         <td>
-                       <input type="radio" required=""  id="seleksi1" name="seleksi" value="1"   checked>
+                       <input type="radio" required=""  id="seleksi1" name="seleksi" value="1"  checked>
                               <label for="seleksi1">Ya</label>
                <input type="radio" required="" id="seleksi2" name="seleksi" value="0"  >
                               <label for="seleksi2">Tidak</label>
@@ -352,7 +357,7 @@ if(isset($_POST['Button']))  {
 
         <tr><td valign="top">Waktu pengambilan terpenuhi</td>
         <td>
-                       <input type="radio" required=""  id="waktu_aftap1" name="waktu_aftap" value="1"   checked>
+                       <input type="radio" required=""  id="waktu_aftap1" name="waktu_aftap" value="1"  checked>
                               <label for="waktu_aftap1">Ya</label>
                <input type="radio" required="" id="waktu_aftap2" name="waktu_aftap" value="0"  >
                               <label for="waktu_aftap2">Tidak</label>
@@ -361,7 +366,7 @@ if(isset($_POST['Button']))  {
 
         <tr><td valign="top">Waktu selesai pengolahan terpenuhi</td>
         <td>
-                       <input type="radio" required=""  id="waktu_komponen1" name="waktu_komponen" value="1"   checked>
+                       <input type="radio" required=""  id="waktu_komponen1" name="waktu_komponen" value="1"  checked>
                               <label for="waktu_komponen1">Ya</label>
                <input type="radio" required="" id="waktu_komponen2" name="waktu_komponen" value="0"  >
                               <label for="waktu_komponen2">Tidak</label>
@@ -370,7 +375,7 @@ if(isset($_POST['Button']))  {
 
         <tr><td valign="top">Pemeriksaan donasi sebelumnya terpenuhi (bila ada)</td>
         <td>
-                       <input type="radio" required=""  id="jejak_imltd1" name="jejak_imltd" value="1"   checked>
+                       <input type="radio" required=""  id="jejak_imltd1" name="jejak_imltd" value="1"  checked>
                               <label for="jejak_imltd1">Ya</label>
                <input type="radio" required="" id="jejak_imltd2" name="jejak_imltd" value="0"  >
                               <label for="jejak_imltd2">Tidak</label>
@@ -379,7 +384,7 @@ if(isset($_POST['Button']))  {
 
         <tr><td valign="top">Hasil pemeriksaan memenuhi spesifikasi</td>
         <td>
-                       <input type="radio" required="" id="imltd_ok1" name="imltd_ok" value="1"   checked>
+                       <input type="radio" required="" id="imltd_ok1" name="imltd_ok" value="1"  checked>
                               <label for="imltd_ok1">Ya</label>
                <input type="radio" required="" id="imltd_ok2" name="imltd_ok" value="0"  >
                               <label for="imltd_ok2">Tidak</label>
@@ -388,7 +393,7 @@ if(isset($_POST['Button']))  {
 
         <tr><td valign="top">Tidak ada tanda-tanda visual kebocoran kantong</td>
         <td>
-                       <input type="radio" required="" id="bocor1" name="bocor" value="1"   checked>
+                       <input type="radio" required="" id="bocor1" name="bocor" value="1"  checked>
                               <label for="bocor1">Ya</label>
                <input type="radio" required="" id="bocor2" name="bocor" value="0"  >
                               <label for="bocor2">Tidak</label>
@@ -397,7 +402,7 @@ if(isset($_POST['Button']))  {
 
         <tr><td valign="top">Kode unik sesuai dengan spesifikasi</td>
         <td>
-                       <input type="radio" required="" id="kode_unik1" name="kode_unik" value="1"   checked>
+                       <input type="radio" required="" id="kode_unik1" name="kode_unik" value="1"  checked>
                               <label for="kode_unik1">Ya</label>
                <input type="radio" required="" id="kode_unik2" name="kode_unik" value="0"  >
                               <label for="kode_unik2">Tidak</label>
@@ -406,7 +411,7 @@ if(isset($_POST['Button']))  {
 
         <tr><td valign="top">Selang kantong sesuai dengan spesifikasi</td>
         <td>
-                       <input type="radio" required="" id="selang1" name="selang" value="1"  checked >
+                       <input type="radio" required="" id="selang1" name="selang" value="1"  checked>
                               <label for="selang1">Ya</label>
                <input type="radio" required="" id="selang2" name="selang" value="0"  >
                               <label for="selang2">Tidak</label>
@@ -415,7 +420,7 @@ if(isset($_POST['Button']))  {
 
         <tr><td valign="top">Tidak ada Hemolysis</td>
         <td>
-                       <input type="radio" required="" id="hemolysis1" name="hemolysis" value="1"   checked>
+                       <input type="radio" required="" id="hemolysis1" name="hemolysis" value="1"  checked>
                               <label for="hemolysis1">Ya</label>
                <input type="radio" required="" id="hemolysis2" name="hemolysis" value="0"  >
                               <label for="hemolysis2">Tidak</label>
@@ -424,7 +429,7 @@ if(isset($_POST['Button']))  {
 
         <tr><td valign="top">Tidak Lipemik</td>
         <td>
-                       <input type="radio" required="" id="lipemik1" name="lipemik" value="1"   checked>
+                       <input type="radio" required="" id="lipemik1" name="lipemik" value="1"  checked>
                               <label for="lipemik1">Ya</label>
                <input type="radio" required="" id="lipemik2" name="lipemik" value="0"  >
                               <label for="lipemik2">Tidak</label>
@@ -433,7 +438,7 @@ if(isset($_POST['Button']))  {
 
         <tr><td valign="top">Tidak Ikterik</td>
         <td>
-                       <input type="radio" required="" id="ikterik1" name="ikterik" value="1"   checked>
+                       <input type="radio" required="" id="ikterik1" name="ikterik" value="1"  checked>
                               <label for="ikterik1">Ya</label>
                <input type="radio" required="" id="ikterik2" name="ikterik" value="0"  >
                               <label for="ikterik2">Tidak</label>
@@ -442,7 +447,7 @@ if(isset($_POST['Button']))  {
 
         <tr><td valign="top">Plasma tidak Kehijauan</td>
         <td>
-                       <input type="radio" required="" id="kehijauan1" name="kehijauan" value="1"  checked >
+                       <input type="radio" required="" id="kehijauan1" name="kehijauan" value="1"  checked>
                               <label for="kehijauan1">Ya</label>
                <input type="radio" required="" id="kehijauan2" name="kehijauan" value="0"  >
                               <label for="kehijauan2">Tidak</label>
@@ -452,7 +457,7 @@ if(isset($_POST['Button']))  {
 
         <tr><td valign="top">Tidak ada bekuan pada Sel Darah Merah</td>
         <td>
-                       <input type="radio" required="" id="bekuan1" name="bekuan" value="1"   checked>
+                       <input type="radio" required="" id="bekuan1" name="bekuan" value="1"  checked>
                               <label for="bekuan1">Ya</label>
                <input type="radio" required="" id="bekuan2" name="bekuan" value="0"  >
                               <label for="bekuan2">Tidak</label>
@@ -461,7 +466,7 @@ if(isset($_POST['Button']))  {
 
         <tr><td valign="top">Volume produk sesuai spesifikasi</td>
         <td>
-                       <input type="radio" required="" id="volume_ok1" name="volume_ok" value="1"   checked>
+                       <input type="radio" required="" id="volume_ok1" name="volume_ok" value="1"  checked>
                               <label for="bekuan1">Ya</label>
                <input type="radio" required="" id="volume_ok2" name="volume_ok" value="0"  >
                               <label for="bekuan2">Tidak</label>
@@ -486,7 +491,7 @@ if(isset($_POST['Button']))  {
                         <tr><td style="background-color: mistyrose" rowspan="4">Hasil<br>penimbangan<br>produk</td></tr>
                         <tr><td style="background-color: mistyrose">Tanggal</td><td><?=$tgltimbang?></td></tr>
                         <tr><td style="background-color: mistyrose">Petugas</td><td><?=$namapetugastimbang.' ('.$usertimbang.') '?></td></tr>
-                        <tr><td style="background-color: mistyrose">Berat</td><td><input required="" name="berat" type="text" size="7" style="font-family:monospace;" value=<?=$berattimbang?>>Kg</td></tr>
+                        <tr><td style="background-color: mistyrose">Berat</td><td><input required="" name="berat" type="text" size="7" style="font-family:monospace;" value=<?=$berattimbang?>>gram</td></tr>
                         <tr><td style="background-color: mistyrose" colspan="2">Volume standar</td><td><?=$vol_min.' - '.$vol_max;?> ml</td></tr>
 <!-- Hitung berat -->
 <?

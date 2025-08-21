@@ -51,15 +51,7 @@ $lvl0=$_SESSION['leveluser'];
 <ul class="thumb">
 <!--	<li><a href="pmikomponen.php?module=sr_aftap"><img src="images/serahterima.png" alt=""/></a></li>
 	<li><a href="pmikomponen.php?module=sr_aftap_list"><img src="images/serahterima_list.png" alt="" /></a></li>-->
-<?php 
-if($lvl0 == "komponen"){ ?>
     <li><a href="pmikomponen.php?module=sr_list"><img src="images/serahterima.png" alt=""/></a></li>
-    <li><a href="pmikomponen.php?module=sr_komponen_rilis"><img src="images/serahterima_darah1.png" alt=""/></a></li>
-<?php } elseif($lvl0 == "qa") { ?>
-    <li><a href="pmiqa.php?module=sr_rilis"><img src="images/serahterima_darah1.png" alt=""/></a></li>
-<?php } else { ?>
-    <li></li>
-<?php } ?>
 </ul>
 </div>
 

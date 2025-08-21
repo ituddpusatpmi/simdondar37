@@ -1,4 +1,14 @@
 <?php
+if (!isset($_GET['sSearch']) || $_GET['sSearch'] == '' || !$_GET['sSearch']) {
+	$output = array(
+		"sEcho" => intval($_GET['sEcho']),
+		"iTotalRecords" => 0,
+		"iTotalDisplayRecords" => 0,
+		"aaData" => array()
+	);
+	echo json_encode($output);
+	return false;
+}
 session_start();
 $today=date("Y-m-d");
 $array_bulan = array(1=>'Jan','Feb','Mar', 'Apr', 'Mei', 'Jun','Jul','Ags','Sep','Okt', 'Nov','Des');

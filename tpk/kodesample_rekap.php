@@ -67,9 +67,6 @@ $lv0=$_SESSION['leveluser'];
                 case 'APH':$jenis="Apheresis";break;
                 case 'TPK':$jenis="Plasma Konvalesen";break;
                 case 'KON':$jenis="Donor Konseling";break;
-                case 'DP':$jenis="Donor Pengganti";break;
-                case 'QC':$jenis="Quality Control";break;
-                case 'MCU':$jenis="Medical Checkup";break;
             }
             ?>
                 <tr style="font-size:12px; color:#000000;" onMouseOver="this.className='highlight'" onMouseOut="this.className='normal'">

@@ -27,6 +27,7 @@ if ($_POST['submit']) {
 	$suhu      = $_POST['suhu'];
 	$hari      = $_POST['hari'];
 	$jam      = $_POST['jam'];
+	$volstandar = $_POST['volume'];
 	$volmin     = $_POST['volmin'];
 	$volmax     = $_POST['volmax'];
 	$nama        = $_POST['nama'];
@@ -40,6 +41,7 @@ if ($_POST['submit']) {
             umurjam     ='$jam[$i]',
             suhusimpan  ='$suhu[$i]',
             beratjenis  ='$beratjenis[$i]',
+            volume      ='$volstandar[$i]',
             vol_min     ='$volmin[$i]',
             vol_max     ='$volmax[$i]',
             waktu_pengolahan = '$olah[$i]',
@@ -63,6 +65,7 @@ $sq = mysqli_query($dbi, "SELECT `Nama`, `no`, `kantongbaru`, `lengkap`, `umurha
 			<td align="center" rowspan="2">NO</td>
 			<td align="center" rowspan="2">NAMA KOMPONEN DARAH</td>
 			<td align="center" rowspan="2">SINGKATAN</td>
+			<td align="center" rowspan="2">VOLUME <br>DEFAULT (ml)</td>
 			<td align="center" rowspan="2">BERAT JENIS</td>
 			<td align="center" rowspan="2">SUHU SIMPAN<br>(<sup>o</sup>C)</td>
 			<td align="center" colspan="2">MASA KADALUARSA</td>
@@ -85,6 +88,7 @@ $sq = mysqli_query($dbi, "SELECT `Nama`, `no`, `kantongbaru`, `lengkap`, `umurha
 				<td align=center><?= $dtrans['no'] ?></td><input type=hidden name='nomor[]' value=<?= $dtrans['no'] ?>>
 				<td align=left><?= $dtrans['lengkap'] ?></td><input type=hidden name='namalengkap[]' value=<?= $dtrans['lengkap'] ?>>
 				<td align=left><?= $dtrans['Nama'] ?></td><input type=hidden name='nama[]' value=<?= $dtrans['Nama'] ?>>
+				<td class='input'><input name='volume[]' type='text' size='7' value=<?= $dtrans['volume'] ?> style='text-align:right'></td>
 				<td class='input'><input name='beratjenis[]' type='text' size='7' value=<?= $dtrans['beratjenis'] ?> style='text-align:right'></td>
 				<td class='input'><input name='suhu[]' type='text' size='7' value=<?= $dtrans['suhusimpan'] ?> style='text-align:right'></td>
 				<td class='input'><input name='hari[]' type='text' size='5' value=<?= $dtrans['umurhari'] ?> style='text-align:right'></td>

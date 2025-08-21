@@ -14,7 +14,7 @@
     <script src="bootsrap337/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
     <link type="text/css" href="../../css/blitzer/jquery-ui.min.css" rel="stylesheet" />
-    <script type="text/javascript" charset="utf-8" src="../../js/jquery-ui.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./../js/jquery-ui.min.js"></script>
     <style>
         .ui-autocomplete {
             max-height: 200px;
@@ -1148,7 +1148,7 @@
                                     <div class="form-group">
                                         <label class="control-label col-lg-4">No. Handphone</label>
                                         <div class="col-lg-8">
-                                            <input type="text" class="form-control" name="telp" id="telp" autocomplete="off"
+                                            <input type="text" class="form-control" name="telp" autocomplete="off"
                                                 placeholder="Nomor Handphone">
                                         </div>
                                     </div>
@@ -2396,7 +2396,6 @@
                                         <input type="hidden" id="Mtgllhr" name="jtgllhr" />
                                         <input type="hidden" id="Mkerja" name="jkerja" />
                                         <input type="hidden" id="Mjk" name="jjk" />
-
                                     </div>
                                 </div>
                                 <div class="form-group row input-group-sm">
@@ -2808,12 +2807,7 @@
             document.getElementById("idktp").focus();
             return false;
         }
-        if (document.getElementById('telp').value && document.getElementById('telp').value.length < 8) {
-            alert('Masukan No. Handphone minimal 8 Karakter !');
-            document.getElementById("telp").focus();
-            return false;
-        }
-        if (document.getElementById('iddonor').value == '' && document.getElementById('idktp').value == '' && document.getElementById('telp').value == '') {
+        if (document.getElementById('iddonor').value == '' && document.getElementById('idktp').value == '') {
             if (document.getElementById('nama').value.length < 3) {
                 alert(' Lengkapi Nama minimal 3 Karakter !');
                 document.getElementById("nama").focus();

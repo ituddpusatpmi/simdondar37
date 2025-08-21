@@ -166,9 +166,33 @@ if ($unit == "" || $id === "") {
     <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
 
     <link rel="stylesheet" href="code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    
+     <!-- Edit -->
+	<script type="text/javascript" src="../../tpk/medical_checkup.js"></script>
 
+    <script>
+      function hbmeter() {
+        const hbInput = document.getElementById("hemoglobin").value.trim();
+        const hb = parseFloat(hbInput);
+        const warning = document.getElementById("warning_hb");
 
+        console.log("Nilai HB:", hb);
 
+        if (hbInput === "" || isNaN(hb)) {
+          warning.textContent = "";
+          return;
+        }
+
+        if (hb < 12.5 || hb > 17.0) {
+          warning.textContent = "Nilai hemoglobin di luar batas normal (12.5 - 17.0 g/dL)";
+        } else {
+          warning.textContent = "";
+        }
+
+        chb(hb);
+      }
+    </script>
+    <!-- End -->
 
 
 
@@ -347,10 +371,17 @@ if ($unit == "" || $id === "") {
                     <td>Nadi<sup style="color:red;"><strong>*</strong></sup></td>
                     <td><input name="reqnadi" type="text" style="width:15mm;" maxlength="3" required> BPM</td>
                   </tr>
-                  <tr>
+                    
+                     <!-- Edit -->
+                 <tr>
                     <td>Hemoglobin<sup style="color:red;"><strong>*</strong></sup></td>
-                    <td style="white-space:nowrap;"><input style='width:15mm' name="reqhemoglobin" id="hemoglobin" type="text" maxlength="5" required> g/dL</td>
+                    <td style="white-space:nowrap;"><input style='width:15mm' name="reqhemoglobin" id="hemoglobin" type="text" maxlength="5" onChange="hbmeter()" required> g/dL
+                      <br>
+                      <span id="warning_hb" style="font-size: 12px; color: red;"></span>
+                    </td>
                   </tr>
+                     <!-- End -->
+            
                   <tr>
                     <td>Ptg Anamnesa</td>
                     <td>

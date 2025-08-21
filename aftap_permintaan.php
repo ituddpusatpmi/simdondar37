@@ -66,6 +66,7 @@ $("ul.thumb li").hover(function() {
 	<!--li><a href="pmikasir.php?module=sejarah"><img src="images/lacak_pendonor.png" alt="" /></a></li-->
 	<li><a href="pmiaftap.php?module=rekap_sisa_kantong_diaftap"><img src="images/rekap_kantong_aftap.png" alt=""/></a></li>
 	<li><a href="logistik/transaksi_minta_barang.php"><img src="images/form_permintaan_barang.png" alt="" /></a></li>
+	<li><a href="pmiaftap.php?module=rekap_minta"><img src="images/rekap_minta_barang.png" alt="" /></a></li>
 	<li><a href="pmiaftap.php?module=transaksi_donor_lama"><img src="images/sejarahdonor.png" alt="" /></a></li>
 	<li><a href="pmiaftap.php?module=manual_aftap"><img src="images/manual_aftap.png" alt="" /></a></li>
 </ul>

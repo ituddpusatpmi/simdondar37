@@ -1,7 +1,7 @@
 <?php
 include ('db.php');
 
-$antri = mysqli_query($dbi,"SELECT * from antrian where tgl=curdate() AND panggil=0 order by nomor DESC limit 1");
+$antri = mysqli_query($dbi,"SELECT * from antrian where tgl=curdate() AND stat is null AND panggil=1 order by nomor DESC limit 1");
 if (mysqli_num_rows($antri) > 0){
     $data = mysqli_fetch_assoc($antri);
     ?>

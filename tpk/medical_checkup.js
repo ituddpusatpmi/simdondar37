@@ -23,14 +23,15 @@ function suhutubuh(suhu){
 		}
 	}
 
-function berat(hb){
-		hb=parseFloat(hb)
-		if(hb<45){
-			setCheckedValue(document.periksa.elements['h_medical'],'1');
-		}else{
-			if (document.periksa.h_medical=='0') setCheckedValue(document.periksa.elements['h_medical'],'0');
-		}
-	}
+function berat(hb) {
+  hb = parseFloat(hb);
+  if (hb < 45) {
+    setCheckedValue(document.periksa.elements["h_medical"], "1");
+  } else {
+    if (document.periksa.h_medical == "0")
+      setCheckedValue(document.periksa.elements["h_medical"], "0");
+  }
+}
 
 function chb(hb){
 		hb=parseFloat(hb)
@@ -41,33 +42,23 @@ function chb(hb){
 		}
 	}
 
-function sistol(hb){
-		hb=parseFloat(hb)
-		if(hb<90){
-			setCheckedValue(document.periksa.elements['h_medical'],'1');
-		}else{
-			if (document.periksa.h_medical=='0') setCheckedValue(document.periksa.elements['h_medical'],'0');
-		}
-		if(hb>150){
-			setCheckedValue(document.periksa.elements['h_medical'],'1');
-		}else{
-			if (document.periksa.h_medical=='0') setCheckedValue(document.periksa.elements['h_medical'],'0');
-		}
-	}
+function sistol(hb) {
+  hb = parseFloat(hb);
+  if (hb < 90 || hb > 160) {
+    setCheckedValue(document.periksa.elements["h_medical"], "1");
+  } else {
+    setCheckedValue(document.periksa.elements["h_medical"], "0");
+  }
+}
 
-function diastol(hb){
-		hb=parseFloat(hb)
-		if(hb<60){
-			setCheckedValue(document.periksa.elements['h_medical'],'1');
-		}else{
-			if (document.periksa.h_medical=='0') setCheckedValue(document.periksa.elements['h_medical'],'0');
-		}
-		if(hb>100){
-			setCheckedValue(document.periksa.elements['h_medical'],'1');
-		}else{
-			if (document.periksa.h_medical=='0') setCheckedValue(document.periksa.elements['h_medical'],'0');
-		}
-	}
+function diastol(hb) {
+  hb = parseFloat(hb);
+  if (hb < 60 || hb > 100) {
+    setCheckedValue(document.periksa.elements["h_medical"], "1");
+  } else {
+    setCheckedValue(document.periksa.elements["h_medical"], "0");
+  }
+}
 
 function showHint(str){
    if (str.length==0){ 

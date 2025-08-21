@@ -65,14 +65,11 @@ if (isset($_POST['gen'])) {
     $v_bl=date('m');
     $v_hr=date('d');
     $v_prefixkode=$v_jenis.$v_th.$v_bl.$v_hr;
-    $j1=$j2=$j3=$j4=$j5=$j6="";
+    $j1=$j2=$j3="";
     switch($v_jenis){
         case 'APH':$j1="selected";break;
         case 'TPK':$j2="selected";break;
         case 'KON':$j3="selected";break;
-        case 'DP':$j4="selected";break;
-        case 'QC':$j5="selected";break;
-        case 'MCU':$j6="selected";break;
     }
 } ?>
 	<body onLoad=setFocus()>
@@ -84,9 +81,6 @@ if (isset($_POST['gen'])) {
 						<option value="APH" <?php echo $j1;?>>Apheresis</option>
 						<option value="TPK" <?php echo $j2;?>>Plasma Konvalesen</option>
 						<option value="KON" <?php echo $j3;?>>Konseling</option>
-                        <option value="DP" <?php echo $j4;?>>Donor Pengganti</option>
-                        <option value="QC" <?php echo $j5;?>>Quality Control</option>
-                        <option value="MCU" <?php echo $j6;?>>Medical Checkup</option>
 				</select></td>
 				<td class="input">Jumlah :<input type="text"  name="jml" style="width:15mm;" required value="1"></td>
 				<td class="input"><input name="gen" type="submit" value="Generated" class="swn_button_blue"></td>

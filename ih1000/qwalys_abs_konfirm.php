@@ -162,7 +162,7 @@ $q="SELECT q.`id` , q.`sn` , q.`sample_id` , q.`parameter1` , q.`microplate` , q
                 s.sah, s.StatTempat, s.stat2, s.tgl_Aftap, s.kodePendonor
                 FROM `qwalys_abs_raw` q
                 LEFT JOIN stokkantong s ON q.`sample_id` = s.nokantong
-                WHERE date( q.runtime ) = '$ptgl'
+                WHERE (q.runtime BETWEEN '$ptgl 00:00:00' AND '$ptgl 23:59:59')
                 AND q.microplate = '$pplate'
                 AND q.`sn` = '$psn'
                 AND q.`operator` = '$puser'
@@ -293,8 +293,12 @@ $Sq=mysql_query($q);
         <?
         $Sq=mysql_query("SELECT q.`nl` as nama , q.`nl_barcode` as barcode, q.`nl_batch` as batch ,q.`nl_ed` as ed
                          FROM `qwalys_abs_raw` q LEFT JOIN stokkantong s ON q.`sample_id` = s.nokantong
-                         WHERE date( q.runtime ) = '$ptgl' AND q.microplate = '$pplate'
-                         AND q.`sn` = '$psn' AND q.`operator` = '$puser' AND q.`parameter2` = '$pparam' and `confirm` is null
+                         WHERE (q.runtime BETWEEN '$ptgl 00:00:00' AND '$ptgl 23:59:59')
+                         AND q.microplate = '$pplate'
+                         AND q.`sn` = '$psn'
+                         AND q.`operator` = '$puser'
+                         AND q.`parameter2` = '$pparam'
+                         AND `confirm` is null
                          group by q.`nl_barcode`");
         $no	=1;
         while($reag=mysql_fetch_assoc($Sq)){
@@ -311,8 +315,12 @@ $Sq=mysql_query($q);
         <?
         $Sq=mysql_query("SELECT q.`sd` as nama , q.`sd_barcode` as barcode, q.`sd_batch` as batch ,q.`sd_ed` as ed
                          FROM `qwalys_abs_raw` q LEFT JOIN stokkantong s ON q.`sample_id` = s.nokantong
-                         WHERE date( q.runtime ) = '$ptgl' AND q.microplate = '$pplate'
-                         AND q.`sn` = '$psn' AND q.`operator` = '$puser' AND q.`parameter2` = '$pparam' and `confirm` is null
+                         WHERE (q.runtime BETWEEN '$ptgl 00:00:00' AND '$ptgl 23:59:59')
+                         AND q.microplate = '$pplate'
+                         AND q.`sn` = '$psn'
+                         AND q.`operator` = '$puser'
+                         AND q.`parameter2` = '$pparam'
+                         AND `confirm` is null
                          group by q.`sd`");
         while($reag=mysql_fetch_assoc($Sq)){
             $no++;?>
@@ -328,8 +336,12 @@ $Sq=mysql_query($q);
         <?
         $Sq=mysql_query("SELECT q.`hsp` as nama , q.`hsp_barcode` as barcode, q.`hsp_batch` as batch ,q.`hsp_ed` as ed
                          FROM `qwalys_abs_raw` q LEFT JOIN stokkantong s ON q.`sample_id` = s.nokantong
-                         WHERE date( q.runtime ) = '$ptgl' AND q.microplate = '$pplate'
-                         AND q.`sn` = '$psn' AND q.`operator` = '$puser' AND q.`parameter2` = '$pparam' and `confirm` is null
+                         WHERE (q.runtime BETWEEN '$ptgl 00:00:00' AND '$ptgl 23:59:59')
+                         AND q.microplate = '$pplate'
+                         AND q.`sn` = '$psn'
+                         AND q.`operator` = '$puser'
+                         AND q.`parameter2` = '$pparam'
+                         AND `confirm` is null
                          group by q.`hsp_barcode`");
         while($reag=mysql_fetch_assoc($Sq)){
             $no++;?>

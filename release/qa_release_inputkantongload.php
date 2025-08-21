@@ -7,9 +7,7 @@ $tglsebelum = mktime(0,0,0,date("m"),1,date("Y"));
 $tglawal=date("Y-m-d");
 $hariini = date("Y-m-d");
 $nkt = $_GET['nkt'];
-$nokantong0 = substr($nkt, 0,-1); 
-$nokantonga=$nokantong0.'A';
-$tampil = "0";
+    $tampil = "0";
 ?>
 <!DOCTYPE html>
 <link type="text/css" href="../css/blitzer/jquery-ui-1.8.9.custom.css" rel="stylesheet" />
@@ -29,13 +27,13 @@ $tampil = "0";
 </head>
 <body OnLoad="document.prolis.noktg.focus();">
 <form name="prolis" method=post>
-    <font size="4" color=00008B>PELULUSAN PRODUK<br> </font>
+    <font size="4" color=00008B>PELULUSAN <br> </font>
     <INPUT type="text"  name="noktg" value="<?php echo $nkt;?>" style="text-transform:uppercase" minlength="5" required="">
     <input type=submit name=cari value=OK class="swn_button_blue">
     <a href="pmiqa.php?module=input_qa"class="swn_button_blue">Kembali</a>
 </form>
 <?
-echo "- load data Kantong Darah<br>";
+echo "- load data Kantong<br>";
 echo "- load data Transaksi Donor<br>";
 echo "- load data Aftap<br>";
 echo "- load data Pendonor<br>";
@@ -44,18 +42,13 @@ echo "- load data IMLTD<br>";
 echo "- load data Konfirmasi Golongan<br>";
 echo "- load data Look Back IMLTD<br>";
 
+
+    //$nkt=$_POST[noktg];
     $sql="select * from stokkantong where upper(nokantong)=upper('$nkt')";
     $stokkantong=mysql_fetch_assoc(mysql_query($sql));
-    $url="pmiqa.php?module=release_proses&nokantong=$nkt&mode=2";
     if (($stokkantong['Status']=='2') and ($stokkantong['sah']=='1')){
-	$sqlkgd="SELECT `NoKantong` FROM `dkonfirmasi` WHERE `NoKantong`='$nokantonga'";
-	$querycekkgd=mysql_query($sqlkgd);
-        $cekrow=mysql_num_rows($querycekkgd);
-        if($cekrow>0){
-          header("Location: $url");
-        }else{
-          echo "<SCRIPT>alert('Produk/Komponen darah yang anda masukkan tidak dapat dilakukan release, karena belum ada pemeriksaan KGD pada kantong ".$nokantonga."');</SCRIPT>";
-        }
+        $URL="pmiqa.php?module=release_proses&nokantong=$nkt&mode=2";
+        header("Location: $URL");
     }else{
         switch ($stokkantong['Status']){
             case '0' :  $statuskantong='Kosong';

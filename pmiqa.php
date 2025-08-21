@@ -54,8 +54,8 @@ if (($_SESSION['leveluser']) == 'qa') {
          //=========SERAH TERIMA=======
          elseif ($module == 'serahterima') {
             include "komponen_serahterima.php";
-         } elseif ($module == 'sr_rilis') {
-            include "modul/st_komponen_rilis/index_komponen.php";
+         } elseif ($module == 'sr_aftap') {
+            include "serahterima/sr_aftap_komponen.php";
          } elseif ($module == 'delrow') {
             include "serahterima/sr_proces.php";
          } elseif ($module == 'batal') {

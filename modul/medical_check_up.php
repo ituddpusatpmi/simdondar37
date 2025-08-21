@@ -776,7 +776,7 @@ if ($ln > 0) {
                                 <div class="table-responsive" id="shadow1">
                                     <table class="table borderless table-striped table-condensed">
                                         <tr>
-                                            <td colspan=3><b>Dalam hari Ini ꞉</b></td>
+                                            <td colspan=3><b>Dalam hari Ini ?</b></td>
                                         <tr>
                                         <tr>
                                             <td>1</td>
@@ -812,7 +812,7 @@ if ($ln > 0) {
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan=3><b>Dalam waktu 48 jam terakhir ꞉</b></td>
+                                            <td colspan=3><b>Dalam waktu 48 jam terakhir ?</b></td>
                                         <tr>
                                         <tr>
                                             <td>4</td>
@@ -844,7 +844,7 @@ if ($ln > 0) {
                                         <tr>
                                         <tr>
                                             <td>6</td>
-                                            <td>Jika wanita ꞉ apakah anda saat ini sedang hamil ?</td>
+                                            <td>Jika wanita ? apakah anda saat ini sedang hamil ?</td>
                                             <td>
                                                 <div class="onoffswitch">
                                                     <input type="hidden" name="no6" value="0">
@@ -1010,7 +1010,7 @@ if ($ln > 0) {
                                         </tr>
                                         <tr>
                                             <td>20</td>
-                                            <td>Donor wanita ꞉ apakah anda pernah berhubungan seksual dengan laki-laki yang biseksual ?</td>
+                                            <td>Donor wanita ? apakah anda pernah berhubungan seksual dengan laki-laki yang biseksual ?</td>
                                             <td>
                                                 <div class="onoffswitch">
                                                     <input type="hidden" name="no20" value="0">
@@ -1069,7 +1069,7 @@ if ($ln > 0) {
                                 </tr>
                                 <tr>
                                     <td>25</td>
-                                    <td>Apakah anda sedang atau pernah mendapat pengobatan siﬁlis atau GO (kencing nanah) ?</td>
+                                    <td>Apakah anda sedang atau pernah mendapat pengobatan si?lis atau GO (kencing nanah) ?</td>
                                     <td>
                                         <div class="onoffswitch">
                                             <input type="hidden" name="no25" value="0">
@@ -1169,7 +1169,7 @@ if ($ln > 0) {
                                 </tr>
                                 <tr>
                                     <td>33</td>
-                                    <td>Laki-laki ꞉ Apakah anda pernah berhubungan seksual dengan laki-laki, walaupun sekali? </td>
+                                    <td>Laki-laki ? Apakah anda pernah berhubungan seksual dengan laki-laki, walaupun sekali? </td>
                                     <td>
                                         <div class="onoffswitch">
                                             <input type="hidden" name="no33" value="0">

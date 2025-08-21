@@ -121,6 +121,13 @@
             return true;
     }
 
+    function enterToSubmit(event) {
+        if (event.key === "Enter") {
+            document.getElementsByName('submit1')[0].click();
+            return false;
+        }
+    }
+
 </script>
 
 <body onLoad=setFocus();>
@@ -145,7 +152,7 @@ if (isset($_POST['keadaan'])) {$keadaan=$_POST['keadaan'];}else{$keadaan="";}
 
 if (isset($_POST[submit1])) {
     //Semua input harus terisi, bila blm lengkap, Alert dan balik
-    $no_kantong = mysql_real_escape_string($_POST['nomorkantong']);
+    $no_kantong = strtoupper(mysql_real_escape_string($_POST['nomorkantong']));
     if((strlen($no_kantong)==0) or (empty($no_kantong))){$nokantong_kosong="1";}else{$nokantong_kosong="0";}
     $v_sample   = $_POST['sr_sample'];
     $v_sah      = $_POST['sr_status'];
@@ -154,34 +161,72 @@ if (isset($_POST[submit1])) {
     $v_suhu     = $_POST['suhu'];
     $v_keadaan  = $_POST['keadaan'];
     if ($nokantong_kosong=="0"){
-        $shift_terima=mysql_fetch_assoc(mysql_query("SELECT nama FROM `shift` WHERE `jam`<=current_time() and `sampai_jam`>=current_time()"));
-        $cek="SELECT `dst_nokantong` from `serahterima_detail_tmp` WHERE `dst_nokantong`='$no_kantong' AND `dst_modul`='$modul' and `dst_user`='$namauser'";
-        $cek1=mysql_fetch_assoc(mysql_query($cek));
-        if ($no_kantong==$cek1['dst_nokantong']){
-            $message="Nomor <b>$no_kantong SUDAH ADA</b> dalam list";
-        } else {
-            $ck=mysql_fetch_assoc(mysql_query("SELECT s.`noKantong`, s.`jenis`, s.`Status`, s.`gol_darah`,s.`RhesusDrh`,s.`kodePendonor`,s.`sah`,s.`merk`, s.`position`,
-                                               s.`tgl_Aftap`,s.`volume`, h.`JenisDonor`, h.`donorbaru`, h.`umur`, h.`Pengambilan`,s.`lama_pengambilan`, h.`jk`, h.`petugas`,h.`Diambil`, h.`NoTrans`, h.`shift`
-                                               FROM `stokkantong` s LEFT JOIN `htransaksi` h on s.`noKantong`=h.`NoKantong` WHERE  s.`noKantong`='$no_kantong'"));
-            if ((($ck['Status']=="1") or ($ck['Status']=="5") or ($ck['Status']=="2")) and (($ck['sah']=="0") or ($ck['sah']==""))){
-                $sql_tmp="INSERT INTO `serahterima_detail_tmp` (
-                          `dst_nokantong`, `dst_statusktg`, `dst_old_position`,  `dst_golda`, `dst_rh`,`dst_kodedonor`, `dst_volumektg`, `dst_jenisktg`,
-                          `dst_asal`, `dst_kodealat`, `dst_suhu`, `dst_keadaan`,`dst_statuspengambilan`,
-                          `dst_sample`,`dst_sah`,`dst_modul`, `dst_user`,`dst_sahktg`, `dst_merk`,`dst_dsdp`, `dst_lamabaru`, `dst_umur`, `dst_lama_aftap`,`dst_kel`,
-                           `dst_ptgaftap`, `dst_volambil`, `dst_no_aftap`, `dst_tglaftap`, `dst_shift_pengirim`, `dst_shift_penerima`)VALUES(
-                          '$no_kantong','$ck[Status]', '$ck[position]','$ck[gol_darah]','$ck[RhesusDrh]','$ck[kodePendonor]','$ck[volume]','$ck[jenis]',
-                          '$v_asal', '$v_kodealat','$v_suhu','$v_keadaan','$ck[Pengambilan]',
-                          '$v_sample','$v_sah','$modul','$namauser','$ck[sah]','$ck[merk]','$ck[JenisDonor]', '$ck[donorbaru]', '$ck[umur]', '$ck[lama_pengambilan]','$ck[jk]',
-                          '$ck[petugas]', '$ck[Diambil]', '$ck[NoTrans]', '$ck[tgl_Aftap]', '$ck[shift]', '$shift_terima[nama]')";
-                //echo "$sql_tmp";
-                $add=mysql_query($sql_tmp);
-                $message="Nomor <b>$no_kantong Berhasil</b> dimasukkan dalam list";
-            }else{
-                $message="Nomor <b>$no_kantong </b> tidak dapat dimasukkan dalam list, karena statusnya sudah disahkan atau kosong di Aftap";
+       $shift_terima = mysql_fetch_assoc(mysql_query("SELECT nama FROM `shift` WHERE `jam`<=current_time() and `sampai_jam`>=current_time()"));
+            $cek = "SELECT `dst_nokantong` from `serahterima_detail_tmp` WHERE `dst_nokantong`='$no_kantong' AND `dst_modul`='$modul' and `dst_user`='$namauser'";
+            $cek1 = mysql_fetch_assoc(mysql_query($cek));
+            if ($no_kantong == $cek1['dst_nokantong']) {
+                $message = "Nomor <b>$no_kantong</b> SUDAH ADA dalam list";
+
+                echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>";
+                echo "<script>
+                        Swal.fire({
+                            icon: 'warning',
+                            html: 'Nomor <b>$no_kantong</b> SUDAH ADA dalam list',
+                            confirmButtonText: 'OK'
+                        }).then(() => {
+                            document.getElementById('nomorkantong').focus();
+                            document.getElementById('nomorkantong').select();
+                        });
+                    </script>";
+            } else {
+                 $ck = mysql_fetch_assoc(mysql_query("
+                        SELECT 
+                            s.`noKantong` AS s_noKantong, s.`jenis`, s.`Status`, s.`gol_darah`, s.`RhesusDrh`, 
+                            s.`kodePendonor` AS s_KodePendonor, s.`sah`, s.`merk`, s.`position`, s.`tgl_Aftap`, s.`volume`,
+                            h.`KodePendonor` AS h_KodePendonor, h.`NoKantong` AS h_NoKantong, h.`JenisDonor`, h.`donorbaru`, 
+                            h.`umur`, h.`Pengambilan`, s.`lama_pengambilan`, h.`jk`, h.`petugas`, h.`Diambil`, 
+                            h.`NoTrans`, h.`shift`
+                        FROM `stokkantong` s 
+                        LEFT JOIN `htransaksi` h ON s.`noKantong` = h.`NoKantong` 
+                        WHERE s.`noKantong` = '$no_kantong'
+                    "));
+
+                if (
+                    ($ck['Status'] == "1" || $ck['Status'] == "2" || $ck['Status'] == "5") &&
+                    ($ck['sah'] == "0" || $ck['sah'] == "")
+                ) {
+                    if (
+                        !isset($ck['s_KodePendonor']) || trim($ck['s_KodePendonor']) == '' ||
+                        !isset($ck['h_NoKantong']) || trim($ck['h_NoKantong']) == ''
+                    ) {
+                        // Beri notifikasi dan hentikan proses
+                        $message = "Nomor <b>$no_kantong</b> <span style='color:red;'>tidak dapat diproses</span> karena belum ditransaksi atau transaksi gagal...";
+                    } else {
+                        // Kondisi valid, boleh insert
+                        $sql_tmp = "INSERT INTO `serahterima_detail_tmp` (
+                                `dst_nokantong`, `dst_statusktg`, `dst_old_position`, `dst_golda`, `dst_rh`, `dst_kodedonor`, 
+                                `dst_volumektg`, `dst_jenisktg`, `dst_asal`, `dst_kodealat`, `dst_suhu`, `dst_keadaan`, 
+                                `dst_statuspengambilan`, `dst_sample`, `dst_sah`, `dst_modul`, `dst_user`, `dst_sahktg`, 
+                                `dst_merk`, `dst_dsdp`, `dst_lamabaru`, `dst_umur`, `dst_lama_aftap`, `dst_kel`, 
+                                `dst_ptgaftap`, `dst_volambil`, `dst_no_aftap`, `dst_tglaftap`, `dst_shift_pengirim`, 
+                                `dst_shift_penerima`
+                            ) VALUES (
+                                '$no_kantong', '{$ck['Status']}', '{$ck['position']}', '{$ck['gol_darah']}', '{$ck['RhesusDrh']}', '{$ck['s_KodePendonor']}', 
+                                '{$ck['volume']}', '{$ck['jenis']}', '$v_asal', '$v_kodealat', '$v_suhu', '$v_keadaan', 
+                                '{$ck['Pengambilan']}', '$v_sample', '$v_sah', '$modul', '$namauser', '{$ck['sah']}', 
+                                '{$ck['merk']}', '{$ck['JenisDonor']}', '{$ck['donorbaru']}', '{$ck['umur']}', '{$ck['lama_pengambilan']}', '{$ck['jk']}', 
+                                '{$ck['petugas']}', '{$ck['Diambil']}', '{$ck['NoTrans']}', '{$ck['tgl_Aftap']}', '{$ck['shift']}', '{$shift_terima['nama']}'
+                            )";
+                        $add = mysql_query($sql_tmp);
+                        $message = "Nomor <b>$no_kantong</b> <span style='color:green;'>Berhasil</span> dimasukkan dalam list";
+                    }
+                } else {
+                    // Gagal karena status/sah tidak sesuai
+                    $message = "Nomor <b>$no_kantong</b> tidak dapat dimasukkan dalam list, karena statusnya sudah disahkan atau kosong di Aftap";
+                }
             }
-        }
-    }else{
-            $message="Nomor kantong <b>TIDAK BOLEH</b> kosong";
+        } else {
+            $message = "Nomor kantong <b>TIDAK BOLEH</b> kosong";
         }
 }
 if (isset($_POST[submit3])) {
@@ -317,7 +362,7 @@ $asal_sample  =$sr['dst_asal'];
             <table id="entrybox" style="border-collapse: collapse;border: 2px solid #ff0000;width: 100%; box-shadow: 1px 2px 2px #800000;">
                 <tr>
                     <td>Masukkan Nomor Kantong</td>
-                    <td><input type=text name=nomorkantong id=nomorkantong autofocus onkeypress="return handleEnter(this, event)"></td>
+                    <td><input type=text name=nomorkantong id=nomorkantong autofocus onkeypress="return enterToSubmit(event)"></td>
                     <td>Status Sample</td>
                     <td><select name="sr_sample" id="sr_sample" onkeypress="return handleEnter(this, event)">
                             <option value="1">Sesuai</option>
@@ -360,22 +405,30 @@ $asal_sample  =$sr['dst_asal'];
         </tr>
         <?php
         $no=0;
-        $qry="SELECT `dst_id`, `dst_nokantong`, `dst_statusktg`, `dst_golda`, `dst_rh`, `dst_kodedonor`, `dst_berat`, `dst_volumektg`,`dst_sahktg`,`dst_merk`,
-               `dst_ptgaftap`, `dst_volambil`, `dst_no_aftap`, date(`dst_tglaftap`) AS `dst_tglaftap`,
-        	  CASE WHEN `dst_dsdp`='0' THEN 'DS' ELSE 'DP' END AS `dst_dsdp`, 
-        	  CASE WHEN `dst_lamabaru`='0' THEN 'BR' ELSE 'UL' END AS `dst_lamabaru`,
-        	  CASE WHEN `dst_kel`='0' THEN 'LK' ELSE 'PR' END AS `dst_kel`, 
-        	  `dst_umur`, `dst_lama_aftap`,
-              CASE
-              WHEN `dst_jenisktg`='1' THEN 'SB'
-              WHEN `dst_jenisktg`='2' THEN 'DB'
-              WHEN `dst_jenisktg`='3' THEN 'TR'
-              WHEN `dst_jenisktg`='4' THEN 'QD'
-              WHEN `dst_jenisktg`='6' THEN 'PB' END As `dst_jenisktg`,
-              CASE WHEN `dst_sample`='1' THEN 'Sesuai' ELSE 'Tdk Sesuai' END AS`dst_sample`,
-              CASE WHEN `dst_sah`='0' THEN 'Tdk Sesuai' Else 'Sesuai' END AS `dst_sah`
-              FROM `serahterima_detail_tmp`
-              WHERE `dst_modul`='KARANTINA' and `dst_user`='$namauser' order by `dst_id` DESC";
+        $qry="SELECT sd.`dst_id`, sd.`dst_nokantong`, sd.`dst_statusktg`, sd.`dst_golda`, sd.`dst_rh`, sd.`dst_kodedonor`, sd.`dst_berat`, sd.`dst_volumektg`, sd.`dst_sahktg`, 
+                        sd.`dst_merk`, sd.`dst_ptgaftap`, sd.`dst_volambil`, sd.`dst_no_aftap`, 
+                        DATE(sd.`dst_tglaftap`) AS `dst_tglaftap`,
+                        CASE WHEN sd.`dst_dsdp` = '0' THEN 'DS' ELSE 'DP' END AS `dst_dsdp`,
+                    CASE WHEN sd.`dst_lamabaru` = '0' THEN 'BR' ELSE 'UL' END AS `dst_lamabaru`,
+                    CASE WHEN sd.`dst_kel` = '0' THEN 'LK' ELSE 'PR' END AS `dst_kel`,
+                    sd.`dst_umur`, 
+                    sd.`dst_lama_aftap`,
+                    CASE
+                        WHEN sd.`dst_jenisktg` = '1' THEN 'SB'
+                        WHEN sd.`dst_jenisktg` = '2' THEN 'DB'
+                        WHEN sd.`dst_jenisktg` = '3' AND st.`jenis` = '3' AND st.`metoda` = '' THEN 'TR'
+                        WHEN sd.`dst_jenisktg` = '3' AND st.`jenis` = '3' AND st.`metoda` = 'TB' THEN 'TB'
+                        WHEN sd.`dst_jenisktg` = '4' THEN 'QD'
+                        WHEN sd.`dst_jenisktg` = '5' AND st.`jenis` = '5' AND st.`metoda` = 'TTF' THEN 'LR'
+                        WHEN sd.`dst_jenisktg` = '5' AND st.`jenis` = '5' AND st.`metoda` = 'TT' THEN 'NLR'
+                        WHEN sd.`dst_jenisktg` = '6' THEN 'PB'
+                    END AS `dst_jenisktg`,
+                    CASE WHEN sd.`dst_sample` = '1' THEN 'Sesuai' ELSE 'Tdk Sesuai' END AS `dst_sample`,
+                    CASE WHEN sd.`dst_sah` = '0' THEN 'Tdk Sesuai' ELSE 'Sesuai' END AS `dst_sah`
+                    FROM `serahterima_detail_tmp` sd
+                    LEFT JOIN `stokkantong` st ON sd.`dst_nokantong` = st.`noKantong`
+                    WHERE sd.`dst_modul` = 'KARANTINA' AND sd.`dst_user` = '$namauser'
+                    ORDER BY sd.`dst_id` DESC";
 		//echo "$qry";
         $sql=mysql_query($qry);
         $no=mysql_num_rows($sql)+1;

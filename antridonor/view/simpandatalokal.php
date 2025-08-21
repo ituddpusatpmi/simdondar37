@@ -171,27 +171,6 @@ if (mysqli_query($con, $sql_upd)) {
   $msg .= '- Update data Pendonor - Gagal<br>';
   $lanjut = '1';
 }
-        //INSERT DATA NASIONAL
-        $curlinsdn = curl_init();
-        curl_setopt_array($curlinsdn, array(
-            CURLOPT_URL => "https://dbdonor.pmi.or.id/pmi/api/simdondar/insertpendonor.php",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 5,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => array('idudd' => $idudd, 'Kode' => $kodep, 'NoKTP' => $ktp, 'Nama' => $namap, 
-            'Alamat' => $alamat, 'Jk' => $jk, 'Pekerjaan' => $pekerjaan, 'TempatLhr' => $tmp_lhr, 
-            'TglLhr' => $tgl_lhr, 'Status' => $nikah, 'kelurahan' => $kel, 'kecamatan' => $kec, 
-            'wilayah' => $wil, 'telp2' => $telp, 'GolDarah' => $gol, 'Rhesus' => $rh, 'jumDonor' => $jmldnr, 
-            'Call' => '1', 'tglkembali' => $curdate, 'umur' => $umur, 'metode' => 'insert'),
-        ));
-        $response = curl_exec($curlinsdn);
-        $datains = json_decode($response, true);
-        //echo "<pre>"; print_r($response); echo "</pre>";
-        curl_close($curlinsdn);
 
 
 $idtrans = substr($id_transaksi_baru, 0, 8);

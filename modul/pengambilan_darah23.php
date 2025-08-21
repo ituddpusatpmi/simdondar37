@@ -400,7 +400,7 @@
             <div class="row">
               <div class="col-lg-12" align="center">
                 <div class="panel-title">
-                  <h4><strong>PENYADAPAN DARAH PENDONOR</strong></h4>
+                  <h4><strong>PENGAMBILAN DARAH PENDONOR</strong></h4>
                 </div>
                 <div class="clearfix"></div>
               </div>

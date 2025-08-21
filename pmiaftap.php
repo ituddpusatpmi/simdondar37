@@ -72,6 +72,8 @@ if (($_SESSION['leveluser']) == 'aftap') { ?>
                 include "ganti_menu.php";
             } elseif ($_GET['module'] == 'ganti_passwd') {
                 include "modul/ganti_passwd.php";
+             } elseif ($_GET['module'] == 'rekap_minta') {
+                include "logistik/rekap_minta_barang.php";
             } elseif ($_GET['module'] == 'aftap_permintaan') {
                 include "aftap_permintaan.php";
             } elseif ($_GET['module'] == 'form_minta') {

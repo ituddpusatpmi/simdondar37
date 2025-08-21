@@ -61,11 +61,11 @@
     }
 </style>
 
-<?php
+<?
 require_once('clogin.php');
 require_once('config/db_connect.php');
-$namauser   =$_SESSION['namauser'];
-$namalengkap=$_SESSION['nama_lengkap'];
+$namauser   =$_SESSION[namauser];
+$namalengkap=$_SESSION[nama_lengkap];
 $tglawal    =date("Y-m-d");
 $hariini    = date("Y-m-d");
 $notransaksi="";

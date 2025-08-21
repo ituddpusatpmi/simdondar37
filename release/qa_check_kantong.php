@@ -360,7 +360,7 @@ if (empty($level)) {
             } else {
                 $volume_darah = round($release['rvolume'], 0);
             }
-    ?>
+            ?>
             <div>
                 <font size="4" color=00008B>DATA PRODUK DARAH/KOMPONEN DARAH</font>
             </div>
@@ -436,7 +436,7 @@ if (empty($level)) {
             <?php
             //jika darah  keluar
             if ($stokkantong['Status'] == '3') {
-            ?><br>
+                ?><br>
                 <div>
                     <font size="4" color=00008B>DATA DISTRIBUSI</font>
                 </div>
@@ -448,7 +448,7 @@ if (empty($level)) {
                     WHERE `nokantong`='$nkt'
                     ORDER by `id` DESC";
                     $kirimbdrs = mysqli_fetch_assoc(mysqli_query($dbi, $q));
-                ?>
+                    ?>
                     <table width="100%" cellpadding="2" cellspacing="2">
                         <tr onMouseOver="this.className='highlight';" onMouseOut="this.className='normal';">
                             <td style="background-color: mistyrose">Tanggal dikeluarkan</td>
@@ -463,14 +463,14 @@ if (empty($level)) {
                             <td><?php echo $kirimbdrs['petugas'] . ' - ' . $kirimbdrs['nama_lengkap'] ?></td>
                         </tr>
                     </table>
-                <?php
+                    <?php
                 } elseif (substr($stokkantong['stat2'], 0, 1) > '0') {
                     //Distribusi ke UDD
                     $q = "SELECT k.`id`,k.`nokantong`,k.`udd`,k.`tgl`,k.`petugas`,b.`nama`, u.`nama_lengkap`
                     FROM `kirimudd` k inner join `utd` b on b.`id`=k.`udd` inner join `user` u on u.`id_user`=k.`petugas`
                     WHERE `nokantong`='$nkt' ORDER by k.`id` DESC";
                     $kirimbdrs = mysqli_fetch_assoc(mysqli_query($dbi, $q));
-                ?>
+                    ?>
                     <table width="100%" cellpadding="2" cellspacing="2">
                         <tr onMouseOver="this.className='highlight';" onMouseOut="this.className='normal';">
                             <td style="background-color: mistyrose">Tanggal dikeluarkan</td>
@@ -485,7 +485,7 @@ if (empty($level)) {
                             <td><?php echo $kirimbdrs['petugas'] . ' - ' . $kirimbdrs['nama_lengkap'] ?></td>
                         </tr>
                     </table>
-                <?php
+                    <?php
                 } else {
                     $s_dist = mysqli_query($dbi, "select * from dtransaksipermintaan where NoKantong='$nkt'");
                     $s_dist = mysqli_fetch_assoc($s_dist);
@@ -528,7 +528,7 @@ if (empty($level)) {
                     $ptgs_cross = $usr['nama_lengkap'];
                     $usr = mysqli_fetch_assoc(mysqli_query($dbi, "select `nama_lengkap` from `user` where `id_user`='$cross[cheker]'"));
                     $ptgs_cek = $usr['nama_lengkap'];
-                ?>
+                    ?>
                     <table width="100%" cellpadding="2" cellspacing="2">
                         <tr>
                             <td width="50%" valign="top">
@@ -650,7 +650,7 @@ if (empty($level)) {
                             </td>
                         </tr>
                     </table>
-                <?php
+                    <?php
                 }
             }
 
@@ -733,7 +733,7 @@ if (empty($level)) {
                         <td><?php echo $dtabuang['user'] ?></td>
                     </tr>
                 </table>
-            <?php
+                <?php
             }
 
             $ptg_barcode0 = "SELECT `l`.`time_aksi`,`l`.`user`, `u`.`nama_lengkap` FROM `user_log` l inner join `user` u on `u`.`id_user`=`l`.`user` WHERE `aksi_user` like '%barcode%$no_kantonga%'";
@@ -979,7 +979,7 @@ if (empty($level)) {
             $s_donor = "select * from pendonor where Kode='$aftap[KodePendonor]'";
             $pendonor = mysqli_fetch_assoc(mysqli_query($dbi, $s_donor));
             if ($level == '1') {
-            ?>
+                ?>
                 <table width="100%" cellpadding="2" cellspacing="2">
                     <tr>
                         <td width="50%" valign="top">
@@ -1061,9 +1061,9 @@ if (empty($level)) {
                         </td>
                     </tr>
                 </table>
-            <?php
+                <?php
             } else {
-            ?>
+                ?>
                 <table width="100%" cellpadding="2" cellspacing="2">
                     <tr>
                         <td width="50%" valign="top">
@@ -1109,7 +1109,7 @@ if (empty($level)) {
                         </td>
                     </tr>
                 </table>
-            <?php
+                <?php
             }
             $s_sr = "SELECT `hst_id`, `hst_notrans`, `hst_bagpengirim`, `hst_bagpenerima`, `hst_tgl`, `hst_asal`, `hst_jenis_st`, `hst_user`, `hst_pengirim`, `hst_penerima`, `hst_penerima2`, `hst_kode_alat`, `hst_suhuterima`, `hst_kondisiumum`, `hst_peruntukan`, `hst_modul`, `hst_shift_pengirim`, `hst_shift_penerima` ,
                 CASE
@@ -1257,7 +1257,7 @@ if (empty($level)) {
                         if ($sq_reagen['noLot'] == "") {
                             $sq_reagen = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT `Nama`, `noLot`, `tglKad`  FROM `reagen` WHERE noLot='$imltd[noLot]'"));
                         }
-                    ?>
+                        ?>
                         <tr style="font-size:13px; color:#000000; font-family:Verdana;" onMouseOver="this.className='highlight';"
                             onMouseOut="this.className='normal';">
                             <td class=input><?php echo $imltd['id'] ?></td>
@@ -1281,7 +1281,7 @@ if (empty($level)) {
                         </tr>
                     <?php }
                     if ($no == "0") {
-                    ?>
+                        ?>
                         <tr style="color:#000000;" onMouseOver="this.className='highlight';" onMouseOut="this.className='normal';">
                             <td colspan="13" class=input align="center">TIDAK ADA DATA PEMERIKSAAN IMLTD METODE ELISA</td>
                         </tr>
@@ -1329,7 +1329,7 @@ if (empty($level)) {
                             $var_imltd = '1';
                         }
                         $sq_reagen = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT `Nama`, `noLot`, `tglKad`  FROM `reagen` WHERE kode='$imltd_r[nolot]'"));
-                    ?>
+                        ?>
                         <tr style="font-size:13px; color:#000000; font-family:Verdana;" onMouseOver="this.className='highlight';"
                             onMouseOut="this.className='normal';">
                             <td class=input><?php echo $imltd_r['id'] ?></td>
@@ -1353,7 +1353,7 @@ if (empty($level)) {
                         </tr>
                     <?php }
                     if ($no == "0") {
-                    ?>
+                        ?>
                         <tr style="color:#000000; " onMouseOver="this.className='highlight';" onMouseOut="this.className='normal';">
                             <td colspan="13" class=input align="center">TIDAK ADA DATA PEMERIKSAAN IMLTD METODE RAPID</td>
                         </tr>
@@ -1361,7 +1361,7 @@ if (empty($level)) {
                 </table>
                 <?php
                 //DATA PEMERIKSAAN NAT===========================================================================================
-
+        
                 $sq_nat = mysqli_query($dbi, "SELECT *,
                                                         case 
                                                         when `Hasil`='0' then 'Non Reaktif' 
@@ -1402,7 +1402,7 @@ if (empty($level)) {
                         }
                         $sq_reagen = mysqli_fetch_assoc(mysqli_query($dbi, "SELECT `Nama`, `noLot`, `tglKad`  FROM `reagen` WHERE kode='$imltd[noLot]'"));
 
-                    ?>
+                        ?>
                         <tr style="font-size:13px; color:#000000; font-family:Verdana;" onMouseOver="this.className='highlight';"
                             onMouseOut="this.className='normal';">
                             <td class=input><?php echo $imltdn['natid'] ?></td>
@@ -1426,7 +1426,7 @@ if (empty($level)) {
                         </tr>
                     <?php }
                     if ($no == "0") {
-                    ?>
+                        ?>
                         <tr style="color:#000000;" onMouseOver="this.className='highlight';" onMouseOut="this.className='normal';">
                             <td colspan="13" class=input align="center">TIDAK ADA DATA PEMERIKSAAN NAT</td>
                         </tr>
@@ -1485,7 +1485,7 @@ if (empty($level)) {
                         if (($a_dtransaksipermintaan['Cocok'] == '1')) {
                             $var_kgd = '1';
                         }
-                    ?>
+                        ?>
                         <tr style="font-size:12px; color:#000000; font-family:Verdana;" onMouseOver="this.className='highlight'"
                             onMouseOut="this.className='normal'">
                             <td align="right"><?php echo $no++ ?>.</td>
@@ -1544,7 +1544,7 @@ if (empty($level)) {
                         </tr>
                     <?php }
                     if ($no == "1") {
-                    ?>
+                        ?>
                         <tr style="color:#000000;" onMouseOver="this.className='highlight';" onMouseOut="this.className='normal';">
                             <td colspan="23" class=input align="center">TIDAK ADA DATA PEMERERIKSAAN KONFIRMASI GOLONGAN DARAH</td>
                         </tr>
@@ -1630,13 +1630,13 @@ if (empty($level)) {
                 $ptg_sah = mysqli_fetch_assoc(mysqli_query($dbi, "select nama_lengkap from `user` where `id_user`='$tmp[rpengesah]'"));
                 $ptg_sah = $ptg_sah['nama_lengkap'];
                 if (strlen($tmp['rnotrans']) == 0) {
-                ?><br>
+                    ?><br>
                     <div>
                         <font size="4" color=red><b>Darah belum di RELEASE</font></b>
                     </div>
-                <?php
+                    <?php
                 } else {
-                ?>
+                    ?>
                     <table width="100%" cellpadding="2" cellspacing="2">
                         <tr>
                             <td width="50%" valign="top">
@@ -1831,7 +1831,7 @@ if (empty($level)) {
                             <td><?php echo $komp['tempat'] . $komp['aksi_user'] ?></td>
                             <td><?php echo $komp['nama_lengkap'] ?></td>
                         </tr>
-                    <?php }
+                    <?php } 
                     //mutasi kantong ke aftap
                     $a1 = "SELECT DATE_FORMAT(user_log.time_aksi, '%H:%i') as jam_aksi, DATE_FORMAT(user_log.time_aksi, '%d/%m/%Y') as tgl_aksi,
 		      	 user_log.user, user_log.komputer,
@@ -1855,7 +1855,7 @@ if (empty($level)) {
                             ?>
                             <td><?php echo $komp['nama_lengkap'] ?></td>
                         </tr>
-                    <?php }
+                    <?php } 
                     //Pengambilan Darah
                     $a1 = "SELECT DATE_FORMAT(user_log.time_aksi, '%H:%i') as jam_aksi, DATE_FORMAT(user_log.time_aksi, '%d/%m/%Y') as tgl_aksi,
 		      	 user_log.user, user_log.komputer,user_log.time_aksi,
@@ -1880,7 +1880,7 @@ if (empty($level)) {
                             ?>
                             <td><?php echo $komp['nama_lengkap'] ?></td>
                         </tr>
-                    <?php }
+                    <?php } 
                     //Pengesahan ke karantina
                     $a1 = "SELECT DATE_FORMAT(user_log.time_aksi, '%H:%i') as jam_aksi, DATE_FORMAT(user_log.time_aksi, '%d/%m/%Y') as tgl_aksi,
              user_log.user, user_log.komputer,
@@ -1906,7 +1906,7 @@ if (empty($level)) {
                             ?>
                             <td><?php echo $komp['nama_lengkap'] ?></td>
                         </tr>
-                    <?php }
+                    <?php } 
                     //KGD
                     $a1 = "SELECT DATE_FORMAT(user_log.time_aksi, '%H:%i') as jam_aksi, DATE_FORMAT(user_log.time_aksi, '%d/%m/%Y') as tgl_aksi,
              user_log.user, user_log.komputer,user_log.time_aksi,
@@ -1930,7 +1930,7 @@ if (empty($level)) {
                             ?>
                             <td><?php echo $komp['nama_lengkap'] ?></td>
                         </tr>
-                    <?php }
+                    <?php } 
                     //IMLTD
                     $a1 = "SELECT DATE_FORMAT(user_log.time_aksi, '%H:%i') as jam_aksi, DATE_FORMAT(user_log.time_aksi, '%d/%m/%Y') as tgl_aksi,
              user_log.user, user_log.komputer,
@@ -2051,7 +2051,7 @@ if (empty($level)) {
                         </tr>
                     <?php } ?>
                 </table>
-        <?php
+                <?php
         } else {
             echo "<SCRIPT>alert('Produk/Komponen darah yang anda masukkan tidak terdaftar/tidak ada dalam SIMDONDAR');</SCRIPT>";
         }
